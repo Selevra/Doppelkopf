@@ -16,6 +16,7 @@ public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private GAME_CNT_VARIANT cntVariant;
+	private DokoData.PUNKTEINGABE mPunkteeingabe;
 
 	private ArrayList<PlayerClass> mPlayers;
 	private ArrayList<RoundClass> mRoundList;
@@ -33,7 +34,7 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, DokoData.PUNKTEINGABE punkteingabe){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
@@ -42,6 +43,7 @@ public class GameClass  implements Serializable{
     	this.mBockRoundLimit = bockLimit;
 
     	this.cntVariant = cntVariant;
+    	this.mPunkteeingabe = punkteingabe;
     	
     	for(int i=0;i<getMAXPlayerCount();i++){
     		this.mPlayers.add(new PlayerClass(i));
@@ -163,6 +165,10 @@ public class GameClass  implements Serializable{
 	public GAME_CNT_VARIANT getGameCntVariant(){
 		return this.cntVariant;
 	}
+
+	public DokoData.PUNKTEINGABE getPunkteeingabe(){
+		return this.mPunkteeingabe;
+	}
 	
 	
 	
@@ -227,7 +233,8 @@ public class GameClass  implements Serializable{
 		}
 	}
 
-	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states) {
+	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states,
+                            String roundResult, String reAnsagen, String contraAnsagen, ArrayList<String> reSpecial, ArrayList<String> contraSpecial) {
 		RoundClass mRound = getNewRound();
 
 
@@ -240,6 +247,16 @@ public class GameClass  implements Serializable{
 		if(mGameBockRoundsCount > 0 && mGameBockRoundsGameCount > 0) {
 			updateBockCountPreRounds(mGameBockRoundsCount, mGameBockRoundsGameCount);
 		}
+
+		Log.d("XML", "Starting to add new round ... ");
+		Log.d("XML", "Round Result: " + roundResult);
+        Log.d("XML", "Re Ansagen: " + reAnsagen);
+        Log.d("XML", "Contra Ansagen: " + contraAnsagen);
+        Log.d("XML", "Re special: " + reSpecial);
+        Log.d("XML", "Contra special: " + contraSpecial);
+		mRound.setRoundResult(roundResult);
+		mRound.setAnsagen(reAnsagen, contraAnsagen);
+		mRound.setSpecialPoints(reSpecial, contraSpecial);
 	}
 
     private int getWinnerCnt(int[] states){

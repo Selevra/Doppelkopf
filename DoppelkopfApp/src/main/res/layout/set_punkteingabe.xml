@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal" >
+
+    <View 
+		android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:weightSum="1" >
+
+	   <TextView
+		   android:id="@+id/fragment_game_round_punkteeingabe"
+		   android:layout_width="0dip"
+		   android:layout_height="match_parent"
+		   android:layout_weight="0.6"
+		   android:textColor="@color/black"
+		   android:gravity="center|left"
+		   android:paddingLeft="5dp"
+		   android:text="Punkteeingabe"
+		   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            style="@style/Spinner"
+            android:id="@+id/sp_game_cnt_varian"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"/>
+
+    </LinearLayout>
+
+</LinearLayout>

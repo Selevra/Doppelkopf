@@ -73,6 +73,13 @@ public class DokoXMLClass {
     private static final String GAME_ROUND_BOCK_CNT = "RoundBockCount";
     private static final String GAME_ROUND_TYPE = "RoundType";
 
+    private static final String GAME_ROUND_DETAILED_INFO = "RoundDetailedInfo";
+    private static final String GAME_ROUND_WINNER = "RoundWinner";
+    private static final String GAME_ROUND_RE_ANSAGEN = "RoundReAnsagen";
+    private static final String GAME_ROUND_CONTRA_ANSAGEN = "RoundContraAnsagen";
+    private static final String GAME_ROUND_RE_SPECIAL = "RoundReSpecial";
+    private static final String GAME_ROUND_CONTRA_SPECIAL = "RoundContraSpecial";
+
 
     private static final String GAME_PLAYERS = "Players";
     private static final String GAME_PLAYER = "Player";
@@ -256,6 +263,37 @@ public class DokoXMLClass {
                     serializer.startTag("", GAME_ROUND_BOCK_CNT);
                     serializer.text(Integer.toString(r.getBockCount()));
                     serializer.endTag("", GAME_ROUND_BOCK_CNT);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.startTag("", GAME_ROUND_DETAILED_INFO);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_WINNER);
+                    serializer.text(r.getRoundResult());
+                    serializer.endTag("", GAME_ROUND_WINNER);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_RE_ANSAGEN);
+                    serializer.text(r.getReAnsagen());
+                    serializer.endTag("", GAME_ROUND_RE_ANSAGEN);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_CONTRA_ANSAGEN);
+                    serializer.text(r.getContraAnsagen());
+                    serializer.endTag("", GAME_ROUND_CONTRA_ANSAGEN);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_RE_SPECIAL);
+                    serializer.text(r.getReSpecial());
+                    serializer.endTag("", GAME_ROUND_RE_SPECIAL);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_CONTRA_SPECIAL);
+                    serializer.text(r.getContraSpecial());
+                    serializer.endTag("", GAME_ROUND_CONTRA_SPECIAL);
+
+                    serializer.text("\n\t\t\t");
+                    serializer.endTag("", GAME_ROUND_DETAILED_INFO);
 
                     serializer.text("\n\t\t");
                     serializer.endTag("", GAME_ROUND);
