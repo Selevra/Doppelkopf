@@ -79,7 +79,6 @@ public class ChangeGameSettingActivity extends DokoActivity {
     	Bundle extras = intent.getExtras();
     	int mActivePlayers,mBockLimit,mPlayerCnt;
     	GAME_CNT_VARIANT mGameCntVaraint;
-		DokoData.PUNKTEINGABE mPunkteeingabe;
     	String mTmp = "";
 
 
@@ -89,14 +88,13 @@ public class ChangeGameSettingActivity extends DokoActivity {
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
 
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
-			mPunkteeingabe = (DokoData.PUNKTEINGABE) intent.getSerializableExtra(DokoData.PUNKTEEINGABE_KEY);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER || 
         			(mPlayerCnt == 0 || mActivePlayers == 0))
         		return null;
         	
-        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint, mPunkteeingabe);
+        	mGame = new GameClass(mPlayerCnt, mActivePlayers, mBockLimit, mGameCntVaraint);
         	for(int k=0;k<mPlayerCnt;k++){
         		mTmp = extras.getString(DokoData.PLAYERS_KEY[k],"");
         		if(mTmp == null || mTmp.length() == 0) return null;

@@ -1,10 +1,8 @@
 package nldoko.game.java.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 
 import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
 import nldoko.game.R;
@@ -19,22 +17,12 @@ public class RoundClass implements Serializable  {
 	private int mPoints;
 	private int mBockCount;
 	private GAME_ROUND_RESULT_TYPE mRoundType;
-	private String mRoundResult;
-	private String mReAnsagen;
-	private String mContraAnsagen;
-	private String mReSpecial;
-	private String mContraSpecial;
 
 	
 	public RoundClass(int id,int points,int bockCount){
 		this.mID = id;
 		this.mBockCount 	= bockCount;
 		this.mPoints	= points;
-		this.mRoundResult = "";
-		this.mReAnsagen = "";
-		this.mContraAnsagen = "";
-		this.mReSpecial = "";
-		this.mContraSpecial = "";
 	}
 
     public RoundClass(int id, GAME_ROUND_RESULT_TYPE type, int points,int bockCount){
@@ -42,11 +30,6 @@ public class RoundClass implements Serializable  {
         this.mBockCount 	= bockCount;
         this.mPoints	= points;
         this.mRoundType = type;
-        this.mRoundResult = "";
-        this.mReAnsagen = "";
-        this.mContraAnsagen = "";
-		this.mReSpecial = "";
-		this.mContraSpecial = "";
     }
 	
 	public int getID(){
@@ -170,65 +153,5 @@ public class RoundClass implements Serializable  {
 					return "2vs2";
 				}
 		}
-	}
-
-	public void setRoundResult(String roundResult) {
-	    this.mRoundResult = roundResult;
-        Log.d("XML", "Set Round Result: " + this.mRoundResult);
-    }
-
-    public void setAnsagen(String reAnsagen, String contraAnsagen) {
-	    if (reAnsagen != null) {
-            this.mReAnsagen = reAnsagen;
-        }
-	    if (contraAnsagen != null) {
-            this.mContraAnsagen = contraAnsagen;
-        }
-        Log.d("XML", "Set Re Ansagen: " + this.mReAnsagen);
-        Log.d("XML", "Set Contra Ansagen: " + this.mContraAnsagen);
-    }
-
-	public void setSpecialPoints(ArrayList<String> reSpecial, ArrayList<String> contraSpecial) {
-		this.mReSpecial = "";
-		this.mContraSpecial = "";
-		Log.d("XML", "Re Special (count): " + Integer.toString(reSpecial.size()));
-		for (int i=0; i<reSpecial.size();i++){
-			Log.d("XML", "Re Special: " + reSpecial.get(i));
-		}
-		Log.d("XML", "Re Special: " + this.mReSpecial);
-		for (int i=0; i<reSpecial.size(); i++) {
-			this.mReSpecial += reSpecial.get(i);
-			if (i < reSpecial.size() - 1) {
-				this.mReSpecial += ", ";
-			}
-			Log.d("XML", "Re Spiecial: " + this.mReSpecial);
-		}
-	}
-
-	public String getRoundResult() {
-        Log.d("XML", "Get Round Result: " + this.mRoundResult);
-	    return this.mRoundResult;
-    }
-
-    public String getReAnsagen() {
-        Log.d("XML", "Get Re Ansagen: " + this.mReAnsagen);
-        return this.mReAnsagen;
-    }
-
-    public String getContraAnsagen() {
-        Log.d("XML", "Set Contra Ansagen: " + this.mContraAnsagen);
-	    return this.mContraAnsagen;
-    }
-
-	public String getReSpecial() {
-//		Log.d("RoundClass", this.mReSpecial.toString());
-		Log.d("XML", "Get Re special: " + this.mReSpecial);
-		return this.mReSpecial;
-	}
-
-	public String getContraSpecial() {
-//		Log.d("RoundClass", this.mReSpecial.toString());
-		Log.d("XML", "Get contra special: " + this.mReSpecial);
-		return this.mContraSpecial;
 	}
 }

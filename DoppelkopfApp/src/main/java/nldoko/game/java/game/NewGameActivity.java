@@ -37,7 +37,6 @@ public class NewGameActivity extends DokoActivity {
 	private Spinner mSpActivePlayer;
 	private Spinner mSpBockLimit;
 	private Spinner mSpGameCntVariant;
-	private Spinner mSpPunkteeingabe;
 	private CheckBox mCbSuspendMark;
     private LinearLayout mGameSettingsEntry;
     private LinearLayout mGameSettingsList;
@@ -49,7 +48,6 @@ public class NewGameActivity extends DokoActivity {
 	private ArrayAdapter<Integer> mSPActivePlayerArrayAdapter;
 	private ArrayAdapter<Integer> mSPBockLimitArrayAdapter;
 	private ArrayAdapter<String> mSPGameCntVaraintArrayAdapter;
-	private ArrayAdapter<String> mSPPunkteeingabeArrayAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +74,6 @@ public class NewGameActivity extends DokoActivity {
     	mSpActivePlayer	 	= (Spinner)findViewById(R.id.sp_act_player_cnt);
     	mSpBockLimit 		= (Spinner)findViewById(R.id.sp_bock_cnt);
     	mSpGameCntVariant	= (Spinner)findViewById(R.id.sp_game_cnt_variant);
-		mSpPunkteeingabe	= (Spinner)findViewById(R.id.sp_game_cnt_varian);
 
         mGameSettingsEntry = (LinearLayout)findViewById(R.id.new_game_settings_entry);
         mGameSettingsEntry.setOnClickListener(new showGameSettingsClickListener());
@@ -126,12 +123,6 @@ public class NewGameActivity extends DokoActivity {
         mSPBockLimitArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
 		mSpBockLimit.setSelection(0);
-
-		String[] mPunkteingabeVariantArr = new String[]{"manual", "automatic"};
-		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mPunkteingabeVariantArr);
-		mSPPunkteeingabeArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-		mSpPunkteeingabe.setAdapter(mSPPunkteeingabeArrayAdapter);
-		mSpPunkteeingabe.setSelection(0);
     }
     
     private void setAutoCompleteNames(){
@@ -226,7 +217,6 @@ public class NewGameActivity extends DokoActivity {
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
-			i.putExtra(DokoData.PUNKTEEINGABE_KEY, DokoData.PUNKTEINGABE.values()[mSpPunkteeingabe.getSelectedItemPosition()]);
 
 			startActivity(i);
 		}

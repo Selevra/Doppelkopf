@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Doppelkopf.iml" filepath="$PROJECT_DIR$/Doppelkopf.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DoppelkopfApp/Doppelkopf-DoppelkopfApp.iml" filepath="$PROJECT_DIR$/DoppelkopfApp/Doppelkopf-DoppelkopfApp.iml" group="Doppelkopf/DoppelkopfApp" />
       <module fileurl="file://$PROJECT_DIR$/DoppelkopfApp/DoppelkopfApp.iml" filepath="$PROJECT_DIR$/DoppelkopfApp/DoppelkopfApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Doppelkopf_Fork-Doppelkopf.iml" filepath="$PROJECT_DIR$/Doppelkopf_Fork-Doppelkopf.iml" group="Doppelkopf" />
     </modules>
   </component>
 </project>

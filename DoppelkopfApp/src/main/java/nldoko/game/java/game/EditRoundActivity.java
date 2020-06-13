@@ -303,7 +303,7 @@ public class EditRoundActivity extends DokoActivity {
             }
         }
     }
-
+	
 	public class PlayernameLongClickListener implements OnLongClickListener{
 		@SuppressWarnings("deprecation")
 		@Override
@@ -330,7 +330,7 @@ public class EditRoundActivity extends DokoActivity {
 			}
 			return true;
 		}
-	}
+    }
 	
 	public class btnEditRoundClickListener implements OnClickListener{
 		@Override

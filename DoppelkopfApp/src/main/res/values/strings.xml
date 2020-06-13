@@ -68,8 +68,6 @@
     \n\nExampels:\n\nCount of bockround = 1, Games per bockround = 4 will reuslt ind 4 new bockrounds total.
     \n\nCount of bockround = 2, Games per bockround = 5 will result ind 5 double bockrounds total.</string>
 
-    <string name="str_game_enter_detailed_info">Enter detailed game infos</string>
-
     <string name="str_error_game_new_round_data">Invalid values. Please check points and count of winner/loser/(suspended player)</string>
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>

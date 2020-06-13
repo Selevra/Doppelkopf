@@ -105,11 +105,6 @@ public class DokoData {
 		CNT_VARIANT_WIN
 	}
 
-	public enum PUNKTEINGABE {
-		PUNKTEEINGABE_MANUAL,
-		PUNKTEINGABE_AUTOMATIC
-	}
-
 	public enum GAME_VIEW_TYPE {
 		ROUND_VIEW_DETAIL,
 		ROUND_VIEW_TABLE
@@ -152,7 +147,6 @@ public class DokoData {
 	public static final String BOCKROUND_KEY 			= "BOCKROUND";
 	public static final String ACTIVE_PLAYER_KEY 		= "ACTIVE_PLAYERS";
 	public static final String GAME_CNT_VARIANT_KEY 	= "GAME_CNT_VARIANT";
-	public static final String PUNKTEEINGABE_KEY		= "PUNKTEINGABE";
 	public static final String ROUND_POINTS_KEY 		= "ROUND_POINTS";
 	public static final String ROUND_ID 				= "ROUND_ID";
 

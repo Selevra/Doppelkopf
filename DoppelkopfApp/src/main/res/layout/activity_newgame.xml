@@ -95,12 +95,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/item_space"
                     layout="@layout/set_game_cnt_variant" />
-				
-				<include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_space"
-                    layout="@layout/set_punkteingabe" />
 
             </LinearLayout>
 
