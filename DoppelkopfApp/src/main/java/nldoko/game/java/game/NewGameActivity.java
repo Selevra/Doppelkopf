@@ -226,7 +226,7 @@ public class NewGameActivity extends DokoActivity {
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
-			i.putExtra(DokoData.PUNKTEEINGABE_KEY, DokoData.PUNKTEINGABE.values()[mSpPunkteeingabe.getSelectedItemPosition()]);
+			i.putExtra(DokoData.PUNKTEEINGABE_KEY, DokoData.POINTS_CALCULATION.values()[mSpPunkteeingabe.getSelectedItemPosition()]);
 
 			startActivity(i);
 		}

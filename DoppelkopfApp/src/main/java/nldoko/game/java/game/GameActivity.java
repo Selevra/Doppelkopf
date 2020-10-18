@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -266,7 +265,7 @@ public class GameActivity extends DokoActivity {
     	Bundle extras = intent.getExtras();
     	int mActivePlayers,mBockLimit,mPlayerCnt;
     	GAME_CNT_VARIANT mGameCntVaraint;
-		DokoData.PUNKTEINGABE mPunkteeingabe;
+		DokoData.POINTS_CALCULATION mPunkteeingabe;
     	String mTmp = "";
         boolean mAutoBockCalc = true;
     	
@@ -307,7 +306,7 @@ public class GameActivity extends DokoActivity {
         	mActivePlayers 	= extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit		= extras.getInt(DokoData.BOCKLIMIT_KEY,0);
         	mGameCntVaraint = (GAME_CNT_VARIANT)intent.getSerializableExtra(DokoData.GAME_CNT_VARIANT_KEY);
-			mPunkteeingabe	= (DokoData.PUNKTEINGABE)intent.getSerializableExtra(DokoData.PUNKTEEINGABE_KEY);
+			mPunkteeingabe	= (DokoData.POINTS_CALCULATION)intent.getSerializableExtra(DokoData.PUNKTEEINGABE_KEY);
         	
         	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
         			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
@@ -325,7 +324,7 @@ public class GameActivity extends DokoActivity {
         	}
         }
         else{
-        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL, DokoData.PUNKTEINGABE.PUNKTEEINGABE_MANUAL);
+        	mGame = new GameClass(5, 4, 1, GAME_CNT_VARIANT.CNT_VARIANT_NORMAL, DokoData.POINTS_CALCULATION.POINTS_CALCULATION_MANUAL);
 	    	
         	mGame.getPlayer(0).setName("Johannes");
         	mGame.getPlayer(1).setName("Christoph");
@@ -525,7 +524,6 @@ public class GameActivity extends DokoActivity {
         mGameBockRoundsGameCnt.setAdapter(mGameBockRoundsGameCntAdapter);
         mGameBockRoundsGameCnt.setSelection(mGame.getPlayerCount() - 1);
 
-        // round result: who is the winner?
 		mRGWinnerRe = (RadioButton)rootView.findViewById(R.id.rb_re_won);
 		mRGWinnerRe.setOnClickListener(new OnClickListener() {
 			@Override
@@ -717,7 +715,7 @@ public class GameActivity extends DokoActivity {
 
         // detailed round info general layouts, buttons and co.
 		mDetailedRoundInfo = (LinearLayout)rootView.findViewById(R.id.game_detailed_round_info_container);
-		if(mGame.getPunkteeingabe() != DokoData.PUNKTEINGABE.PUNKTEINGABE_AUTOMATIC) {
+		if(mGame.getPointsCalculationType() != DokoData.POINTS_CALCULATION.POINTS_CALCULATION_AUTOMATIC) {
 			mDetailedRoundInfo.setVisibility(View.GONE);
 		}
 		else {
@@ -848,7 +846,7 @@ public class GameActivity extends DokoActivity {
         LinearLayout mPointGrid = (LinearLayout)rootView.findViewById(R.id.point_grid);
         setupGridPointButtonsToEditValues(mPointGrid, mEtNewRoundPoints);
 //        LinearLayout pointGrid = (LinearLayout)rootView.findViewById(R.id.game_add_round_point_grid);
-        if (mGame.getPunkteeingabe() == DokoData.PUNKTEINGABE.PUNKTEINGABE_AUTOMATIC) {
+        if (mGame.getPointsCalculationType() == DokoData.POINTS_CALCULATION.POINTS_CALCULATION_AUTOMATIC) {
 			mPointGrid.setVisibility(View.GONE);
 		}
         else {
@@ -982,7 +980,7 @@ public class GameActivity extends DokoActivity {
                 mGameBockRoundsGameCount = 0;
             }
 
-			mGame.addNewRound(getNewRoundPoints(),mGameBockRoundsCount, mGameBockRoundsGameCount,mNewRoundPlayerState, mRoundResultXML, mRoundAnsagenReXML, mRoundAnsagenKontraXML, mReSpecialXML, mKontraSpecialXML);
+			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerState, mRoundResultXML, mRoundAnsagenReXML, mRoundAnsagenKontraXML, mReSpecialXML, mKontraSpecialXML);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -1143,6 +1141,7 @@ public class GameActivity extends DokoActivity {
         mGameBockRoundsGameCnt.setSelection(mGame.getPlayerCount() - 1);
         mGameBockDetailContainer.setVisibility(View.GONE);
 
+        resetDetailedRoundInfos();
 
 		if (mBtnAddRound != null && mBtnAddRound.getParent() != null && mBtnAddRound.getParent().getParent() != null && (mBtnAddRound.getParent().getParent() instanceof ScrollView)) {
 			ScrollView sv = (ScrollView)mBtnAddRound.getParent().getParent();
@@ -1150,6 +1149,30 @@ public class GameActivity extends DokoActivity {
 		}
 	}
 
+	private static void resetDetailedRoundInfos() {
+		// game result buttons
+		for (int i=0; i<mListResultTBs.size(); i++)
+		{
+			mListResultTBs.get(i).setChecked(false);
+		}
+		mMapRBWinner.get(GAME_PARTY.PARTY_RE).setChecked(false);
+		mMapRBWinner.get(GAME_PARTY.PARTY_RE).setChecked(false);
+		// an/absagen buttons
+		for (int i=0; i<mListReAnsagenTBs.size(); i++) {
+			mListReAnsagenTBs.get(i).setChecked(false);
+		}
+		for (int i=0; i<mListKontraAnsagenTBs.size(); i++) {
+			mListKontraAnsagenTBs.get(i).setChecked(false);
+		}
+		// special points
+		for (Map.Entry<String, ToggleButton> entry : mMapTBsRe.entrySet()) {
+			entry.getValue().setChecked(false);
+		}
+		for (Map.Entry<String, ToggleButton> entry : mMapTBsKontra.entrySet()) {
+			entry.getValue().setChecked(false);
+		}
+		updatePointsTextView();
+	}
 
 	private boolean isNewBockRoundSet(){
         return mCBNewBockRound.isChecked();
@@ -1158,7 +1181,14 @@ public class GameActivity extends DokoActivity {
     private int getNewRoundPoints(){
         int mPoints;
         try{
-            mPoints = Integer.valueOf(mEtNewRoundPoints.getText().toString());
+			if (mGame.getPointsCalculationType() == DokoData.POINTS_CALCULATION.POINTS_CALCULATION_MANUAL) {
+				mPoints = Integer.parseInt(mEtNewRoundPoints.getText().toString());
+			}
+			else if (mGame.getPointsCalculationType() == DokoData.POINTS_CALCULATION.POINTS_CALCULATION_AUTOMATIC) {
+				mPoints = Math.abs(calculatePointsForRe()); // Kontra points are representated with "-" in internal calculations
+			}
+			else mPoints = 0;
+
             if (!mGame.isAutoBockCalculationOn() && mGame.getPreRoundList().size() > 0) {
                 int mBockCountRound = mGame.getPreRoundList().get(0).getBockCount();
                 if (mBockCountRound > 0) {
@@ -1612,11 +1642,12 @@ public class GameActivity extends DokoActivity {
     private static void updatePointsTextView() {
 		Log.d("INFO", "\nUpdating projected points...");
 		int points = calculatePointsForRe();
-		mTVProjectedPoints.setText(Math.abs(points) + " P.");
 		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_CONTRA).isChecked()) {
 			mTVProjectedPointsWinner.setText("Pls. select winner");
+			mTVProjectedPoints.setText("-");
 		}
 		else {
+			mTVProjectedPoints.setText(Math.abs(points) + " P.");
 			if (points > 0) {
 				mTVProjectedPointsWinner.setText("(Re)");
 			}
@@ -1847,12 +1878,12 @@ public class GameActivity extends DokoActivity {
 		}
 		// case 2: party won the round, but was Ansage correct?
 		else {
-			boolean ret = consecutiveAnsagen <= getConsectuiveChecked(mListResultTBs);
+			return consecutiveAnsagen <= getConsectuiveChecked(mListResultTBs);
 //			if (ret) {
 ////				Log.d("INFO", "Ansage-Success: Party won round and ansage was correct");
 //			}
 //			else Log.d("INFO", "Ansage-Success: Party won round and ansage was correct");
-			return ret;
+//			return ret;
 		}
 	}
 

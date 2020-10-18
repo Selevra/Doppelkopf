@@ -16,7 +16,7 @@ public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private GAME_CNT_VARIANT cntVariant;
-	private DokoData.PUNKTEINGABE mPunkteeingabe;
+	private DokoData.POINTS_CALCULATION mPointCalcType;
 
 	private ArrayList<PlayerClass> mPlayers;
 	private ArrayList<RoundClass> mRoundList;
@@ -34,7 +34,7 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, DokoData.PUNKTEINGABE punkteingabe){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, DokoData.POINTS_CALCULATION punkteingabe){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
@@ -43,7 +43,7 @@ public class GameClass  implements Serializable{
     	this.mBockRoundLimit = bockLimit;
 
     	this.cntVariant = cntVariant;
-    	this.mPunkteeingabe = punkteingabe;
+    	this.mPointCalcType = punkteingabe;
     	
     	for(int i=0;i<getMAXPlayerCount();i++){
     		this.mPlayers.add(new PlayerClass(i));
@@ -166,8 +166,8 @@ public class GameClass  implements Serializable{
 		return this.cntVariant;
 	}
 
-	public DokoData.PUNKTEINGABE getPunkteeingabe(){
-		return this.mPunkteeingabe;
+	public DokoData.POINTS_CALCULATION getPointsCalculationType(){
+		return this.mPointCalcType;
 	}
 	
 	
