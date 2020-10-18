@@ -76,9 +76,9 @@ public class DokoXMLClass {
     private static final String GAME_ROUND_DETAILED_INFO = "RoundDetailedInfo";
     private static final String GAME_ROUND_WINNER = "RoundWinner";
     private static final String GAME_ROUND_RE_ANSAGEN = "RoundReAnsagen";
-    private static final String GAME_ROUND_CONTRA_ANSAGEN = "RoundContraAnsagen";
+    private static final String GAME_ROUND_CONTRA_ANSAGEN = "RoundKontraAnsagen";
     private static final String GAME_ROUND_RE_SPECIAL = "RoundReSpecial";
-    private static final String GAME_ROUND_CONTRA_SPECIAL = "RoundContraSpecial";
+    private static final String GAME_ROUND_CONTRA_SPECIAL = "RoundKontraSpecial";
 
 
     private static final String GAME_PLAYERS = "Players";
@@ -279,7 +279,7 @@ public class DokoXMLClass {
 
                     serializer.text("\n\t\t\t\t");
                     serializer.startTag("", GAME_ROUND_CONTRA_ANSAGEN);
-                    serializer.text(r.getContraAnsagen());
+                    serializer.text(r.getKontraAnsagen());
                     serializer.endTag("", GAME_ROUND_CONTRA_ANSAGEN);
 
                     serializer.text("\n\t\t\t\t");
@@ -289,7 +289,7 @@ public class DokoXMLClass {
 
                     serializer.text("\n\t\t\t\t");
                     serializer.startTag("", GAME_ROUND_CONTRA_SPECIAL);
-                    serializer.text(r.getContraSpecial());
+                    serializer.text(r.getKontraSpecial());
                     serializer.endTag("", GAME_ROUND_CONTRA_SPECIAL);
 
                     serializer.text("\n\t\t\t");

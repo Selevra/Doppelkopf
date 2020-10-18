@@ -234,7 +234,7 @@ public class GameClass  implements Serializable{
 	}
 
 	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states,
-                            String roundResult, String reAnsagen, String contraAnsagen, ArrayList<String> reSpecial, ArrayList<String> contraSpecial) {
+                            String roundResult, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		RoundClass mRound = getNewRound();
 
 
@@ -251,12 +251,12 @@ public class GameClass  implements Serializable{
 		Log.d("XML", "Starting to add new round ... ");
 		Log.d("XML", "Round Result: " + roundResult);
         Log.d("XML", "Re Ansagen: " + reAnsagen);
-        Log.d("XML", "Contra Ansagen: " + contraAnsagen);
+        Log.d("XML", "Kontra Ansagen: " + kontraAnsagen);
         Log.d("XML", "Re special: " + reSpecial);
-        Log.d("XML", "Contra special: " + contraSpecial);
+        Log.d("XML", "Kontra special: " + kontraSpecial);
 		mRound.setRoundResult(roundResult);
-		mRound.setAnsagen(reAnsagen, contraAnsagen);
-		mRound.setSpecialPoints(reSpecial, contraSpecial);
+		mRound.setAnsagen(reAnsagen, kontraAnsagen);
+		mRound.setSpecialPoints(reSpecial, kontraSpecial);
 	}
 
     private int getWinnerCnt(int[] states){

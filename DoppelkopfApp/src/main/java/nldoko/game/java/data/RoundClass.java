@@ -21,9 +21,9 @@ public class RoundClass implements Serializable  {
 	private GAME_ROUND_RESULT_TYPE mRoundType;
 	private String mRoundResult;
 	private String mReAnsagen;
-	private String mContraAnsagen;
+	private String mKontraAnsagen;
 	private String mReSpecial;
-	private String mContraSpecial;
+	private String mKontraSpecial;
 
 	
 	public RoundClass(int id,int points,int bockCount){
@@ -32,9 +32,9 @@ public class RoundClass implements Serializable  {
 		this.mPoints	= points;
 		this.mRoundResult = "";
 		this.mReAnsagen = "";
-		this.mContraAnsagen = "";
+		this.mKontraAnsagen = "";
 		this.mReSpecial = "";
-		this.mContraSpecial = "";
+		this.mKontraSpecial = "";
 	}
 
     public RoundClass(int id, GAME_ROUND_RESULT_TYPE type, int points,int bockCount){
@@ -44,9 +44,9 @@ public class RoundClass implements Serializable  {
         this.mRoundType = type;
         this.mRoundResult = "";
         this.mReAnsagen = "";
-        this.mContraAnsagen = "";
+        this.mKontraAnsagen = "";
 		this.mReSpecial = "";
-		this.mContraSpecial = "";
+		this.mKontraSpecial = "";
     }
 	
 	public int getID(){
@@ -177,20 +177,20 @@ public class RoundClass implements Serializable  {
         Log.d("XML", "Set Round Result: " + this.mRoundResult);
     }
 
-    public void setAnsagen(String reAnsagen, String contraAnsagen) {
+    public void setAnsagen(String reAnsagen, String kontraAnsagen) {
 	    if (reAnsagen != null) {
             this.mReAnsagen = reAnsagen;
         }
-	    if (contraAnsagen != null) {
-            this.mContraAnsagen = contraAnsagen;
+	    if (kontraAnsagen != null) {
+            this.mKontraAnsagen = kontraAnsagen;
         }
         Log.d("XML", "Set Re Ansagen: " + this.mReAnsagen);
-        Log.d("XML", "Set Contra Ansagen: " + this.mContraAnsagen);
+        Log.d("XML", "Set Kontra Ansagen: " + this.mKontraAnsagen);
     }
 
-	public void setSpecialPoints(ArrayList<String> reSpecial, ArrayList<String> contraSpecial) {
+	public void setSpecialPoints(ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		this.mReSpecial = "";
-		this.mContraSpecial = "";
+		this.mKontraSpecial = "";
 		Log.d("XML", "Re Special (count): " + Integer.toString(reSpecial.size()));
 		for (int i=0; i<reSpecial.size();i++){
 			Log.d("XML", "Re Special: " + reSpecial.get(i));
@@ -215,9 +215,9 @@ public class RoundClass implements Serializable  {
         return this.mReAnsagen;
     }
 
-    public String getContraAnsagen() {
-        Log.d("XML", "Set Contra Ansagen: " + this.mContraAnsagen);
-	    return this.mContraAnsagen;
+    public String getKontraAnsagen() {
+        Log.d("XML", "Set Kontra Ansagen: " + this.mKontraAnsagen);
+	    return this.mKontraAnsagen;
     }
 
 	public String getReSpecial() {
@@ -226,9 +226,9 @@ public class RoundClass implements Serializable  {
 		return this.mReSpecial;
 	}
 
-	public String getContraSpecial() {
+	public String getKontraSpecial() {
 //		Log.d("RoundClass", this.mReSpecial.toString());
-		Log.d("XML", "Get contra special: " + this.mReSpecial);
-		return this.mContraSpecial;
+		Log.d("XML", "Get kontra special: " + this.mReSpecial);
+		return this.mKontraSpecial;
 	}
 }
