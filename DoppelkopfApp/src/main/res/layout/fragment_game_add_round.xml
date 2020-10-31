@@ -185,6 +185,7 @@
                         android:text="for" />
 
                     <RadioGroup
+						android:id="@+id/rb_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

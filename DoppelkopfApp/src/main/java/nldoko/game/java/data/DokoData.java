@@ -83,8 +83,8 @@ public class DokoData {
 	}
 	
 	public enum PLAYER_ROUND_RESULT_STATE {
-		LOSE_STATE, 
-		WIN_STATE, 
+		LOSE_STATE,
+		WIN_STATE,
 		SUSPEND_STATE;
 
 		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
@@ -97,6 +97,12 @@ public class DokoData {
 			}
 			return null;
 		}
+	}
+
+	public enum PLAYER_ROUND_PARTY {
+		PARTY_RE,
+		PARTY_KONTRA,
+		PARTY_NOT_SET
 	}
 	
 	public enum GAME_CNT_VARIANT {

@@ -63,6 +63,8 @@
     <string name="str_game_points">Punkte</string>
     <string name="str_game_points_winner_select_text">gewonnen</string>
     <string name="str_game_points_lose_select_text">verloren</string>
+    <string name="str_game_points_re_select_text">re</string>
+    <string name="str_game_points_kontra_select_text">kontra</string>
     <string name="str_game_points_suspend_select_text">ausgesetzt</string>
     <string name="str_game_points_choose_bock">Neue Bockrunden</string>
     <string name="str_game_bock_rounds_cnt">Anzahl Bockrunden</string>

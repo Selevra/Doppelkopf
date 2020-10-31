@@ -4,6 +4,7 @@ import android.util.Log;
 
 import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.game.GameActivity;
 
 
 import java.io.Serializable;
@@ -233,8 +234,8 @@ public class GameClass  implements Serializable{
 		}
 	}
 
-	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states,
-                            String roundResult, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
+	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states, GameActivity.USER_SELECTED_PLAYER_STATE[] userSelectedStates,
+							String roundResult, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		RoundClass mRound = getNewRound();
 
 
@@ -248,15 +249,18 @@ public class GameClass  implements Serializable{
 			updateBockCountPreRounds(mGameBockRoundsCount, mGameBockRoundsGameCount);
 		}
 
+		mRound.setRoundResult(roundResult);
+		mRound.setAnsagen(reAnsagen, kontraAnsagen);
+		mRound.setSpecialPoints(reSpecial, kontraSpecial);
+		mRound.setPartyMember(this.mPlayers, userSelectedStates, this.mPointCalcType);
+
 		Log.d("XML", "Starting to add new round ... ");
 		Log.d("XML", "Round Result: " + roundResult);
+		Log.d("XML", "Re: " + roundResult);
         Log.d("XML", "Re Ansagen: " + reAnsagen);
         Log.d("XML", "Kontra Ansagen: " + kontraAnsagen);
         Log.d("XML", "Re special: " + reSpecial);
         Log.d("XML", "Kontra special: " + kontraSpecial);
-		mRound.setRoundResult(roundResult);
-		mRound.setAnsagen(reAnsagen, kontraAnsagen);
-		mRound.setSpecialPoints(reSpecial, kontraSpecial);
 	}
 
     private int getWinnerCnt(int[] states){
