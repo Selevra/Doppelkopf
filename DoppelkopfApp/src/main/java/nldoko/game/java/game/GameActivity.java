@@ -103,12 +103,14 @@ public class GameActivity extends DokoActivity {
 	private static LinearLayout mGameBockDetailContainer;
 
 	// detailed info of round: general items
-	private static CheckBox mCBDetailedRoundInfo;
+//	private static CheckBox mCBDetailedRoundInfo;
 	private static LinearLayout mDetailedRoundInfo;
-	private static ImageView mDetailedRoundInfoIcon;
-	private static LinearLayout mDetailedRoundInfoContainer;
+//	private static ImageView mDetailedRoundInfoIcon;
+//	private static LinearLayout mDetailedRoundInfoContainer;
+	private static LinearLayout mDetailedRoundInfoTypeContainer;
 	private static LinearLayout mDetailedRoundInfoAnsagenContainer;
 	private static LinearLayout mDetailedRoundInfoSpecialContainer;
+	private static ImageView mDetailedRoundInfoTypeArrow;
 	private static ImageView mDetailedRoundInfoAnsagenArrow;
 	private static ImageView mDetailedRoundInfoSpecialArrow;
 	// ... round result buttons
@@ -120,6 +122,8 @@ public class GameActivity extends DokoActivity {
 	private static ToggleButton mTBNo30;
 	private static ToggleButton mTBNo0;
 	private static ArrayList<ToggleButton> mListGameResultTBs = new ArrayList<ToggleButton>();
+	// round type buttons
+	private static Map<String, ToggleButton> mMapTbRoundType = new HashMap<String, ToggleButton>();
 	// ... "Ansagen" Re
 	private static ToggleButton mTBReRe;
 	private static ToggleButton mTBRe90;
@@ -554,7 +558,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (rbWinnerRe != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
 				}
 			}
 		});
@@ -563,7 +567,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (rbWinnerKontra != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
 				}
 			}
 		});
@@ -575,7 +579,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBNo120 != null) {
 					setAllWinnerButtonsUntil(120);
-					updatePointsTextView();
 				}
 			}
 		});
@@ -585,7 +588,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBNo90 != null) {
 					setAllWinnerButtonsUntil(90);
-					updatePointsTextView();
 				}
 			}
 		});
@@ -595,7 +597,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBNo60 != null) {
 					setAllWinnerButtonsUntil(60);
-					updatePointsTextView();
 				}
 			}
 		});
@@ -605,7 +606,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBNo30 != null) {
 					setAllWinnerButtonsUntil(30);
-					updatePointsTextView();
 				}
 			}
 		});
@@ -615,7 +615,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBNo0 != null) {
 					setAllWinnerButtonsUntil(0);
-					updatePointsTextView();
 				}
 			}
 		});
@@ -625,6 +624,80 @@ public class GameActivity extends DokoActivity {
         mListGameResultTBs.add(mTBNo30);
         mListGameResultTBs.add(mTBNo0);
 
+        // buttons for round type
+		mMapTbRoundType.put("Normal", (ToggleButton)rootView.findViewById(R.id.btn_normal));
+		mMapTbRoundType.get("Normal").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Normal") != null) {
+					setRoundType("Normal");
+				}
+			}
+		});
+		mMapTbRoundType.put("Hochzeit", (ToggleButton)rootView.findViewById(R.id.btn_hochzeit));
+		mMapTbRoundType.get("Hochzeit").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Hochzeit") != null) {
+					setRoundType("Hochzeit");
+				}
+			}
+		});
+		mMapTbRoundType.put("Armut", (ToggleButton)rootView.findViewById(R.id.btn_armut));
+		mMapTbRoundType.get("Armut").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Armut") != null) {
+					setRoundType("Armut");
+				}
+			}
+		});
+		mMapTbRoundType.put("Obersolo", (ToggleButton)rootView.findViewById(R.id.btn_obersolo));
+		mMapTbRoundType.get("Obersolo").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Obersolo") != null) {
+					setRoundType("Obersolo");
+				}
+			}
+		});
+		mMapTbRoundType.put("Untersolo", (ToggleButton)rootView.findViewById(R.id.btn_untersolo));
+		mMapTbRoundType.get("Untersolo").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Untersolo") != null) {
+					setRoundType("Untersolo");
+				}
+			}
+		});
+		mMapTbRoundType.put("Fleischloser", (ToggleButton)rootView.findViewById(R.id.btn_fleischloser));
+		mMapTbRoundType.get("Fleischloser").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Fleischloser") != null) {
+					setRoundType("Fleischloser");
+				}
+			}
+		});
+		mMapTbRoundType.put("Farbsolo", (ToggleButton)rootView.findViewById(R.id.btn_farbsolo));
+		mMapTbRoundType.get("Farbsolo").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("Farbsolo") != null) {
+					setRoundType("Farbsolo");
+				}
+			}
+		});
+		mMapTbRoundType.put("stille Hochzeit", (ToggleButton)rootView.findViewById(R.id.btn_stille_hochzeit));
+		mMapTbRoundType.get("stille Hochzeit").setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mMapTbRoundType.get("stille Hochzeit") != null) {
+					setRoundType("stille Hochzeit");
+				}
+			}
+		});
+
         // Toggle buttons for "ansagen"
         mTBReRe = (ToggleButton)rootView.findViewById(R.id.tb_re_re);
         mTBReRe.setOnClickListener(new OnClickListener() {
@@ -632,7 +705,6 @@ public class GameActivity extends DokoActivity {
             public void onClick(View view) {
                 if (mTBReRe != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_RE, "Re");
-					updatePointsTextView();
                 }
             }
         });
@@ -642,7 +714,6 @@ public class GameActivity extends DokoActivity {
             public void onClick(View view) {
                 if (mTBRe90 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_RE,"90");
-					updatePointsTextView();
                 }
             }
         });
@@ -652,7 +723,6 @@ public class GameActivity extends DokoActivity {
             public void onClick(View view) {
                 if (mTBRe60 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_RE, "60");
-					updatePointsTextView();
                 }
             }
         });
@@ -662,7 +732,6 @@ public class GameActivity extends DokoActivity {
             public void onClick(View view) {
                 if (mTBRe30 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_RE,"30");
-					updatePointsTextView();
                 }
             }
         });
@@ -672,7 +741,6 @@ public class GameActivity extends DokoActivity {
             public void onClick(View view) {
                 if (mTBRe0 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_RE,"0");
-					updatePointsTextView();
                 }
             }
         });
@@ -688,7 +756,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBKontraKontra != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "Kontra");
-					updatePointsTextView();
 				}
 			}
 		});
@@ -698,7 +765,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBKontra90 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"90");
-					updatePointsTextView();
 				}
 			}
 		});
@@ -708,7 +774,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBKontra60 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "60");
-					updatePointsTextView();
 				}
 			}
 		});
@@ -718,7 +783,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBKontra30 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"30");
-					updatePointsTextView();
 				}
 			}
 		});
@@ -728,7 +792,6 @@ public class GameActivity extends DokoActivity {
 			public void onClick(View view) {
 				if (mTBKontra0 != null) {
 					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"0");
-					updatePointsTextView();
 				}
 			}
 		});
@@ -746,8 +809,23 @@ public class GameActivity extends DokoActivity {
 		else {
 			mDetailedRoundInfo.setVisibility(View.VISIBLE);
 		}
+		mDetailedRoundInfoTypeContainer = (LinearLayout)rootView.findViewById(R.id.ll_round_type);
 		mDetailedRoundInfoAnsagenContainer = (LinearLayout)rootView.findViewById(R.id.ll_ansagen);
 		mDetailedRoundInfoSpecialContainer = (LinearLayout)rootView.findViewById(R.id.ll_special_points);
+		mDetailedRoundInfoTypeArrow = (ImageView) rootView.findViewById(R.id.im_round_type);
+		mDetailedRoundInfoTypeArrow.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mDetailedRoundInfoTypeArrow != null) {
+					if (mDetailedRoundInfoTypeContainer.getVisibility() == View.VISIBLE) {
+						mDetailedRoundInfoTypeContainer.setVisibility(View.GONE);
+					}
+					else {
+						mDetailedRoundInfoTypeContainer.setVisibility(View.VISIBLE);
+					}
+				}
+			}
+		});
 		mDetailedRoundInfoAnsagenArrow = (ImageView) rootView.findViewById(R.id.im_ansagen);
 		mDetailedRoundInfoAnsagenArrow.setOnClickListener(new OnClickListener() {
 			@Override
@@ -780,14 +858,13 @@ public class GameActivity extends DokoActivity {
 		// text views for projected points
 		mTVProjectedPoints = (TextView)rootView.findViewById(R.id.text_projected_points);
 		mTVProjectedPointsWinner = (TextView)rootView.findViewById(R.id.text_winner);
-		// detailed round info buttons for winner
-		// detailed round info buttons for "Ansagen"
+
 		// detailed round info buttons for "Sonderpunkte"
 		mSBReDK = (SeekBar)rootView.findViewById(R.id.re_seekBar_DK);
 		mSBReDK.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsTextView();
+				updatePointsAndTextView();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -800,7 +877,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (mTBReDK != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
 				}
 				if (mSBReDK != null) {
 					mSBReDK.setVisibility(mTBReDK.isChecked() ? View.VISIBLE : View.GONE);
@@ -812,7 +889,7 @@ public class GameActivity extends DokoActivity {
 		mSBReFuchs.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsTextView();
+				updatePointsAndTextView();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -825,7 +902,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (mTBReFuchs != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
 				}
 				if (mSBReFuchs != null) {
 					mSBReFuchs.setVisibility(mTBReFuchs.isChecked() ? View.VISIBLE : View.GONE);
@@ -838,7 +915,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (mTBReKarlchen != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
 				}
 			}
 		});
@@ -848,7 +925,87 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (mTBReHeart != null) {
-					updatePointsTextView();
+					updatePointsAndTextView();
+				}
+			}
+		});
+
+		mSBKontraDK = (SeekBar)rootView.findViewById(R.id.kontra_seekBar_DK);
+		mSBKontraDK.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+				updatePointsAndTextView();
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+		});
+		mTBKontraDK = (ToggleButton)rootView.findViewById(R.id.btn_kontra_doppelkopf);
+		mMapTBsKontra.put("Doppelkopf", mTBKontraDK);
+		mTBKontraDK.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTBKontraDK != null) {
+					updatePointsAndTextView();
+				}
+				if (mSBKontraDK != null) {
+					mSBKontraDK.setVisibility(mTBKontraDK.isChecked() ? View.VISIBLE : View.GONE);
+				}
+			}
+		});
+
+		mSBKontraFuchs = (SeekBar)rootView.findViewById(R.id.kontra_seekBar_Fuchs);
+		mSBKontraFuchs.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+				updatePointsAndTextView();
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+		});
+		mTBKontraFuchs = (ToggleButton)rootView.findViewById(R.id.btn_kontra_fuchs);
+		mMapTBsKontra.put("Fuchs", mTBKontraFuchs);
+		mTBKontraFuchs.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTBKontraFuchs != null) {
+					updatePointsAndTextView();
+				}
+				if (mSBKontraFuchs != null) {
+					mSBKontraFuchs.setVisibility(mTBKontraFuchs.isChecked() ? View.VISIBLE : View.GONE);
+				}
+			}
+		});
+		mTBKontraKarlchen = (ToggleButton)rootView.findViewById(R.id.btn_kontra_karl);
+		mMapTBsKontra.put("Karlchen", mTBKontraKarlchen);
+		mTBKontraKarlchen.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTBKontraKarlchen != null) {
+					updatePointsAndTextView();
+				}
+			}
+		});
+		mTBKontraHeart = (ToggleButton)rootView.findViewById(R.id.btn_kontra_heart);
+		mMapTBsKontra.put("Herz", mTBKontraHeart);
+		mTBKontraHeart.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTBKontraHeart != null) {
+					updatePointsAndTextView();
+				}
+			}
+		});
+		mTBKontraGegen = (ToggleButton)rootView.findViewById(R.id.btn_kontra_gegen);
+		mMapTBsKontra.put("Gegen", mTBKontraGegen);
+		mTBKontraGegen.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTBKontraGegen != null) {
+					updatePointsAndTextView();
 				}
 			}
 		});
@@ -1007,8 +1164,8 @@ public class GameActivity extends DokoActivity {
                 mGameBockRoundsGameCount = 0;
             }
 
-            Log.d("XML", "Round Result: " + getRoundResult());
-			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResult(), getRoundAnsagen(GAME_PARTY.PARTY_RE), getRoundAnsagen(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
+//            Log.d("XML", "Round Result: " + getRoundResult());
+			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResult(), getRoundType(), getRoundAnsagen(GAME_PARTY.PARTY_RE), getRoundAnsagen(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -1248,6 +1405,14 @@ public class GameActivity extends DokoActivity {
 			mListGameResultTBs.get(i).setChecked(false);
 		}
 		mRadioGroup.clearCheck(); // setting all radio buttons to false individually does not work
+		// hide expandable containers
+		mDetailedRoundInfoTypeContainer.setVisibility(View.GONE);
+		mDetailedRoundInfoAnsagenContainer.setVisibility(View.GONE);
+		mDetailedRoundInfoSpecialContainer.setVisibility(View.GONE);
+		// round type
+		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+			entry.getValue().setChecked(false);
+		}
 		// an/absagen buttons
 		for (int i=0; i<mListReAnsagenTBs.size(); i++) {
 			mListReAnsagenTBs.get(i).setChecked(false);
@@ -1259,10 +1424,14 @@ public class GameActivity extends DokoActivity {
 		for (Map.Entry<String, ToggleButton> entry : mMapTBsRe.entrySet()) {
 			entry.getValue().setChecked(false);
 		}
+		mSBReDK.setVisibility(View.GONE);
+		mSBReFuchs.setVisibility(View.GONE);
 		for (Map.Entry<String, ToggleButton> entry : mMapTBsKontra.entrySet()) {
 			entry.getValue().setChecked(false);
 		}
-		updatePointsTextView();
+		mSBKontraDK.setVisibility(View.GONE);
+		mSBKontraFuchs.setVisibility(View.GONE);
+		updatePointsAndTextView();
 	}
 
 	private boolean isNewBockRoundSet(){
@@ -1646,24 +1815,54 @@ public class GameActivity extends DokoActivity {
     private String getRoundResult() {
 		String ret = "";
 		if (mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked()) {
-			ret = "Re";
+			ret = "Re, ";
 		}
 		else if (mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked()) {
-			ret = "Kontra";
+			ret = "Kontra, ";
 		}
+		else return "";
 
 		String[] ansagen = {"No 120", "No 90", "No 60", "No 30", "0"};
-		int checked = getConsectuiveChecked(mListGameResultTBs);
-
-		for (int i=0; i<checked; i++) {
-			ret += ", " + ansagen[i];
-		}
+		ret += concatenateRoundResultStrings(ansagen, getConsectuiveChecked(mListGameResultTBs));
 		return ret;
 	}
 
-	// TODO: Implement me
-	private String getRoundAnsagen(GAME_PARTY party) {
+	private String getRoundType() {
+		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+			if (entry.getValue().isChecked()) {
+				return entry.getKey();
+			}
+		}
 		return "";
+	}
+
+	private String getRoundAnsagen(GAME_PARTY party) {
+		ArrayList<ToggleButton> tmpList;
+		String partyString;
+		if (party == GAME_PARTY.PARTY_RE) {
+			partyString = "Re";
+			tmpList = mListReAnsagenTBs;
+		}
+		else if (party == GAME_PARTY.PARTY_KONTRA) {
+			partyString = "Kontra";
+			tmpList = mListKontraAnsagenTBs;
+		}
+		// should never be reached
+		else return "";
+
+		String[] ansagen = {partyString, "No 90", "No 60", "No 30", "0"};
+		return concatenateRoundResultStrings(ansagen, getConsectuiveChecked(tmpList));
+	}
+
+	private String concatenateRoundResultStrings(String[] text, int elementsToUse) {
+		String ret = "";
+		for (int i=0; i<elementsToUse; i++) {
+			if (i != 0) {
+				ret += ", ";
+			}
+			ret += text[i];
+		}
+		return ret;
 	}
 
     // TODO: merge both "set all until" functions
@@ -1690,6 +1889,8 @@ public class GameActivity extends DokoActivity {
 				buttonStateToSet = false;
 			}
 		}
+
+		updatePointsAndTextView();
 	}
 
     private static void setAllAnsagenButtonsForPartyUntil(GAME_PARTY party, String lastButtonToSet) {
@@ -1732,9 +1933,22 @@ public class GameActivity extends DokoActivity {
                 buttonStateToSet = false;
             }
         }
+
+		updatePointsAndTextView();
     }
 
-    private static void updatePointsTextView() {
+	private static void setRoundType(String type) {
+		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+			if (entry.getKey() == type) {
+				entry.getValue().setChecked(true);
+			}
+			else {
+				entry.getValue().setChecked(false);
+			}
+		}
+	}
+
+    private static void updatePointsAndTextView() {
 		Log.d("INFO", "\nUpdating projected points...");
 		int points = calculatePointsForRe();
 		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked()) {

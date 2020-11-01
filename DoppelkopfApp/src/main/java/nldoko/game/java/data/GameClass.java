@@ -235,7 +235,7 @@ public class GameClass  implements Serializable{
 	}
 
 	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states, GameActivity.USER_SELECTED_PLAYER_STATE[] userSelectedStates,
-							String roundResult, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
+							String roundResult, String roundTypeDetailed, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		RoundClass mRound = getNewRound();
 
 
@@ -250,6 +250,7 @@ public class GameClass  implements Serializable{
 		}
 
 		mRound.setRoundResult(roundResult);
+		mRound.setRoundTypeDetailed(roundTypeDetailed);
 		mRound.setAnsagen(reAnsagen, kontraAnsagen);
 		mRound.setSpecialPoints(reSpecial, kontraSpecial);
 		mRound.setPartyMember(this.mPlayers, userSelectedStates, this.mPointCalcType);

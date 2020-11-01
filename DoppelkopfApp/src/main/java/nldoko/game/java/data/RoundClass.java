@@ -22,6 +22,7 @@ public class RoundClass implements Serializable  {
 	private GAME_ROUND_RESULT_TYPE mRoundType;
 	// detailed round infos
 	private String mRoundResult;
+	private String mRoundTypeDetailed;
 	private String mReMembers;
 	private String mKontraMembers;
 	private String mSuspendedPlayers;
@@ -185,6 +186,11 @@ public class RoundClass implements Serializable  {
         Log.d("XML", "Set Round Result: " + this.mRoundResult);
     }
 
+	public void setRoundTypeDetailed(String roundType) {
+		this.mRoundTypeDetailed = roundType;
+		Log.d("XML", "Set Round Type (detailed): " + this.mRoundTypeDetailed);
+	}
+
     public void setAnsagen(String reAnsagen, String kontraAnsagen) {
 	    if (reAnsagen != null) {
             this.mReAnsagen = reAnsagen;
@@ -197,20 +203,22 @@ public class RoundClass implements Serializable  {
     }
 
 	public void setSpecialPoints(ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
-		this.mReSpecial = "";
-		this.mKontraSpecial = "";
-		Log.d("XML", "Re Special (count): " + Integer.toString(reSpecial.size()));
-		for (int i=0; i<reSpecial.size();i++){
-			Log.d("XML", "Re Special: " + reSpecial.get(i));
-		}
+		this.mReSpecial = concatenateListElements(reSpecial);
+		this.mKontraSpecial = concatenateListElements(kontraSpecial);
+
 		Log.d("XML", "Re Special: " + this.mReSpecial);
-		for (int i=0; i<reSpecial.size(); i++) {
-			this.mReSpecial += reSpecial.get(i);
-			if (i < reSpecial.size() - 1) {
-				this.mReSpecial += ", ";
+		Log.d("XML", "Kontra Special: " + this.mKontraSpecial);
+	}
+
+	private String concatenateListElements(ArrayList<String> list) {
+		String ret = "";
+		for (int i=0; i<list.size(); i++) {
+			if (i != 0) {
+				ret += ", ";
 			}
-			Log.d("XML", "Re Special: " + this.mReSpecial);
+			ret += list.get(i);
 		}
+		return ret;
 	}
 
 	public void setPartyMember(ArrayList<PlayerClass> players, GameActivity.USER_SELECTED_PLAYER_STATE[] states, DokoData.POINTS_CALCULATION calcType) {
@@ -255,29 +263,26 @@ public class RoundClass implements Serializable  {
 	}
 
 	public String getRoundResult() {
-        Log.d("XML", "Get Round Result: " + this.mRoundResult);
 	    return this.mRoundResult;
     }
 
+	public String getRoundTypeDetailed() {
+		return this.mRoundTypeDetailed;
+	}
+
     public String getReAnsagen() {
-        Log.d("XML", "Get Re Ansagen: " + this.mReAnsagen);
         return this.mReAnsagen;
     }
 
     public String getKontraAnsagen() {
-        Log.d("XML", "Set Kontra Ansagen: " + this.mKontraAnsagen);
 	    return this.mKontraAnsagen;
     }
 
 	public String getReSpecial() {
-//		Log.d("RoundClass", this.mReSpecial.toString());
-		Log.d("XML", "Get Re special: " + this.mReSpecial);
 		return this.mReSpecial;
 	}
 
 	public String getKontraSpecial() {
-//		Log.d("RoundClass", this.mReSpecial.toString());
-		Log.d("XML", "Get kontra special: " + this.mReSpecial);
 		return this.mKontraSpecial;
 	}
 

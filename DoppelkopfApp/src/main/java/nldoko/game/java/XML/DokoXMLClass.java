@@ -74,10 +74,11 @@ public class DokoXMLClass {
     private static final String GAME_ROUND_TYPE = "RoundType";
 
     private static final String GAME_ROUND_DETAILED_INFO = "RoundDetailedInfo";
-    private static final String GAME_ROUND_RESULT = "RoundResult";
     private static final String GAME_ROUND_RE_MEMBER = "RoundReMember";
     private static final String GAME_ROUND_KONTRA_MEMBER = "RoundKontraMember";
     private static final String GAME_ROUND_SUSPENDED_PLAYERS = "RoundSuspendedPlayers";
+    private static final String GAME_ROUND_RESULT = "RoundResult";
+    private static final String GAME_ROUND_TYPE_DETAILED = "RoundTypeDetailed";
     private static final String GAME_ROUND_RE_ANSAGEN = "RoundReAnsagen";
     private static final String GAME_ROUND_CONTRA_ANSAGEN = "RoundKontraAnsagen";
     private static final String GAME_ROUND_RE_SPECIAL = "RoundReSpecial";
@@ -271,11 +272,6 @@ public class DokoXMLClass {
                     serializer.startTag("", GAME_ROUND_DETAILED_INFO);
 
                     serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_RESULT);
-                    serializer.text(r.getRoundResult());
-                    serializer.endTag("", GAME_ROUND_RESULT);
-
-                    serializer.text("\n\t\t\t\t");
                     serializer.startTag("", GAME_ROUND_RE_MEMBER);
                     serializer.text(r.getReMembers());
                     serializer.endTag("", GAME_ROUND_RE_MEMBER);
@@ -289,6 +285,16 @@ public class DokoXMLClass {
                     serializer.startTag("", GAME_ROUND_SUSPENDED_PLAYERS);
                     serializer.text(r.getSuspendedPlayers());
                     serializer.endTag("", GAME_ROUND_SUSPENDED_PLAYERS);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_RESULT);
+                    serializer.text(r.getRoundResult());
+                    serializer.endTag("", GAME_ROUND_RESULT);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_ROUND_TYPE_DETAILED);
+                    serializer.text(r.getRoundTypeDetailed());
+                    serializer.endTag("", GAME_ROUND_TYPE_DETAILED);
 
                     serializer.text("\n\t\t\t\t");
                     serializer.startTag("", GAME_ROUND_RE_ANSAGEN);
