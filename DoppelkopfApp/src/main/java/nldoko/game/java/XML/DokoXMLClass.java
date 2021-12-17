@@ -52,7 +52,7 @@ public class DokoXMLClass {
 
 	private static final String TAG = "DokoXMLClass";
 
-    private static final String GAME_XML_STRUCT_VERSION = "2";
+    private static final String GAME_XML_STRUCT_VERSION = "3";
     private static final String GAME_XML_STRUCT_VERSION_ATTR = "version";
 
     private static final String GAME_SETTINGS_TAG           = "GamSettings";
