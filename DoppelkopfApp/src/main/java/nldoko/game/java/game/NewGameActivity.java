@@ -131,7 +131,7 @@ public class NewGameActivity extends DokoActivity {
 		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mPunkteingabeVariantArr);
 		mSPPunkteeingabeArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 		mSpPunkteeingabe.setAdapter(mSPPunkteeingabeArrayAdapter);
-		mSpPunkteeingabe.setSelection(0);
+		mSpPunkteeingabe.setSelection(1); // TODO: change to 0 for playstore
     }
     
     private void setAutoCompleteNames(){
