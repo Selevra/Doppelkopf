@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -49,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import nldoko.game.java.DokoActivity;
 import nldoko.game.R;
@@ -62,7 +62,7 @@ import nldoko.game.java.util.Functions;
 
 public class GameActivity extends DokoActivity {
 
-	private String TAG = "Game";
+	final private String TAG = "Game";
 
     private static DokoActivity dokoActivity;
 		
@@ -460,13 +460,13 @@ public class GameActivity extends DokoActivity {
 	
 	private static void setBottomInfo(Context context) {
 		int mBockRoundCnt = 0, mTmp = 0;
-		String mBockPreviewStr = "";
+		StringBuilder mBockPreviewStr = new StringBuilder();
 		if(mGame != null && mGame.getBockRoundLimit() > 0){
 			for(int i=0;i<mGame.getPreRoundList().size();i++){
 				mTmp = mGame.getPreRoundList().get(i).getBockCount();
 				if(mTmp > 0){
 					mBockRoundCnt++;
-					mBockPreviewStr += Functions.getBockCountAsString(mTmp)+"  ";
+					mBockPreviewStr.append(Functions.getBockCountAsString(mTmp)).append("  ");
 				}
 			}
 		}
@@ -481,7 +481,7 @@ public class GameActivity extends DokoActivity {
             mBottomInfoBockRoundCount.setText(String.valueOf(mBockRoundCnt));
         }
 
-		mBottomInfoBockRoundPreview.setText(mBockPreviewStr);
+		mBottomInfoBockRoundPreview.setText(mBockPreviewStr.toString());
 	}
 
 
@@ -506,7 +506,7 @@ public class GameActivity extends DokoActivity {
         mBockRoundInfoIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                dokoActivity.showAlertDialog(R.string.str_help, R.string.str_game_points_choose_bock_info, dokoActivity);
+                showAlertDialog(R.string.str_help, R.string.str_game_points_choose_bock_info, dokoActivity);
             }
         });
 
@@ -751,48 +751,33 @@ public class GameActivity extends DokoActivity {
         mListReAnsagenTBs.add(mTBRe0);
 
 		mTBKontraKontra = (ToggleButton)rootView.findViewById(R.id.tb_kontra_kontra);
-		mTBKontraKontra.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraKontra != null) {
-					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "Kontra");
-				}
+		mTBKontraKontra.setOnClickListener(view -> {
+			if (mTBKontraKontra != null) {
+				setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "Kontra");
 			}
 		});
 		mTBKontra90 = (ToggleButton)rootView.findViewById(R.id.tb_kontra_90);
-		mTBKontra90.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontra90 != null) {
-					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"90");
-				}
+		mTBKontra90.setOnClickListener(view -> {
+			if (mTBKontra90 != null) {
+				setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"90");
 			}
 		});
 		mTBKontra60 = (ToggleButton)rootView.findViewById(R.id.tb_kontra_60);
-		mTBKontra60.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontra60 != null) {
-					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "60");
-				}
+		mTBKontra60.setOnClickListener(view -> {
+			if (mTBKontra60 != null) {
+				setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA, "60");
 			}
 		});
 		mTBKontra30 = (ToggleButton)rootView.findViewById(R.id.tb_kontra_30);
-		mTBKontra30.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontra30 != null) {
-					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"30");
-				}
+		mTBKontra30.setOnClickListener(view -> {
+			if (mTBKontra30 != null) {
+				setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"30");
 			}
 		});
 		mTBKontra0 = (ToggleButton)rootView.findViewById(R.id.tb_kontra_0);
-		mTBKontra0.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontra0 != null) {
-					setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"0");
-				}
+		mTBKontra0.setOnClickListener(view -> {
+			if (mTBKontra0 != null) {
+				setAllAnsagenButtonsForPartyUntil(GAME_PARTY.PARTY_KONTRA,"0");
 			}
 		});
 		mListKontraAnsagenTBs.add(mTBKontraKontra);
@@ -813,44 +798,35 @@ public class GameActivity extends DokoActivity {
 		mDetailedRoundInfoAnsagenContainer = (LinearLayout)rootView.findViewById(R.id.ll_ansagen);
 		mDetailedRoundInfoSpecialContainer = (LinearLayout)rootView.findViewById(R.id.ll_special_points);
 		mDetailedRoundInfoTypeArrow = (ImageView) rootView.findViewById(R.id.im_round_type);
-		mDetailedRoundInfoTypeArrow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mDetailedRoundInfoTypeArrow != null) {
-					if (mDetailedRoundInfoTypeContainer.getVisibility() == View.VISIBLE) {
-						mDetailedRoundInfoTypeContainer.setVisibility(View.GONE);
-					}
-					else {
-						mDetailedRoundInfoTypeContainer.setVisibility(View.VISIBLE);
-					}
+		mDetailedRoundInfoTypeArrow.setOnClickListener(view -> {
+			if (mDetailedRoundInfoTypeArrow != null) {
+				if (mDetailedRoundInfoTypeContainer.getVisibility() == View.VISIBLE) {
+					mDetailedRoundInfoTypeContainer.setVisibility(View.GONE);
+				}
+				else {
+					mDetailedRoundInfoTypeContainer.setVisibility(View.VISIBLE);
 				}
 			}
 		});
 		mDetailedRoundInfoAnsagenArrow = (ImageView) rootView.findViewById(R.id.im_ansagen);
-		mDetailedRoundInfoAnsagenArrow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mDetailedRoundInfoAnsagenArrow != null) {
-					if (mDetailedRoundInfoAnsagenContainer.getVisibility() == View.VISIBLE) {
-						mDetailedRoundInfoAnsagenContainer.setVisibility(View.GONE);
-					}
-					else {
-						mDetailedRoundInfoAnsagenContainer.setVisibility(View.VISIBLE);
-					}
+		mDetailedRoundInfoAnsagenArrow.setOnClickListener(view -> {
+			if (mDetailedRoundInfoAnsagenArrow != null) {
+				if (mDetailedRoundInfoAnsagenContainer.getVisibility() == View.VISIBLE) {
+					mDetailedRoundInfoAnsagenContainer.setVisibility(View.GONE);
+				}
+				else {
+					mDetailedRoundInfoAnsagenContainer.setVisibility(View.VISIBLE);
 				}
 			}
 		});
 		mDetailedRoundInfoSpecialArrow = (ImageView) rootView.findViewById(R.id.im_special);
-		mDetailedRoundInfoSpecialArrow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mDetailedRoundInfoSpecialArrow != null) {
-					if (mDetailedRoundInfoSpecialContainer.getVisibility() == View.VISIBLE) {
-						mDetailedRoundInfoSpecialContainer.setVisibility(View.GONE);
-					}
-					else {
-						mDetailedRoundInfoSpecialContainer.setVisibility(View.VISIBLE);
-					}
+		mDetailedRoundInfoSpecialArrow.setOnClickListener(view -> {
+			if (mDetailedRoundInfoSpecialArrow != null) {
+				if (mDetailedRoundInfoSpecialContainer.getVisibility() == View.VISIBLE) {
+					mDetailedRoundInfoSpecialContainer.setVisibility(View.GONE);
+				}
+				else {
+					mDetailedRoundInfoSpecialContainer.setVisibility(View.VISIBLE);
 				}
 			}
 		});
@@ -879,7 +855,7 @@ public class GameActivity extends DokoActivity {
 				if (mTBReDK != null) {
 					updatePointsAndTextView();
 				}
-				if (mSBReDK != null) {
+				if (mSBReDK != null && mTBReDK != null) {
 					mSBReDK.setVisibility(mTBReDK.isChecked() ? View.VISIBLE : View.GONE);
 				}
 			}
@@ -898,35 +874,26 @@ public class GameActivity extends DokoActivity {
 		});
 		mTBReFuchs = (ToggleButton)rootView.findViewById(R.id.btn_re_fuchs);
 		mMapTBsRe.put("Fuchs", mTBReFuchs);
-		mTBReFuchs.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBReFuchs != null) {
-					updatePointsAndTextView();
-				}
-				if (mSBReFuchs != null) {
-					mSBReFuchs.setVisibility(mTBReFuchs.isChecked() ? View.VISIBLE : View.GONE);
-				}
+		mTBReFuchs.setOnClickListener(view -> {
+			if (mTBReFuchs != null) {
+				updatePointsAndTextView();
+			}
+			if (mSBReFuchs != null && mTBReFuchs != null) {
+				mSBReFuchs.setVisibility(mTBReFuchs.isChecked() ? View.VISIBLE : View.GONE);
 			}
 		});
 		mTBReKarlchen = (ToggleButton)rootView.findViewById(R.id.btn_re_karl);
 		mMapTBsRe.put("Karlchen", mTBReKarlchen);
-		mTBReKarlchen.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBReKarlchen != null) {
-					updatePointsAndTextView();
-				}
+		mTBReKarlchen.setOnClickListener(view -> {
+			if (mTBReKarlchen != null) {
+				updatePointsAndTextView();
 			}
 		});
 		mTBReHeart = (ToggleButton)rootView.findViewById(R.id.btn_re_heart);
 		mMapTBsRe.put("Herz", mTBReHeart);
-		mTBReHeart.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBReHeart != null) {
-					updatePointsAndTextView();
-				}
+		mTBReHeart.setOnClickListener(view -> {
+			if (mTBReHeart != null) {
+				updatePointsAndTextView();
 			}
 		});
 
@@ -943,15 +910,12 @@ public class GameActivity extends DokoActivity {
 		});
 		mTBKontraDK = (ToggleButton)rootView.findViewById(R.id.btn_kontra_doppelkopf);
 		mMapTBsKontra.put("Doppelkopf", mTBKontraDK);
-		mTBKontraDK.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraDK != null) {
-					updatePointsAndTextView();
-				}
-				if (mSBKontraDK != null) {
-					mSBKontraDK.setVisibility(mTBKontraDK.isChecked() ? View.VISIBLE : View.GONE);
-				}
+		mTBKontraDK.setOnClickListener(view -> {
+			if (mTBKontraDK != null) {
+				updatePointsAndTextView();
+			}
+			if (mSBKontraDK != null && mTBKontraDK != null) {
+				mSBKontraDK.setVisibility(mTBKontraDK.isChecked() ? View.VISIBLE : View.GONE);
 			}
 		});
 
@@ -968,45 +932,33 @@ public class GameActivity extends DokoActivity {
 		});
 		mTBKontraFuchs = (ToggleButton)rootView.findViewById(R.id.btn_kontra_fuchs);
 		mMapTBsKontra.put("Fuchs", mTBKontraFuchs);
-		mTBKontraFuchs.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraFuchs != null) {
-					updatePointsAndTextView();
-				}
-				if (mSBKontraFuchs != null) {
-					mSBKontraFuchs.setVisibility(mTBKontraFuchs.isChecked() ? View.VISIBLE : View.GONE);
-				}
+		mTBKontraFuchs.setOnClickListener(view -> {
+			if (mTBKontraFuchs != null) {
+				updatePointsAndTextView();
+			}
+			if (mSBKontraFuchs != null && mTBKontraFuchs != null) {
+				mSBKontraFuchs.setVisibility(mTBKontraFuchs.isChecked() ? View.VISIBLE : View.GONE);
 			}
 		});
 		mTBKontraKarlchen = (ToggleButton)rootView.findViewById(R.id.btn_kontra_karl);
 		mMapTBsKontra.put("Karlchen", mTBKontraKarlchen);
-		mTBKontraKarlchen.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraKarlchen != null) {
-					updatePointsAndTextView();
-				}
+		mTBKontraKarlchen.setOnClickListener(view -> {
+			if (mTBKontraKarlchen != null) {
+				updatePointsAndTextView();
 			}
 		});
 		mTBKontraHeart = (ToggleButton)rootView.findViewById(R.id.btn_kontra_heart);
 		mMapTBsKontra.put("Herz", mTBKontraHeart);
-		mTBKontraHeart.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraHeart != null) {
-					updatePointsAndTextView();
-				}
+		mTBKontraHeart.setOnClickListener(view -> {
+			if (mTBKontraHeart != null) {
+				updatePointsAndTextView();
 			}
 		});
 		mTBKontraGegen = (ToggleButton)rootView.findViewById(R.id.btn_kontra_gegen);
 		mMapTBsKontra.put("Gegen", mTBKontraGegen);
-		mTBKontraGegen.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBKontraGegen != null) {
-					updatePointsAndTextView();
-				}
+		mTBKontraGegen.setOnClickListener(view -> {
+			if (mTBKontraGegen != null) {
+				updatePointsAndTextView();
 			}
 		});
 
@@ -1126,12 +1078,7 @@ public class GameActivity extends DokoActivity {
         v.setOnClickListener(clickPoints);
 
         v = (TextView)grid.findViewById(R.id.point_grid_footer_right);
-        v.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valueField.setText("");
-            }
-        });
+        v.setOnClickListener(v1 -> valueField.setText(""));
     }
 
 	public class btnAddRoundClickListener implements OnClickListener{
@@ -1165,7 +1112,7 @@ public class GameActivity extends DokoActivity {
             }
 
 //            Log.d("XML", "Round Result: " + getRoundResult());
-			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResult(), getRoundType(), getRoundAnsagen(GAME_PARTY.PARTY_RE), getRoundAnsagen(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
+			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResultXMLString(), getRoundType(), getRoundAnsagenXMLString(GAME_PARTY.PARTY_RE), getRoundAnsagenXMLString(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -1225,7 +1172,6 @@ public class GameActivity extends DokoActivity {
 	}
 	
 	public class GameAddRoundPlayernameClickListener implements OnClickListener{
-		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(View v) {
 			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
@@ -1253,7 +1199,6 @@ public class GameActivity extends DokoActivity {
     }
 	
 	public class GameAddRoundPlayernameLongClickListener implements OnLongClickListener{
-		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onLongClick(View v) {
 			for(int i=0;i<mGameAddRoundPlayerState.size();i++){
@@ -1346,8 +1291,8 @@ public class GameActivity extends DokoActivity {
 
     public static void changePlayerViewState(TextView mTvStateView, Drawable newDrawable, int stringID, boolean animate, Context context) {
         if (animate) {
-            Drawable backgrounds[] = new Drawable[2];
-            Resources res = context.getResources();
+            Drawable[] backgrounds = new Drawable[2];
+            // Resources res = context.getResources();
             backgrounds[0] = mTvStateView.getBackground();
             backgrounds[1] = newDrawable;
 
@@ -1368,10 +1313,7 @@ public class GameActivity extends DokoActivity {
 		if(getNewRoundPoints() == -1) {
             return false;
         }
-		if(getNewRoundPoints() != 0 && (!isWinnerCntOK() || !isSuspendCntOK())) {
-            return false;
-        }
-		return true;
+		return getNewRoundPoints() == 0 || (isWinnerCntOK() && isSuspendCntOK());
 	}
 	
 	private static  void resetNewRoundFields(Context context) {
@@ -1468,35 +1410,29 @@ public class GameActivity extends DokoActivity {
 		if(mGame.getPlayerCount()-mGame.getActivePlayerCount() == 0){
             return true;
         }
-		if(getSuspendCnt() == (mGame.getPlayerCount()-mGame.getActivePlayerCount())) {
-            return true;
-        }
-		return false;
+		return getSuspendCnt() == (mGame.getPlayerCount() - mGame.getActivePlayerCount());
 	}
 	
 	private boolean isWinnerCntOK(){
 		int mWinnerCnt = getWinnerCnt();
-		if(mWinnerCnt >= mGame.getActivePlayerCount() || mWinnerCnt == 0) {
-            return false;
-        }
-		return true;
+		return mWinnerCnt < mGame.getActivePlayerCount() && mWinnerCnt != 0;
 	}
 	
 	private int getSuspendCnt(){
 		int m = 0;
-		for(int i=0;i<mNewRoundPlayerWinState.length;i++){
-            PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerWinState[i]);
-            if(stateForPosition == PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
-                m++;
-            }
+		for (int j : mNewRoundPlayerWinState) {
+			PLAYER_ROUND_RESULT_STATE stateForPosition = PLAYER_ROUND_RESULT_STATE.valueOf(j);
+			if (stateForPosition == PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
+				m++;
+			}
 		}
 		return m;
 	}
 
 	private int getUserSuspendCnt() {
 		int m = 0;
-		for(int i=0;i<mUserSelectedPlayerState.length;i++){
-			if(mUserSelectedPlayerState[i] == USER_SELECTED_PLAYER_STATE.SUSPEND_STATE) {
+		for (USER_SELECTED_PLAYER_STATE user_selected_player_state : mUserSelectedPlayerState) {
+			if (user_selected_player_state == USER_SELECTED_PLAYER_STATE.SUSPEND_STATE) {
 				m++;
 			}
 		}
@@ -1505,19 +1441,19 @@ public class GameActivity extends DokoActivity {
 	
 	private int getWinnerCnt(){
         int m = 0;
-        for(int i=0;i<mNewRoundPlayerWinState.length;i++){
-            PLAYER_ROUND_RESULT_STATE stateForPosition  =  PLAYER_ROUND_RESULT_STATE.valueOf(mNewRoundPlayerWinState[i]);
-            if(stateForPosition == PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
-                m++;
-            }
-        }
+		for (int j : mNewRoundPlayerWinState) {
+			PLAYER_ROUND_RESULT_STATE stateForPosition = PLAYER_ROUND_RESULT_STATE.valueOf(j);
+			if (stateForPosition == PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
+				m++;
+			}
+		}
         return m;
 	}
 
 	private int getUserWinReCnt(){
 		int m = 0;
-		for(int i=0;i<mUserSelectedPlayerState.length;i++){
-			if(mUserSelectedPlayerState[i] == USER_SELECTED_PLAYER_STATE.WIN_OR_RE_STATE) {
+		for (USER_SELECTED_PLAYER_STATE user_selected_player_state : mUserSelectedPlayerState) {
+			if (user_selected_player_state == USER_SELECTED_PLAYER_STATE.WIN_OR_RE_STATE) {
 				m++;
 			}
 		}
@@ -1563,16 +1499,10 @@ public class GameActivity extends DokoActivity {
     }
 
 	private void showExitDialog(){
-		DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				finish();
-			}
-		};
+		DialogInterface.OnClickListener okListener = (dialog, whichButton) -> finish();
 
-		DialogInterface.OnClickListener abortListerner = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
+		DialogInterface.OnClickListener abortListerner = (dialog, whichButton) -> {
 
-			}
 		};
 
 		showAlertDialog(R.string.str_exit_game,
@@ -1711,7 +1641,7 @@ public class GameActivity extends DokoActivity {
     private void handleEditRoundFinish(int requestCode, int resultCode, Intent data) {
     	Bundle extras = null;
     	int mNewRoundPoints;
-        int mEditRoundRoundPlayerStates[] = new int[DokoData.MAX_PLAYER];
+        int[] mEditRoundRoundPlayerStates = new int[DokoData.MAX_PLAYER];
         loadDefaultPlayerStates(mEditRoundRoundPlayerStates, new USER_SELECTED_PLAYER_STATE[DokoData.MAX_PLAYER]);
 
 		
@@ -1732,7 +1662,7 @@ public class GameActivity extends DokoActivity {
         		} else {
                     PLAYER_ROUND_RESULT_STATE mPlayerRoundState = PLAYER_ROUND_RESULT_STATE.valueOf(mTmpState);
 
-        			switch (mPlayerRoundState) {
+        			switch (Objects.requireNonNull(mPlayerRoundState)) {
 						case WIN_STATE:
                             mEditRoundRoundPlayerStates[k] = PLAYER_ROUND_RESULT_STATE.WIN_STATE.ordinal();
                             break;
@@ -1770,9 +1700,7 @@ public class GameActivity extends DokoActivity {
         	mActivePlayers =  extras.getInt(DokoData.ACTIVE_PLAYER_KEY,0);
         	mBockLimit = extras.getInt(DokoData.BOCKLIMIT_KEY,0);
         	
-        	if(mPlayerCnt < DokoData.MIN_PLAYER || mPlayerCnt > DokoData.MAX_PLAYER 
-        			|| mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER
-        			|| (mPlayerCnt == 0 || mActivePlayers == 0))
+        	if(mPlayerCnt > DokoData.MAX_PLAYER || mActivePlayers > mPlayerCnt || mActivePlayers < DokoData.MIN_PLAYER)
         		return;
         	
         	//set new game settings
@@ -1812,7 +1740,7 @@ public class GameActivity extends DokoActivity {
 	    super.onSaveInstanceState(outState);
     }
 
-    private String getRoundResult() {
+    private String getRoundResultXMLString() {
 		String ret = "";
 		if (mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked()) {
 			ret = "Re, ";
@@ -1823,7 +1751,7 @@ public class GameActivity extends DokoActivity {
 		else return "";
 
 		String[] ansagen = {"No 120", "No 90", "No 60", "No 30", "0"};
-		ret += concatenateRoundResultStrings(ansagen, getConsectuiveChecked(mListGameResultTBs));
+		ret += concatenateRoundResultStrings(ansagen, getConsecutiveChecked(mListGameResultTBs));
 		return ret;
 	}
 
@@ -1836,7 +1764,7 @@ public class GameActivity extends DokoActivity {
 		return "";
 	}
 
-	private String getRoundAnsagen(GAME_PARTY party) {
+	private String getRoundAnsagenXMLString(GAME_PARTY party) {
 		ArrayList<ToggleButton> tmpList;
 		String partyString;
 		if (party == GAME_PARTY.PARTY_RE) {
@@ -1851,27 +1779,29 @@ public class GameActivity extends DokoActivity {
 		else return "";
 
 		String[] ansagen = {partyString, "No 90", "No 60", "No 30", "0"};
-		return concatenateRoundResultStrings(ansagen, getConsectuiveChecked(tmpList));
+		return concatenateRoundResultStrings(ansagen, getConsecutiveChecked(tmpList));
 	}
 
 	private String concatenateRoundResultStrings(String[] text, int elementsToUse) {
-		String ret = "";
+		StringBuilder ret = new StringBuilder();
 		for (int i=0; i<elementsToUse; i++) {
 			if (i != 0) {
-				ret += ", ";
+				ret.append(", ");
 			}
-			ret += text[i];
+			ret.append(text[i]);
 		}
-		return ret;
+		return ret.toString();
 	}
 
     // TODO: merge both "set all until" functions
 	private static void setAllWinnerButtonsUntil(Integer lastButtonToSet) {
+		Log.d("INFO", "setAllWinnerButtonsUntil: Button clicked: " + lastButtonToSet);
     	ArrayList<Integer> buttons = new ArrayList<Integer>(Arrays.asList(120, 90, 60, 30, 0));
     	// check if size of both array lists are equal
         if (buttons.size() != mListGameResultTBs.size())
         {
-            Log.d("ERROR", "GameActivity: unexpected amount of buttons to set game result (no 120, no 90, ...)");
+        	// FIXME: improve error handling. E.g. unset all buttons?
+            Log.d("ERROR", "GameActivity: unexpected amount of buttons to set game result (no 120, no 90, ...). Size of mListGameResultTBs: " + mListGameResultTBs.size());
             return;
         }
 
@@ -1929,22 +1859,16 @@ public class GameActivity extends DokoActivity {
 		}
         for (int i=0; i<buttons.size(); i++) {
             list.get(i).setChecked(buttonStateToSet);
-            if (buttonStateToSet && buttons.get(i) == lastButtonToSet) {
+            if (buttonStateToSet && Objects.equals(buttons.get(i), lastButtonToSet)) {
                 buttonStateToSet = false;
             }
         }
-
 		updatePointsAndTextView();
     }
 
 	private static void setRoundType(String type) {
 		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
-			if (entry.getKey() == type) {
-				entry.getValue().setChecked(true);
-			}
-			else {
-				entry.getValue().setChecked(false);
-			}
+			entry.getValue().setChecked(Objects.equals(entry.getKey(), type));
 		}
 	}
 
@@ -1972,13 +1896,11 @@ public class GameActivity extends DokoActivity {
 
 	private static int calculatePointsForRe() {
     	int rePoints = 0;
-    	int ansagenValueRe = 0;
-    	int ansagenValueKontra = 0;
-    	int newPoints = 0; // used for debugging
+    	int newPoints = 0; // only used for debugging
 
 		// get value of Ansagen for both parties
-		ansagenValueRe = getAnsagenPointsValue(GAME_PARTY.PARTY_RE);
-		ansagenValueKontra = getAnsagenPointsValue(GAME_PARTY.PARTY_KONTRA);
+		int ansagenValueRe = getAnsagenPointsValue(GAME_PARTY.PARTY_RE);
+		int ansagenValueKontra = getAnsagenPointsValue(GAME_PARTY.PARTY_KONTRA);
 
     	// calculate points depending on if "Ansagen" were correct
 		if (wasAnsageSuccessful(GAME_PARTY.PARTY_RE)) {
@@ -1990,7 +1912,7 @@ public class GameActivity extends DokoActivity {
 			newPoints = -ansagenValueRe;
 			rePoints -= ansagenValueRe;
 		}
-		Log.d("POINTS", "Points after calculateAnsagenPoints for Re: " + Integer.toString(rePoints) + ", new Points: " + Integer.toString(newPoints));
+		Log.d("POINTS", "Points after calculateAnsagenPoints for Re: " + rePoints + ", new Points: " + newPoints);
 		// calculate points for Kontra Ansage
 		if (wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA)) {
 			newPoints = -ansagenValueKontra;
@@ -2001,25 +1923,25 @@ public class GameActivity extends DokoActivity {
 			newPoints = ansagenValueKontra;
 			rePoints += ansagenValueKontra;
 		}
-		Log.d("POINTS", "Points after calculateAnsagenPoints for Kontra: " + Integer.toString(rePoints) + ", new Points: " + Integer.toString(newPoints));
+		Log.d("POINTS", "Points after calculateAnsagenPoints for Kontra: " + rePoints + ", new Points: " + newPoints);
 
 		newPoints = calculateNormalPointsRe();
 		rePoints += calculateNormalPointsRe();
-		Log.d("POINTS", "Points after calculateNormalPointsForRe: " + Integer.toString(rePoints) + ", new Points: " + Integer.toString(newPoints));
+		Log.d("POINTS", "Points after calculateNormalPointsForRe: " + rePoints + ", new Points: " + newPoints);
 
 		newPoints = calculateSpecialPointsForParty(GAME_PARTY.PARTY_RE);
 		rePoints += calculateSpecialPointsForParty(GAME_PARTY.PARTY_RE);
-		Log.d("POINTS", "Points after special points for Re: " + Integer.toString(rePoints) + ", new Points: " + Integer.toString(newPoints));
+		Log.d("POINTS", "Points after special points for Re: " + rePoints + ", new Points: " + newPoints);
 
 		newPoints = calculateSpecialPointsForParty(GAME_PARTY.PARTY_KONTRA);
 		rePoints -= calculateSpecialPointsForParty(GAME_PARTY.PARTY_KONTRA);
-		Log.d("POINTS", "Points after special points for Kontra: " + Integer.toString(rePoints) + ", new Points: " + Integer.toString(newPoints));
+		Log.d("POINTS", "Points after special points for Kontra: " + rePoints + ", new Points: " + newPoints);
     	return rePoints;
 	}
 
 	private static int calculateNormalPointsRe() {
 		int points = 0;
-		int gameValue = getConsectuiveChecked(mListGameResultTBs);
+		int gameValue = getConsecutiveChecked(mListGameResultTBs);
 		boolean reWonRound = mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked();
 		boolean kontraWonRound = mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked();
 
@@ -2054,7 +1976,7 @@ public class GameActivity extends DokoActivity {
 			}
 			else return 0; // leave function since we do not know who has more points scored (button is not set by user)
 		}
-		Log.d("POINTS", "Points after checking for at least 1 successful Ansage: " + Integer.toString(points));
+		Log.d("POINTS", "Points after checking for at least 1 successful Ansage: " + points);
 //		// Re won, but ansage failed => no points for Re and possibly additional points for kontra for each "no x" that has failed
 //		if (takeReAnsageIntoAccount && !wasAnsageSuccessful(GAME_PARTY.PARTY_RE) && reWonRound) {
 //			return -(getConsectuiveChecked(mListReAnsagenTBs) - gameValue);
@@ -2080,42 +2002,42 @@ public class GameActivity extends DokoActivity {
 
 		if (reWonRound) {
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA)) {
-				points += getConsectuiveChecked(mListKontraAnsagenTBs) - 1; // all Absagen of other team were beaten (only take no 90 and lower into account => reason for "-1")
+				points += getConsecutiveChecked(mListKontraAnsagenTBs) - 1; // all Absagen of other team were beaten (only take no 90 and lower into account => reason for "-1")
 			}
-			Log.d("POINTS", "Points after checking for success of Re Ansage (1): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Re Ansage (1): " + points);
 			// check for points due to failed Ansagen of Re
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_RE)) {
-				points -= (getConsectuiveChecked(mListReAnsagenTBs) - 1 - gameValue);
+				points -= (getConsecutiveChecked(mListReAnsagenTBs) - 1 - gameValue);
 			}
-			Log.d("POINTS", "Points after checking for success of Re Ansage (2): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Re Ansage (2): " + points);
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_RE) && !wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA) && gameValue != 0) {
 				// check for correct Ansagen "no 90" or lower
 				points += gameValue - 1; // only no 90 or lower
 			}
-			Log.d("POINTS", "Points after checking for success of Re Ansage (3): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Re Ansage (3): " + points);
 		}
 		else if (kontraWonRound) {
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_RE)) {
-				points -= getConsectuiveChecked(mListReAnsagenTBs) - 1;  // all Absagen of other team were beaten (only take no 90 and lower into account => reason for "-1")
+				points -= getConsecutiveChecked(mListReAnsagenTBs) - 1;  // all Absagen of other team were beaten (only take no 90 and lower into account => reason for "-1")
 			}
-			Log.d("POINTS", "Points after checking for success of Kontra Ansage (1): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Kontra Ansage (1): " + points);
 			// check for points due to failed Ansagen of Kontra
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA)) {
-				points += (getConsectuiveChecked(mListKontraAnsagenTBs) - 1 - gameValue);
+				points += (getConsecutiveChecked(mListKontraAnsagenTBs) - 1 - gameValue);
 			}
-			Log.d("POINTS", "Points after checking for success of Kontra Ansage (2): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Kontra Ansage (2): " + points);
 			if (!wasAnsageSuccessful(GAME_PARTY.PARTY_RE) && !wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA) && gameValue != 0) {
 				// check for correct Ansagen "no 90" or lower
 				points -= gameValue - 1; // only no 90 or lower
 			}
-			Log.d("POINTS", "Points after checking for success of Kontra Ansage (3): " + Integer.toString(points));
+			Log.d("POINTS", "Points after checking for success of Kontra Ansage (3): " + points);
 		}
 		else return 0; // leave function since we do not know who has more points scored (button is not set by user)
 
 		return points;
 	}
 
-	private static int getConsectuiveChecked(@NonNull ArrayList<ToggleButton> list) {
+	private static int getConsecutiveChecked(@NonNull ArrayList<ToggleButton> list) {
 		int consecutiveChecked = 0;
 		for (ToggleButton tb : list) {
 			if (tb.isChecked()) {
@@ -2136,7 +2058,7 @@ public class GameActivity extends DokoActivity {
 			return 0;
 		}
 
-		int ansageValue = getConsectuiveChecked(tmpList);
+		int ansageValue = getConsecutiveChecked(tmpList);
 		if (ansageValue > 0) {
 			return ansageValue + 1;
 		}
@@ -2171,7 +2093,7 @@ public class GameActivity extends DokoActivity {
 		}
 
     	// compare "highest" Ansage with game result to see if it was successful
-		int consecutiveAnsagen = getConsectuiveChecked(ansagenList);
+		int consecutiveAnsagen = getConsecutiveChecked(ansagenList);
 		if (consecutiveAnsagen == 0) {
 //			Log.d("INFO", "Ansage-Success: No ansage done for party");
 			return true;
@@ -2179,7 +2101,7 @@ public class GameActivity extends DokoActivity {
 		// case 1: other party has more points
 		if (!mMapRBWinner.get(party).isChecked()) {
 			if (!wasAnsageSuccessful(otherParty) && consecutiveAnsagen == 1) { //other parties ansage failed but party correctly thought that it will happen saying re/kontra
-				return consecutiveAnsagen < getConsectuiveChecked(mListGameResultTBs);
+				return consecutiveAnsagen < getConsecutiveChecked(mListGameResultTBs);
 			}
 			else return false;
 //			Log.d("INFO", "Ansage-Success: Other party has won and therefore Ansage is false");
@@ -2187,7 +2109,7 @@ public class GameActivity extends DokoActivity {
 		}
 		// case 2: party won the round, but was Ansage correct?
 		else {
-			return consecutiveAnsagen <= getConsectuiveChecked(mListGameResultTBs);
+			return consecutiveAnsagen <= getConsecutiveChecked(mListGameResultTBs);
 //			if (ret) {
 ////				Log.d("INFO", "Ansage-Success: Party won round and ansage was correct");
 //			}
@@ -2226,19 +2148,19 @@ public class GameActivity extends DokoActivity {
 		specialXML.clear();
 		for (Map.Entry<String, ToggleButton> entry : tbMap.entrySet()) {
 			if (entry.getValue().isChecked()) {
-				if (entry.getKey() != "Doppelkopf" && entry.getKey() != "Fuchs") {
+				if (!Objects.equals(entry.getKey(), "Doppelkopf") && !Objects.equals(entry.getKey(), "Fuchs")) {
 					points++;
 					specialXML.add(entry.getKey());
-				} else if (entry.getKey() == "Doppelkopf") {
+				} else if (Objects.equals(entry.getKey(), "Doppelkopf")) {
 					points += sbDK.getProgress();
 					specialXML.add(sbDK.getProgress() + "x " + entry.getKey());
-				} else if (entry.getKey() == "Fuchs") {
+				} else if (Objects.equals(entry.getKey(), "Fuchs")) {
 					points += sbFuchs.getProgress();
 					specialXML.add(sbFuchs.getProgress() + "x " + entry.getKey());
 				}
 			}
 		}
-		Log.d("XML", partyString + " Special (count): " + Integer.toString(specialXML.size()));
+		Log.d("XML", partyString + " Special (count): " + specialXML.size());
 		for (int i = 0; i < specialXML.size(); i++) {
 			Log.d("XML", partyString + " Special: " + specialXML.get(i));
 		}
