@@ -123,7 +123,7 @@ public class GameActivity extends DokoActivity {
 	private static ToggleButton mTBNo0;
 	private static ArrayList<ToggleButton> mListGameResultTBs = new ArrayList<ToggleButton>();
 	// round type buttons
-	private static Map<String, ToggleButton> mMapTbRoundType = new HashMap<String, ToggleButton>();
+	private static Map<ROUND_TYPES, ToggleButton> mMapTbRoundType = new HashMap<ROUND_TYPES, ToggleButton>();
 	// ... "Ansagen" Re
 	private static ToggleButton mTBReRe;
 	private static ToggleButton mTBRe90;
@@ -202,6 +202,25 @@ public class GameActivity extends DokoActivity {
 //		NO_30,
 //		SCHWARZ
 //	}
+
+	public enum ROUND_TYPES {
+		NORMAL, HOCHZEIT, ARMUT, OBERSOLO, UNTERSOLO, FLEISCHLOSER, FARBSOLO, STILLE_HOCHZEIT,
+	}
+
+	// TODO: do we need separate maps?
+	private static Map<ROUND_TYPES, Integer> normalRoundTypeButtons = new HashMap<ROUND_TYPES, Integer>() {{
+		put(ROUND_TYPES.NORMAL, R.id.btn_normal);
+		put(ROUND_TYPES.HOCHZEIT, R.id.btn_hochzeit);
+		put(ROUND_TYPES.ARMUT, R.id.btn_armut);
+	}};
+
+	private static Map<ROUND_TYPES, Integer> soloRoundTypeButtons = new HashMap<ROUND_TYPES, Integer>() {{
+		put(ROUND_TYPES.OBERSOLO, R.id.btn_obersolo);
+		put(ROUND_TYPES.UNTERSOLO, R.id.btn_untersolo);
+		put(ROUND_TYPES.FLEISCHLOSER, R.id.btn_fleischloser);
+		put(ROUND_TYPES.FARBSOLO, R.id.btn_farbsolo);
+		put(ROUND_TYPES.STILLE_HOCHZEIT, R.id.btn_stille_hochzeit);
+	}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -625,78 +644,25 @@ public class GameActivity extends DokoActivity {
         mListGameResultTBs.add(mTBNo0);
 
         // buttons for round type
-		mMapTbRoundType.put("Normal", (ToggleButton)rootView.findViewById(R.id.btn_normal));
-		mMapTbRoundType.get("Normal").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Normal") != null) {
-					setRoundType("Normal");
+		// normal games
+		for (Map.Entry<ROUND_TYPES, Integer> entry : normalRoundTypeButtons.entrySet()) {
+			mMapTbRoundType.put(entry.getKey(), (ToggleButton)rootView.findViewById(entry.getValue()));
+			mMapTbRoundType.get(entry.getKey()).setOnClickListener(view -> {
+				if (mMapTbRoundType.get(entry.getKey()) != null) {
+					setRoundType(entry.getKey());
 				}
-			}
-		});
-		mMapTbRoundType.put("Hochzeit", (ToggleButton)rootView.findViewById(R.id.btn_hochzeit));
-		mMapTbRoundType.get("Hochzeit").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Hochzeit") != null) {
-					setRoundType("Hochzeit");
+			});
+		}
+
+//		// solo games
+		for (Map.Entry<ROUND_TYPES, Integer> entry : soloRoundTypeButtons.entrySet()) {
+			mMapTbRoundType.put(entry.getKey(), (ToggleButton)rootView.findViewById(entry.getValue()));
+			mMapTbRoundType.get(entry.getKey()).setOnClickListener(view -> {
+				if (mMapTbRoundType.get(entry.getKey()) != null) {
+					setRoundType(entry.getKey());
 				}
-			}
-		});
-		mMapTbRoundType.put("Armut", (ToggleButton)rootView.findViewById(R.id.btn_armut));
-		mMapTbRoundType.get("Armut").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Armut") != null) {
-					setRoundType("Armut");
-				}
-			}
-		});
-		mMapTbRoundType.put("Obersolo", (ToggleButton)rootView.findViewById(R.id.btn_obersolo));
-		mMapTbRoundType.get("Obersolo").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Obersolo") != null) {
-					setRoundType("Obersolo");
-				}
-			}
-		});
-		mMapTbRoundType.put("Untersolo", (ToggleButton)rootView.findViewById(R.id.btn_untersolo));
-		mMapTbRoundType.get("Untersolo").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Untersolo") != null) {
-					setRoundType("Untersolo");
-				}
-			}
-		});
-		mMapTbRoundType.put("Fleischloser", (ToggleButton)rootView.findViewById(R.id.btn_fleischloser));
-		mMapTbRoundType.get("Fleischloser").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Fleischloser") != null) {
-					setRoundType("Fleischloser");
-				}
-			}
-		});
-		mMapTbRoundType.put("Farbsolo", (ToggleButton)rootView.findViewById(R.id.btn_farbsolo));
-		mMapTbRoundType.get("Farbsolo").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("Farbsolo") != null) {
-					setRoundType("Farbsolo");
-				}
-			}
-		});
-		mMapTbRoundType.put("stille Hochzeit", (ToggleButton)rootView.findViewById(R.id.btn_stille_hochzeit));
-		mMapTbRoundType.get("stille Hochzeit").setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mMapTbRoundType.get("stille Hochzeit") != null) {
-					setRoundType("stille Hochzeit");
-				}
-			}
-		});
+			});
+		}
 
         // Toggle buttons for "ansagen"
         mTBReRe = (ToggleButton)rootView.findViewById(R.id.tb_re_re);
