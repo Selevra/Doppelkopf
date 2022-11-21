@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.iml" filepath="$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/DoppelkopfApp/Doppelkopf.DoppelkopfApp.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Doppelkopf_Fork.Doppelkopf.iml" filepath="$PROJECT_DIR$/.idea/modules/Doppelkopf_Fork.Doppelkopf.iml" />
     </modules>
   </component>
