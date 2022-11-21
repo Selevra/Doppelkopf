@@ -573,68 +573,63 @@ public class GameActivity extends DokoActivity {
         mRadioGroup = (RadioGroup)rootView.findViewById(R.id.rb_group);
 
 		final RadioButton rbWinnerRe = (RadioButton)rootView.findViewById(R.id.rb_re_won);
-		rbWinnerRe.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (rbWinnerRe != null) {
-					updatePointsAndTextView();
+		rbWinnerRe.setOnClickListener(view -> {
+			if (rbWinnerRe != null) {
+				Log.d("INFO", "Re radio button was pressed");
+				// check "No 120" button if not already done
+				if (!mListGameResultTBs.get(0).isChecked()) {
+					Log.d("INFO", "120 is unchecked when Re-Party was selected as winner");
+					// set inverse state of 120 button
+					mListGameResultTBs.get(0).setChecked(true);
+					setAllWinnerButtonsUntil(120);
 				}
+				updatePointsAndTextView();
 			}
 		});
 		final RadioButton rbWinnerKontra = (RadioButton)rootView.findViewById(R.id.rb_kontra_won);
-		rbWinnerKontra.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (rbWinnerKontra != null) {
-					updatePointsAndTextView();
+		rbWinnerKontra.setOnClickListener(view -> {
+			if (rbWinnerKontra != null) {
+				Log.d("INFO", "Kontra radio button was pressed");
+				// check at least "No 120" button if not already done
+				if (!mListGameResultTBs.get(0).isChecked()) {
+					Log.d("INFO", "120 is unchecked when Kontra-Party was selected as winner");
+					// set inverse state of 120 button
+					mListGameResultTBs.get(0).setChecked(true);
+					setAllWinnerButtonsUntil(120);
 				}
+				updatePointsAndTextView();
 			}
 		});
 		mMapRBWinner.put(GAME_PARTY.PARTY_RE, rbWinnerRe);
 		mMapRBWinner.put(GAME_PARTY.PARTY_KONTRA, rbWinnerKontra);
 		mTBNo120 = (ToggleButton)rootView.findViewById(R.id.tb_no120);
-		mTBNo120.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBNo120 != null) {
-					setAllWinnerButtonsUntil(120);
-				}
+		mTBNo120.setOnClickListener(view -> {
+			if (mTBNo120 != null) {
+				setAllWinnerButtonsUntil(120);
 			}
 		});
 		mTBNo90 = (ToggleButton)rootView.findViewById(R.id.tb_no90);
-		mTBNo90.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBNo90 != null) {
-					setAllWinnerButtonsUntil(90);
-				}
+		mTBNo90.setOnClickListener(view -> {
+			if (mTBNo90 != null) {
+				setAllWinnerButtonsUntil(90);
 			}
 		});
 		mTBNo60 = (ToggleButton)rootView.findViewById(R.id.tb_no60);
-		mTBNo60.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBNo60 != null) {
-					setAllWinnerButtonsUntil(60);
-				}
+		mTBNo60.setOnClickListener(view -> {
+			if (mTBNo60 != null) {
+				setAllWinnerButtonsUntil(60);
 			}
 		});
 		mTBNo30 = (ToggleButton)rootView.findViewById(R.id.tb_no30);
-		mTBNo30.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBNo30 != null) {
-					setAllWinnerButtonsUntil(30);
-				}
+		mTBNo30.setOnClickListener(view -> {
+			if (mTBNo30 != null) {
+				setAllWinnerButtonsUntil(30);
 			}
 		});
 		mTBNo0 = (ToggleButton)rootView.findViewById(R.id.tb_no0);
-		mTBNo0.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mTBNo0 != null) {
-					setAllWinnerButtonsUntil(0);
-				}
+		mTBNo0.setOnClickListener(view -> {
+			if (mTBNo0 != null) {
+				setAllWinnerButtonsUntil(0);
 			}
 		});
 		mListGameResultTBs.add(mTBNo120);
@@ -1078,7 +1073,7 @@ public class GameActivity extends DokoActivity {
             }
 
 //            Log.d("XML", "Round Result: " + getRoundResult());
-			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResultXMLString(), getRoundType(), getRoundAnsagenXMLString(GAME_PARTY.PARTY_RE), getRoundAnsagenXMLString(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
+			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResultXMLString(), getRoundTypeString(), getRoundAnsagenXMLString(GAME_PARTY.PARTY_RE), getRoundAnsagenXMLString(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -1318,7 +1313,7 @@ public class GameActivity extends DokoActivity {
 		mDetailedRoundInfoAnsagenContainer.setVisibility(View.GONE);
 		mDetailedRoundInfoSpecialContainer.setVisibility(View.GONE);
 		// round type
-		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+		for (Map.Entry<ROUND_TYPES, ToggleButton> entry : mMapTbRoundType.entrySet()) {
 			entry.getValue().setChecked(false);
 		}
 		// an/absagen buttons
@@ -1714,20 +1709,22 @@ public class GameActivity extends DokoActivity {
 		else if (mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked()) {
 			ret = "Kontra, ";
 		}
-		else return "";
+		else {
+			ret = "Tie, ";
+		}
 
 		String[] ansagen = {"No 120", "No 90", "No 60", "No 30", "0"};
 		ret += concatenateRoundResultStrings(ansagen, getConsecutiveChecked(mListGameResultTBs));
 		return ret;
 	}
 
-	private String getRoundType() {
-		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+	private String getRoundTypeString() {
+		for (Map.Entry<ROUND_TYPES, ToggleButton> entry : mMapTbRoundType.entrySet()) {
 			if (entry.getValue().isChecked()) {
-				return entry.getKey();
+				return entry.getKey().name();
 			}
 		}
-		return "";
+		return ROUND_TYPES.NORMAL.name();
 	}
 
 	private String getRoundAnsagenXMLString(GAME_PARTY party) {
@@ -1762,7 +1759,7 @@ public class GameActivity extends DokoActivity {
     // TODO: merge both "set all until" functions
 	private static void setAllWinnerButtonsUntil(Integer lastButtonToSet) {
 		Log.d("INFO", "setAllWinnerButtonsUntil: Button clicked: " + lastButtonToSet);
-    	ArrayList<Integer> buttons = new ArrayList<Integer>(Arrays.asList(120, 90, 60, 30, 0));
+    	ArrayList<Integer> buttons = new ArrayList<>(Arrays.asList(120, 90, 60, 30, 0));
     	// check if size of both array lists are equal
         if (buttons.size() != mListGameResultTBs.size())
         {
@@ -1774,9 +1771,10 @@ public class GameActivity extends DokoActivity {
     	boolean buttonStateToSet = true;
 		// in case the button to activate until to was already the last activated button (check against false, because button state changed before call to this function), deactivate all buttons
 		if (!(mListGameResultTBs.get(buttons.indexOf(lastButtonToSet)).isChecked())) {
-			if ((buttons.indexOf(lastButtonToSet) == buttons.size() -1) || !(mListGameResultTBs.get(buttons.indexOf(lastButtonToSet) + 1).isChecked())) {
-				Log.d("INFO", "Trying to activate button that was the last activated => deactivate all");
+			if ((buttons.indexOf(lastButtonToSet) == buttons.size() - 1) || !(mListGameResultTBs.get(buttons.indexOf(lastButtonToSet) + 1).isChecked())) {
+				Log.d("INFO", "Trying to activate button that was the last activated => deactivate all buttons + Winner Radio-Button");
 				buttonStateToSet = false;
+				mRadioGroup.clearCheck();
 			}
 		}
     	for (int i=0; i<buttons.size(); i++) {
@@ -1832,8 +1830,9 @@ public class GameActivity extends DokoActivity {
 		updatePointsAndTextView();
     }
 
-	private static void setRoundType(String type) {
-		for (Map.Entry<String, ToggleButton> entry : mMapTbRoundType.entrySet()) {
+	private static void setRoundType(ROUND_TYPES type) {
+		Log.d("INFO", "Button pressed: " + type);
+		for (Map.Entry<ROUND_TYPES, ToggleButton> entry : mMapTbRoundType.entrySet()) {
 			entry.getValue().setChecked(Objects.equals(entry.getKey(), type));
 		}
 	}
@@ -1841,26 +1840,24 @@ public class GameActivity extends DokoActivity {
     private static void updatePointsAndTextView() {
 		Log.d("INFO", "\nUpdating projected points...");
 		int points = calculatePointsForRe();
-		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked()) {
-			mTVProjectedPointsWinner.setText("Pls. select winner");
-			mTVProjectedPoints.setText("-");
+//		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked()) {
+//			mTVProjectedPointsWinner.setText("Pls. select winner");
+//			mTVProjectedPoints.setText("-");
+//		}
+		mTVProjectedPoints.setText(Math.abs(points) + " P.");
+		if (points > 0) {
+			mTVProjectedPointsWinner.setText("(Re)");
+		}
+		else if (points < 0) {
+			mTVProjectedPointsWinner.setText("(Kontra)");
 		}
 		else {
-			mTVProjectedPoints.setText(Math.abs(points) + " P.");
-			if (points > 0) {
-				mTVProjectedPointsWinner.setText("(Re)");
-			}
-			else if (points < 0) {
-				mTVProjectedPointsWinner.setText("(Kontra)");
-			}
-			else {
-				mTVProjectedPointsWinner.setText("");
-			}
-
+			mTVProjectedPointsWinner.setText("");
 		}
 	}
 
 	private static int calculatePointsForRe() {
+		// negative points equal positive points for Kontra party
     	int rePoints = 0;
     	int newPoints = 0; // only used for debugging
 
@@ -1910,14 +1907,14 @@ public class GameActivity extends DokoActivity {
 		int gameValue = getConsecutiveChecked(mListGameResultTBs);
 		boolean reWonRound = mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked();
 		boolean kontraWonRound = mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked();
+		boolean isTie = !reWonRound && !kontraWonRound;
 
 		//int reAnsageValue = getAnsagenPointsValue(GAME_PARTY.PARTY_RE);
 		//int kontraAnsageValue = getAnsagenPointsValue(GAME_PARTY.PARTY_CONTRA);
 //		boolean kontraAnsageSuccess = wasAnsageSuccessful(GAME_PARTY.PARTY_CONTRA);
 
-		boolean takeReAnsageIntoAccount = getAnsagenPointsValue(GAME_PARTY.PARTY_RE) != 0;
+		boolean takeReAnsageIntoAccount = getAnsagenPointsValue(GAME_PARTY.PARTY_RE) != 0; // TODO: WHY??
 		boolean takeKontraAnsageIntoAccount = getAnsagenPointsValue(GAME_PARTY.PARTY_KONTRA) != 0;
-
 		// catch error case
 		if (takeReAnsageIntoAccount && takeKontraAnsageIntoAccount && wasAnsageSuccessful(GAME_PARTY.PARTY_RE) && wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA)) {
 			Log.d("ERROR", "GameActivity: Both parties had success with their Ansagen (value > 0) which is not possible!");
@@ -1940,7 +1937,7 @@ public class GameActivity extends DokoActivity {
 			else if (reWonRound && wasAnsageSuccessful(GAME_PARTY.PARTY_KONTRA)) {
 				points -= 1;
 			}
-			else return 0; // leave function since we do not know who has more points scored (button is not set by user)
+			//else return 0; // leave function since we do not know who has more points scored (button is not set by user)
 		}
 		Log.d("POINTS", "Points after checking for at least 1 successful Ansage: " + points);
 //		// Re won, but ansage failed => no points for Re and possibly additional points for kontra for each "no x" that has failed
@@ -1998,7 +1995,12 @@ public class GameActivity extends DokoActivity {
 			}
 			Log.d("POINTS", "Points after checking for success of Kontra Ansage (3): " + points);
 		}
-		else return 0; // leave function since we do not know who has more points scored (button is not set by user)
+		// Tie
+		else {
+			// Kontra "wins" with a tie
+			points -= 1;
+		}
+		Log.d("POINTS", "Points after checking for tie: " + points);
 
 		return points;
 	}
@@ -2026,7 +2028,7 @@ public class GameActivity extends DokoActivity {
 
 		int ansageValue = getConsecutiveChecked(tmpList);
 		if (ansageValue > 0) {
-			return ansageValue + 1;
+			return ansageValue + 1; // First "Ansage" equals 2 points
 		}
 		else return 0;
 	}
@@ -2036,13 +2038,12 @@ public class GameActivity extends DokoActivity {
 		GAME_PARTY otherParty;
 //		ArrayList<ToggleButton> otherPartyAnsagenList;
 
-		// it has to be selected which team has more points
-		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked())
-		{
-			Log.d("INFO", "It wasn't selected which team has more points => cannot say if Ansage was correct");
-			return false;
-		}
-
+//		// it has to be selected which team has more points
+//		if (!mMapRBWinner.get(GAME_PARTY.PARTY_RE).isChecked() && !mMapRBWinner.get(GAME_PARTY.PARTY_KONTRA).isChecked())
+//		{
+//			Log.d("INFO", "It wasn't selected which team has more points => cannot say if Ansage was correct");
+//			return false;
+//		}
     	if (party == GAME_PARTY.PARTY_RE) {
     		ansagenList = mListReAnsagenTBs;
     		otherParty = GAME_PARTY.PARTY_KONTRA;
@@ -2065,22 +2066,28 @@ public class GameActivity extends DokoActivity {
 			return true;
 		}
 		// case 1: other party has more points
-		if (!mMapRBWinner.get(party).isChecked()) {
-			if (!wasAnsageSuccessful(otherParty) && consecutiveAnsagen == 1) { //other parties ansage failed but party correctly thought that it will happen saying re/kontra
+		if (mMapRBWinner.get(otherParty).isChecked()) {
+			if (!wasAnsageSuccessful(otherParty) && consecutiveAnsagen == 1) { //other parties Ansage failed but party correctly thought that it will happen saying re/kontra
 				return consecutiveAnsagen < getConsecutiveChecked(mListGameResultTBs);
 			}
-			else return false;
+			else {
+				return false;
+			}
 //			Log.d("INFO", "Ansage-Success: Other party has won and therefore Ansage is false");
 //			return false;
 		}
 		// case 2: party won the round, but was Ansage correct?
-		else {
+		else if (mMapRBWinner.get(party).isChecked()) {
 			return consecutiveAnsagen <= getConsecutiveChecked(mListGameResultTBs);
 //			if (ret) {
 ////				Log.d("INFO", "Ansage-Success: Party won round and ansage was correct");
 //			}
 //			else Log.d("INFO", "Ansage-Success: Party won round and ansage was correct");
 //			return ret;
+		}
+		// case 3: 120 points for both teams
+		else {
+			return false; // TODO: Look into it in more detail, maybe it is correct because other party said more or see case 1, that you can say re/kontra to state, that other team will not meet it
 		}
 	}
 
