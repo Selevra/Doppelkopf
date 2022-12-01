@@ -127,7 +127,7 @@ public class NewGameActivity extends DokoActivity {
         mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
 		mSpBockLimit.setSelection(0);
 
-		String[] mPunkteingabeVariantArr = new String[]{"manual", "automatic"};
+		String[] mPunkteingabeVariantArr = new String[]{"manual", "detailed"};
 		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mPunkteingabeVariantArr);
 		mSPPunkteeingabeArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 		mSpPunkteeingabe.setAdapter(mSPPunkteeingabeArrayAdapter);

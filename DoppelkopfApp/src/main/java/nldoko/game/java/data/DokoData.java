@@ -81,22 +81,24 @@ public class DokoData {
             return "restore";
         }
 	}
-	
-	public enum PLAYER_ROUND_RESULT_STATE {
-		LOSE_STATE,
-		WIN_STATE,
-		SUSPEND_STATE;
 
-		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
-			switch (state) {
-				case 0:	return LOSE_STATE;
-				case 1:	return WIN_STATE;
-				case 2:	return SUSPEND_STATE;
-				default:
-					break;
-			}
-			return null;
-		}
+	// must be aligned with Enum "USER_SELECTED_PLAYER_STATE"
+	public enum PLAYER_ROUND_RESULT_STATE {
+		WIN_STATE,
+		LOSE_STATE,
+		SUSPEND_STATE,
+		TIE_STATE,
+
+//		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
+//			switch (state) {
+//				case 0:	return LOSE_STATE;
+//				case 1:	return WIN_STATE;
+//				case 2:	return SUSPEND_STATE;
+//				default:
+//					break;
+//			}
+//			return null;
+//		}
 	}
 
 	public enum PLAYER_ROUND_PARTY {
@@ -113,7 +115,7 @@ public class DokoData {
 
 	public enum POINTS_CALCULATION {
 		POINTS_CALCULATION_MANUAL,
-		POINTS_CALCULATION_AUTOMATIC
+		POINTS_CALCULATION_DETAILED
 	}
 
 	public enum GAME_VIEW_TYPE {
