@@ -157,5 +157,35 @@
             limitations under the License.</string>
     <string name="str_game_enter_detailed_info">Enter detailed game infos</string>
     <string name="round_result">Round result</string>
+    <string name="no_120">No\n120</string>
+    <string name="no_90">No\n90</string>
+    <string name="no_60">No\n60</string>
+    <string name="no_30">No\n30</string>
+    <string name="points_0">0\n</string>
+    <string name="re_text">Re</string>
+    <string name="kontra_text">Kontra</string>
+    <string name="re_text_newline">Re\n</string>
+    <string name="kontra_text_newline">Kontra\n</string>
+    <string name="re_party">Re-Party</string>
+    <string name="kontra_party">Kontra-Party</string>
+    <string name="for_string">for</string>
+    <string name="round_type">Round type</string>
+    <string name="round_type_normal">Normal</string>
+    <string name="round_type_wedding">Wedding</string>
+    <string name="round_type_poverty">Poverty</string>
+    <string name="round_type_solo">Solo</string>
+    <string name="solo_typo_obersolo">Obersolo</string>
+    <string name="solo_type_untersolo">Untersolo</string>
+    <string name="solo_type_fleischloser">Fleischloser</string>
+    <string name="solo_type_color">Farbsolo</string>
+    <string name="solo_type_silent_wedding">Silent Wedding</string>
+    <string name="an_absagen">An-/Absagen</string>
+    <string name="special_points">Special points</string>
+    <string name="doppelkopf">Doppelkopf</string>
+    <string name="fox">Fox</string>
+    <string name="karlchen">Charly</string>
+    <string name="heart_trick">Heart trick</string>
+    <string name="win_vs_alten">Vs. the Alten</string>
+    <string name="total_points">Total points:</string>
 
 </resources>

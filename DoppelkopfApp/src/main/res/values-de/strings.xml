@@ -161,4 +161,34 @@
             limitations under the License.</string>
     <string name="str_game_enter_detailed_info">Bitte geben Sie die detaillierten Rundeninfos ein</string>
     <string name="round_result">Runden Ergebnis</string>
+    <string name="no_120">Keine\n120</string>
+    <string name="no_90">Keine\n90</string>
+    <string name="no_60">No\n60</string>
+    <string name="no_30">No\n30</string>
+    <string name="points_0">0\n</string>
+    <string name="re_text">Re</string>
+    <string name="kontra_text">Kontra</string>
+    <string name="re_text_newline">Re\n</string>
+    <string name="kontra_text_newline">Kontra\n</string>
+    <string name="re_party">Re Partei</string>
+    <string name="kontra_party">Kontra Partei</string>
+    <string name="for_string">für</string>
+    <string name="round_type">Rundentyp</string>
+    <string name="round_type_normal">Normal</string>
+    <string name="round_type_wedding">Hochzeit</string>
+    <string name="round_type_poverty">Armut</string>
+    <string name="round_type_solo">Solo</string>
+    <string name="solo_typo_obersolo">Obersolo</string>
+    <string name="solo_type_untersolo">Untersolo</string>
+    <string name="solo_type_fleischloser">Fleischloser</string>
+    <string name="solo_type_color">Farbsolo</string>
+    <string name="solo_type_silent_wedding">Stille Hochzeit</string>
+    <string name="an_absagen">An-/Absagen</string>
+    <string name="special_points">Special points</string>
+    <string name="doppelkopf">Doppelkopf</string>
+    <string name="fox">Fuchs</string>
+    <string name="karlchen">Karlchen</string>
+    <string name="heart_trick">Herzstich</string>
+    <string name="win_vs_alten">Gegen die Alten</string>
+    <string name="total_points">Punkte:</string>
 </resources>

@@ -132,36 +132,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="ToggleButton"
-                        android:textOff="Keine 120"
-                        android:textOn="Keine 120" />
+                        android:textOff="@string/no_120"
+                        android:textOn="@string/no_120" />
 
                     <ToggleButton
                         android:id="@+id/tb_no90"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="ToggleButton"
-                        android:textOff="Keine 90"
-                        android:textOn="Keine 90" />
+                        android:textOff="@string/no_90"
+                        android:textOn="@string/no_90" />
 
                     <ToggleButton
                         android:id="@+id/tb_no60"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="ToggleButton"
-                        android:textOff="Keine 60"
-                        android:textOn="Keine 60" />
+                        android:textOff="@string/no_60"
+                        android:textOn="@string/no_60" />
 
                     <ToggleButton
                         android:id="@+id/tb_no30"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="ToggleButton"
-                        android:textOff="Keine 30"
-                        android:textOn="Keine 30" />
+                        android:textOff="@string/no_30"
+                        android:textOn="@string/no_30" />
 
                     <ToggleButton
                         android:id="@+id/tb_no0"
@@ -170,9 +166,8 @@
                         android:layout_weight="1"
 						android:layout_gravity="center"
 						android:gravity="center"
-                        android:text="ToggleButton"
-                        android:textOff="0\n"
-                        android:textOn="0\n"/>
+                        android:textOff="@string/points_0"
+                        android:textOn="@string/points_0"/>
                 </LinearLayout>
 				<LinearLayout
                     android:layout_width="match_parent"
@@ -183,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="for" />
+                        android:text="@string/for_string" />
 
                     <RadioGroup
 						android:id="@+id/rb_group"
@@ -197,14 +192,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 							android:minHeight="48dp"
-                            android:text="Re-Party" />
+                            android:text="@string/re_party" />
 
                         <RadioButton
                             android:id="@+id/rb_kontra_won"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 							android:minHeight="48dp"
-                            android:text="Kontra-Party" />
+                            android:text="@string/kontra_party" />
                     </RadioGroup>
                 </LinearLayout>
 				
@@ -218,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="Round type"
+                        android:text="@string/round_type"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -247,90 +242,76 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Normal" />
+                            android:text="@string/round_type_normal" />
 
                         <ToggleButton
                             android:id="@+id/btn_normal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Normal"
-                            android:textOn="Normal" />
+                            android:textOff="@string/round_type_normal"
+                            android:textOn="@string/round_type_normal" />
 
                         <ToggleButton
                             android:id="@+id/btn_hochzeit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Hochzeit"
-                            android:textOn="Hochzeit" />
+                            android:textOff="@string/round_type_wedding"
+                            android:textOn="@string/round_type_wedding" />
 
                         <ToggleButton
                             android:id="@+id/btn_armut"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Armut"
-                            android:textOn="Armut" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                            android:textOff="@string/round_type_poverty"
+                            android:textOn="@string/round_type_poverty" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Solo" />
+                            android:text="@string/round_type_solo" />
 
                         <ToggleButton
                             android:id="@+id/btn_obersolo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Obersolo"
-                            android:textOn="Obersolo" />
+                            android:textOff="@string/solo_typo_obersolo"
+                            android:textOn="@string/solo_typo_obersolo" />
 							
 						<ToggleButton
                             android:id="@+id/btn_untersolo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Untersolo"
-                            android:textOn="Untersolo" />
+                            android:textOff="@string/solo_type_untersolo"
+                            android:textOn="@string/solo_type_untersolo" />
 							
 						<ToggleButton
                             android:id="@+id/btn_fleischloser"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Fleischloser"
-                            android:textOn="Fleischloser" />
+                            android:textOff="@string/solo_type_fleischloser"
+                            android:textOn="@string/solo_type_fleischloser" />
 							
 						<ToggleButton
                             android:id="@+id/btn_farbsolo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Farbsolo"
-                            android:textOn="Farbsolo" />
+                            android:textOff="@string/solo_type_color"
+                            android:textOn="@string/solo_type_color" />
 						
 						<ToggleButton
                             android:id="@+id/btn_stille_hochzeit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="stille Hochzeit"
-                            android:textOn="stille Hochzeit" />
+                            android:textOff="@string/solo_type_silent_wedding"
+                            android:textOn="@string/solo_type_silent_wedding" />
 					</LinearLayout>
 				</LinearLayout>
 
@@ -344,7 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="An-/Absagen"
+                        android:text="@string/an_absagen"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -373,7 +354,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Re" />
+                            android:text="@string/re_text" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -385,17 +366,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="Re"
-                                android:textOn="Re" />
+                                android:textOff="@string/re_text_newline"
+                                android:textOn="@string/re_text_newline" />
 							<ToggleButton
                                 android:id="@+id/tb_re_90"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 90"
-                                android:textOn="No 90" />
+                                android:textOff="@string/no_90"
+                                android:textOn="@string/no_90" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -407,25 +386,22 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 60"
-                                android:textOn="No 60" />
+                                android:textOff="@string/no_60"
+                                android:textOn="@string/no_60" />
                             <ToggleButton
                                 android:id="@+id/tb_re_30"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 30"
-                                android:textOn="No 30" />
+                                android:textOff="@string/no_30"
+                                android:textOn="@string/no_30" />
                             <ToggleButton
                                 android:id="@+id/tb_re_0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="0"
-                                android:textOn="0" />
+                                android:textOff="@string/points_0"
+                                android:textOn="@string/points_0" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -438,7 +414,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Kontra" />
+                            android:text="@string/kontra_text" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -450,17 +426,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="Kontra"
-                                android:textOn="Kontra" />
+                                android:textOff="@string/kontra_text_newline"
+                                android:textOn="@string/kontra_text_newline" />
 							<ToggleButton
                                 android:id="@+id/tb_kontra_90"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 90"
-                                android:textOn="No 90" />
+                                android:textOff="@string/no_90"
+                                android:textOn="@string/no_90" />
 
                         </LinearLayout>
 
@@ -473,25 +447,22 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 60"
-                                android:textOn="No 60" />
+                                android:textOff="@string/no_60"
+                                android:textOn="@string/no_60" />
                             <ToggleButton
                                 android:id="@+id/tb_kontra_30"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="No 30"
-                                android:textOn="No 30" />
+                                android:textOff="@string/no_30"
+                                android:textOn="@string/no_30" />
                             <ToggleButton
                                 android:id="@+id/tb_kontra_0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ToggleButton"
-                                android:textOff="0"
-                                android:textOn="0" />
+                                android:textOff="@string/points_0"
+                                android:textOn="@string/points_0" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -507,7 +478,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="Sonderpunkte"
+                        android:text="@string/special_points"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -536,16 +507,15 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Re" />
+                            android:text="@string/re_text" />
 
                         <ToggleButton
                             android:id="@+id/btn_re_doppelkopf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Doppelkopf"
-                            android:textOn="Doppelkopf" />
+                            android:textOff="@string/doppelkopf"
+                            android:textOn="@string/doppelkopf" />
 
                         <SeekBar
                             android:id="@+id/re_seekBar_DK"
@@ -561,9 +531,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Fuchs"
-                            android:textOn="Fuchs" />
+                            android:textOff="@string/fox"
+                            android:textOn="@string/fox" />
 
                         <SeekBar
                             android:id="@+id/re_seekBar_Fuchs"
@@ -579,38 +548,29 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Karlchen"
-                            android:textOn="Karlchen" />
+                            android:textOff="@string/karlchen"
+                            android:textOn="@string/karlchen" />
 
                         <ToggleButton
                             android:id="@+id/btn_re_heart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Herzstich"
-                            android:textOn="Herzstich" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                            android:textOff="@string/heart_trick"
+                            android:textOn="@string/heart_trick" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Kontra" />
+                            android:text="@string/kontra_text" />
 
                         <ToggleButton
                             android:id="@+id/btn_kontra_doppelkopf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Doppelkopf"
-                            android:textOn="Doppelkopf" />
+                            android:textOff="@string/doppelkopf"
+                            android:textOn="@string/doppelkopf" />
 
                         <SeekBar
                             android:id="@+id/kontra_seekBar_DK"
@@ -626,9 +586,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Fuchs"
-                            android:textOn="Fuchs" />
+                            android:textOff="@string/fox"
+                            android:textOn="@string/fox" />
 
                         <SeekBar
                             android:id="@+id/kontra_seekBar_Fuchs"
@@ -644,27 +603,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Karlchen"
-                            android:textOn="Karlchen" />
+                            android:textOff="@string/karlchen"
+                            android:textOn="@string/karlchen" />
 
                         <ToggleButton
                             android:id="@+id/btn_kontra_heart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Herzstich"
-                            android:textOn="Herzstich" />
+                            android:textOff="@string/heart_trick"
+                            android:textOn="@string/heart_trick" />
 
                         <ToggleButton
                             android:id="@+id/btn_kontra_gegen"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ToggleButton"
-                            android:textOff="Gegen die Alten"
-                            android:textOn="Gegen die Alten" />
+                            android:textOff="@string/win_vs_alten"
+                            android:textOn="@string/win_vs_alten" />
                     </LinearLayout>
                 </LinearLayout>
 				<LinearLayout
@@ -693,14 +649,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
 						android:textSize="17sp"
-                        android:text="Total points:"
+                        android:text="@string/total_points"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/text_projected_points"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:text="-" />
                     <TextView
                         android:id="@+id/text_winner"
