@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.appcompat.BuildConfig;
+//import android.support.v7.appcompat.BuildConfig;
 import nldoko.game.R;
 
 import nldoko.game.java.game.NewGameActivity;
