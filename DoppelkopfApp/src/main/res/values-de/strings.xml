@@ -74,7 +74,8 @@
     \n\nBeispiele:\n\nAnzahl Bockrunden = 1, Spiele pro Bockrunde = 4 ergeben insgesamt 4 neue Bockrunden.
     \n\nAnzahl Bockrunden = 2, Spiele pro Bockrunde = 5 ergeben insgesamt 5 neue Doppel-Bockrunden.</string>
 
-    <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner (Ausgesetzt) prüfen</string>
+    <string name="str_error_game_new_round_data">Ungültige Werte. Bitte Punkte, Anzahl Gewinner (Ausgesetzt) prüfen.</string>
+    <string name="str_error_game_new_detailed_round_data">Ungültige Werte. Bitte Rundenergebnis und -typ sowie die Anzahl der Spieler in Re/Kontra/Ausgesetzt prüfen.</string>
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>
     <string name="str_round_type_3vs2">3vs2</string>
@@ -160,7 +161,7 @@
             See the License for the specific language governing permissions and
             limitations under the License.</string>
     <string name="str_game_enter_detailed_info">Bitte geben Sie die detaillierten Rundeninfos ein</string>
-    <string name="round_result">Runden Ergebnis</string>
+    <string name="round_result">Rundenergebnis</string>
     <string name="no_120">Keine\n120</string>
     <string name="no_90">Keine\n90</string>
     <string name="no_60">No\n60</string>
@@ -170,9 +171,7 @@
     <string name="kontra_text">Kontra</string>
     <string name="re_text_newline">Re\n</string>
     <string name="kontra_text_newline">Kontra\n</string>
-    <string name="re_party">Re Partei</string>
-    <string name="kontra_party">Kontra Partei</string>
-    <string name="for_string">für</string>
+    <string name="for_string">erreicht von Partei</string>
     <string name="round_type">Rundentyp</string>
     <string name="round_type_normal">Normal</string>
     <string name="round_type_wedding">Hochzeit</string>
@@ -191,4 +190,8 @@
     <string name="heart_trick">Herzstich</string>
     <string name="win_vs_alten">Gegen die Alten</string>
     <string name="total_points">Punkte:</string>
+    <string name="tie_text">Unentschieden</string>
+    <string name="select_party_tie">Partei oder Untentschieden wählen</string>
+    <string name="set_round_result">Rundenergebnis wählen</string>
+    <string name="set_round_type">Rundentyp wählen</string>
 </resources>

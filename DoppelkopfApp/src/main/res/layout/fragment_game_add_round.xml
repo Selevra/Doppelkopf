@@ -192,14 +192,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 							android:minHeight="48dp"
-                            android:text="@string/re_party" />
+                            android:text="@string/re_text" />
 
                         <RadioButton
                             android:id="@+id/rb_kontra_won"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 							android:minHeight="48dp"
-                            android:text="@string/kontra_party" />
+                            android:text="@string/kontra_text" />
+
+						<RadioButton
+							android:id="@+id/rb_tie"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:minHeight="48dp"
+							android:text="@string/tie_text" />
                     </RadioGroup>
                 </LinearLayout>
 				
