@@ -81,7 +81,6 @@
 		<View
             android:layout_width="fill_parent"
             android:layout_height="4dip"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="0dp"
             android:background="@drawable/drop_shadow" />
 
@@ -188,7 +187,7 @@
 
                     <RadioGroup
 						android:id="@+id/rb_group"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal" >
@@ -197,12 +196,14 @@
                             android:id="@+id/rb_re_won"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+							android:minHeight="48dp"
                             android:text="Re-Party" />
 
                         <RadioButton
                             android:id="@+id/rb_kontra_won"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+							android:minHeight="48dp"
                             android:text="Kontra-Party" />
                     </RadioGroup>
                 </LinearLayout>
@@ -231,6 +232,7 @@
 
                 <LinearLayout
                     android:id="@+id/ll_round_type"
+					android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -240,7 +242,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -279,7 +280,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -358,6 +358,7 @@
 
                 <LinearLayout
                     android:id="@+id/ll_ansagen"
+					android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -520,6 +521,7 @@
 
                 <LinearLayout
                     android:id="@+id/ll_special_points"
+					android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -529,7 +531,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -595,7 +596,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -679,7 +679,6 @@
 						style="?android:attr/listSeparatorTextViewStyle"
 						android:paddingTop="5dip"
 						android:gravity="center_horizontal"
-						android:layout_below="@+id/connect_help"
 						android:layout_width="match_parent"
 						android:layout_height="2dp"
 						android:background="#000" />
@@ -692,7 +691,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="left"
 						android:textSize="17sp"
                         android:text="Total points:"
@@ -755,8 +753,9 @@
 
                     <ImageView
                         android:clickable="true"
+						android:focusable="true"
                         android:id="@+id/game_add_round_bock_info"
-                        android:tint="@color/btn_style_1"
+                        app:tint="@color/btn_style_1"
                         android:src="@drawable/ic_info_outline_black_24dp"
                         android:layout_weight="0.29"
                         android:layout_width="0dip"
@@ -765,7 +764,7 @@
                         />
 
 
-                    <android.support.v7.widget.AppCompatCheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/game_add_round_bock_cb"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
