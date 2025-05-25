@@ -190,5 +190,8 @@
     <string name="select_party_tie">select party or tie</string>
     <string name="set_round_result">set round result</string>
     <string name="set_round_type">set round type</string>
+    <string name="scoring_mode">Scoring mode</string>
+    <string name="scoring_mode_manual">Manual</string>
+    <string name="scoring_mode_detailed">Detailed</string>
 
 </resources>

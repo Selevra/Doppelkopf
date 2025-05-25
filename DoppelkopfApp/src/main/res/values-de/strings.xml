@@ -194,4 +194,7 @@
     <string name="select_party_tie">Partei oder Untentschieden wählen</string>
     <string name="set_round_result">Rundenergebnis wählen</string>
     <string name="set_round_type">Rundentyp wählen</string>
+    <string name="scoring_mode">Punkteeingabe</string>
+    <string name="scoring_mode_manual">Manuell</string>
+    <string name="scoring_mode_detailed">Detailliert</string>
 </resources>

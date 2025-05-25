@@ -127,11 +127,11 @@ public class NewGameActivity extends DokoActivity {
         mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
 		mSpBockLimit.setSelection(0);
 
-		String[] mPunkteingabeVariantArr = new String[]{"manual", "detailed"};
-		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mPunkteingabeVariantArr);
+		String[] mScoringModeVariantArr = new String[]{getString(R.string.scoring_mode_manual), getString(R.string.scoring_mode_detailed)};
+		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mScoringModeVariantArr);
 		mSPPunkteeingabeArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 		mSpPunkteeingabe.setAdapter(mSPPunkteeingabeArrayAdapter);
-		mSpPunkteeingabe.setSelection(1); // TODO: change to 0 for playstore
+		mSpPunkteeingabe.setSelection(0);
     }
     
     private void setAutoCompleteNames(){

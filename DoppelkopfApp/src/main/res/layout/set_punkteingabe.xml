@@ -23,7 +23,7 @@
 		   android:textColor="@color/black"
 		   android:gravity="center|left"
 		   android:paddingLeft="5dp"
-		   android:text="Punkteeingabe"
+		   android:text="@string/scoring_mode"
 		   android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
