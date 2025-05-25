@@ -4,6 +4,7 @@ import android.util.Log;
 
 import nldoko.game.java.data.DokoData.GAME_CNT_VARIANT;
 import nldoko.game.java.XML.DokoXMLClass;
+import nldoko.game.java.game.GameActivity;
 
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private GAME_CNT_VARIANT cntVariant;
+	private DokoData.POINTS_CALCULATION mPointCalcType;
 
 	private ArrayList<PlayerClass> mPlayers;
 	private ArrayList<RoundClass> mRoundList;
@@ -33,7 +35,7 @@ public class GameClass  implements Serializable{
 		this.mCurrentFilename = fromFile;
 	}
 	
-	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant){
+	public GameClass(int playerCount, int activePlayer, int bockLimit, GAME_CNT_VARIANT cntVariant, DokoData.POINTS_CALCULATION pointsCalculation){
 		this.mPlayers = new ArrayList<PlayerClass>();
 		this.mRoundList = new ArrayList<RoundClass>();
 		this.mPreRoundList = new ArrayList<RoundClass>();
@@ -42,6 +44,7 @@ public class GameClass  implements Serializable{
     	this.mBockRoundLimit = bockLimit;
 
     	this.cntVariant = cntVariant;
+    	this.mPointCalcType = pointsCalculation;
     	
     	for(int i=0;i<getMAXPlayerCount();i++){
     		this.mPlayers.add(new PlayerClass(i));
@@ -77,6 +80,10 @@ public class GameClass  implements Serializable{
     public boolean isAutoBockCalculationOn() {
         return true;
     }
+
+	public boolean isDetailedRoundInfo() {
+		return this.getPointsCalculationType() == DokoData.POINTS_CALCULATION.POINTS_CALCULATION_DETAILED;
+	}
 
 	public void setGameCntVariant(GAME_CNT_VARIANT variant){
 		this.cntVariant = variant;
@@ -163,6 +170,10 @@ public class GameClass  implements Serializable{
 	public GAME_CNT_VARIANT getGameCntVariant(){
 		return this.cntVariant;
 	}
+
+	public DokoData.POINTS_CALCULATION getPointsCalculationType(){
+		return this.mPointCalcType;
+	}
 	
 	
 	
@@ -217,76 +228,90 @@ public class GameClass  implements Serializable{
 		}		
 	}
 	
-	public void editLastRound(int newRoundPoints, int[] states) {
-		RoundClass mRound = mRoundList.get(mRoundList.size()-1);
+	public void editLastRound(int newRoundPoints, DokoData.PLAYER_ROUND_RESULT_STATE[] states) {
+		RoundClass mRound = mRoundList.get(mRoundList.size() - 1);
 		
 		if (mRound != null) {
 			mRound.setPoints(newRoundPoints);
-			mRound.setRoundType(getWinnerCnt(states),mActivePlayerCount);
-			updatePlayerPoints(mRound,states);
+			mRound.setRoundType(getWinnerCnt(states), mActivePlayerCount);
+			updatePlayerPoints(mRound, states);
 		}
 	}
 
-	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, int[] states) {
+	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, DokoData.PLAYER_ROUND_RESULT_STATE[] states, GameActivity.USER_SELECTED_PLAYER_STATE[] userSelectedStates,
+							String roundResult, String roundTypeDetailed, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		RoundClass mRound = getNewRound();
 
 
 		mRound.setPoints(newRoundPoints);
-		mRound.setRoundType(getWinnerCnt(states),mActivePlayerCount);
-		//Log.d("GAMECLASS",mRound.getResultText());		
-		updatePlayerPoints(mRound,states);
+		mRound.setRoundType(getWinnerCnt(states), mActivePlayerCount);
+		//Log.d("GAMECLASS", mRound.getResultText());
+		updatePlayerPoints(mRound, states);
 		addRound(mRound);
 
 		if(mGameBockRoundsCount > 0 && mGameBockRoundsGameCount > 0) {
 			updateBockCountPreRounds(mGameBockRoundsCount, mGameBockRoundsGameCount);
 		}
+
+		mRound.setRoundResult(roundResult);
+		mRound.setRoundTypeDetailed(roundTypeDetailed);
+		mRound.setAnsagen(reAnsagen, kontraAnsagen);
+		mRound.setSpecialPoints(reSpecial, kontraSpecial);
+		mRound.setPartyMember(this.mPlayers, userSelectedStates, this.mPointCalcType);
+
+		Log.d("XML", "Starting to add new round ... ");
+		Log.d("XML", "Round Result: " + roundResult);
+		Log.d("XML", "Re: " + roundResult);
+        Log.d("XML", "Re Ansagen: " + reAnsagen);
+        Log.d("XML", "Kontra Ansagen: " + kontraAnsagen);
+        Log.d("XML", "Re special: " + reSpecial);
+        Log.d("XML", "Kontra special: " + kontraSpecial);
 	}
 
-    private int getWinnerCnt(int[] states){
-        int m = 0;
-        for(int i=0;i<states.length;i++){
-            DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
-            if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
-                m++;
+    private int getWinnerCnt(DokoData.PLAYER_ROUND_RESULT_STATE[] states){
+        int noOfWinner = 0;
+//        for(int i=0;i<states.length;i++){
+		for (DokoData.PLAYER_ROUND_RESULT_STATE state : states) {
+			if(state == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
+                noOfWinner++;
             }
         }
-        return m;
+        return noOfWinner;
     }
 
-	private void updatePlayerPoints(RoundClass mRound, int[] states) {
-		int mSoloWinPos = 0;
-		int mSoloLosePos = 0;
+	private void updatePlayerPoints(RoundClass mRound, DokoData.PLAYER_ROUND_RESULT_STATE[] states) {
+//		int mSoloWinPos = 0; // the player that has played alone
+//		int mSoloLosePos = 0; // the player that has played alone
 
-
-
-        for(int i=0;i<getPlayerCount();i++){
-            DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
-
-			if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
+        for(int i=0; i<getPlayerCount(); i++){
+          	if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
                 getPlayer(i).updatePoints(mRound.getID(), (float) 0);
             }
-			else if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
-				mSoloWinPos = i;
+			else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO &&
+					states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
+				//Win solo 1vs3, 1vs4, 1vs5
+				soloPointUpdate(mRound, true, i, states);
 			}
-			else {
-                mSoloLosePos = i;
+			else if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.LOSE_STATE &&
+					mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO){
+				//Lose solo - 3vs1, 4vs1, 5vs1
+				soloPointUpdate(mRound,false, i, states);
             }
 		}
 		
-		if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO){
-			//Win solo 1vs3, 1vs4, 1vs5
-			soloPointUpdate(mRound,true,mSoloWinPos,states);
-		}
-		else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO){
-			//Lose solo - 3vs1, 4vs1, 5vs1
-			soloPointUpdate(mRound,false,mSoloLosePos,states);
-		}
-		else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.FIVEPLAYER_3WIN){
+//		if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO){
+//			//Win solo 1vs3, 1vs4, 1vs5
+//			soloPointUpdate(mRound,true,mSoloWinPos,states);
+//		}
+//		else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO){
+//			//Lose solo - 3vs1, 4vs1, 5vs1
+//			soloPointUpdate(mRound,false,mSoloLosePos,states);
+//		}
+		// for round with more than 4 active players
+		if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.FIVEPLAYER_3WIN){
 			//3vs2
 			for(int i=0;i<getPlayerCount();i++){
-                DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
-
-				if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
+             	 if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
 					//Win
 					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN) {
                         getPlayer(i).updatePoints(mRound.getID(), (float) mRound.getPoints());
@@ -295,7 +320,7 @@ public class GameClass  implements Serializable{
                         getPlayer(i).updatePoints(mRound.getID(),(float)0);
                     }
 				}
-				else if(stateForPosition != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
+				else if(states[i] != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
 					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE) {
                         getPlayer(i).updatePoints(mRound.getID(), (float) ((float) mRound.getPoints() * 1.5 * -1));
                     }
@@ -322,9 +347,7 @@ public class GameClass  implements Serializable{
             }
 
 			for(int i=0;i<getPlayerCount();i++){
-                DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
-
-				if(stateForPosition == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
+                if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
 					//Win
 					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN) {
 						getPlayer(i).updatePoints(mRound.getID(), (mRound.getPoints() * mWinFactor));
@@ -333,7 +356,7 @@ public class GameClass  implements Serializable{
 						getPlayer(i).updatePoints(mRound.getID(), 0.0f);
 					}
 				}
-				else if(stateForPosition != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
+				else if(states[i] != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
 					if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE) {
 						getPlayer(i).updatePoints(mRound.getID(), (float) (-mRound.getPoints() * mLoseFactor));
 					}
@@ -351,7 +374,7 @@ public class GameClass  implements Serializable{
 		}
 	}
 
-	private void soloPointUpdate(RoundClass mRound, boolean isSoloWinner, int mSoloPos, int[] states) {
+	private void soloPointUpdate(RoundClass mRound, boolean isSoloWinner, int mSoloPos, DokoData.PLAYER_ROUND_RESULT_STATE[] states) {
 		int mPoints = 0;
 		
 		if(isSoloWinner) {
@@ -363,9 +386,7 @@ public class GameClass  implements Serializable{
 
 		
 		for(int i=0; i<getPlayerCount();i++){
-            DokoData.PLAYER_ROUND_RESULT_STATE stateForPosition  =  DokoData.PLAYER_ROUND_RESULT_STATE.valueOf(states[i]);
-
-			if(i!=mSoloPos &&  stateForPosition != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
+			if(i!=mSoloPos &&  states[i] != DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE){
 				if(cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_NORMAL || (isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_LOSE)
 						|| (!isSoloWinner &&  cntVariant == GAME_CNT_VARIANT.CNT_VARIANT_WIN)) {
 					getPlayer(i).updatePoints(mRound.getID(), (float) mPoints);

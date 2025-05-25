@@ -1,8 +1,6 @@
 package nldoko.game.java.game;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -332,7 +330,7 @@ public class GameMainListAdapter extends ArrayAdapter<RoundClass> {
 	private void showEditRoundDialog(final int roundNumber, final View v){
 		String mStr = "";
 
-		if(mGame.getRoundList().get(roundNumber-1).getPoints() == 0 || mGame.getRoundList().size() > roundNumber){
+		if(mGame.getRoundList().size() > roundNumber){
 			Toast.makeText(mContext, R.string.str_edit_round_not_possible, Toast.LENGTH_SHORT).show();
 			return;
 		}

@@ -81,28 +81,41 @@ public class DokoData {
             return "restore";
         }
 	}
-	
-	public enum PLAYER_ROUND_RESULT_STATE {
-		LOSE_STATE, 
-		WIN_STATE, 
-		SUSPEND_STATE;
 
-		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
-			switch (state) {
-				case 0:	return LOSE_STATE;
-				case 1:	return WIN_STATE;
-				case 2:	return SUSPEND_STATE;
-				default:
-					break;
-			}
-			return null;
-		}
+	// must be aligned with Enum "USER_SELECTED_PLAYER_STATE"
+	public enum PLAYER_ROUND_RESULT_STATE {
+		WIN_STATE,
+		LOSE_STATE,
+		SUSPEND_STATE,
+		TIE_STATE,
+
+//		public static PLAYER_ROUND_RESULT_STATE valueOf(int state) {
+//			switch (state) {
+//				case 0:	return LOSE_STATE;
+//				case 1:	return WIN_STATE;
+//				case 2:	return SUSPEND_STATE;
+//				default:
+//					break;
+//			}
+//			return null;
+//		}
+	}
+
+	public enum PLAYER_ROUND_PARTY {
+		PARTY_RE,
+		PARTY_KONTRA,
+		PARTY_NOT_SET
 	}
 	
 	public enum GAME_CNT_VARIANT {
 		CNT_VARIANT_NORMAL,
 		CNT_VARIANT_LOSE,
 		CNT_VARIANT_WIN
+	}
+
+	public enum POINTS_CALCULATION {
+		POINTS_CALCULATION_MANUAL,
+		POINTS_CALCULATION_DETAILED
 	}
 
 	public enum GAME_VIEW_TYPE {
@@ -147,6 +160,7 @@ public class DokoData {
 	public static final String BOCKROUND_KEY 			= "BOCKROUND";
 	public static final String ACTIVE_PLAYER_KEY 		= "ACTIVE_PLAYERS";
 	public static final String GAME_CNT_VARIANT_KEY 	= "GAME_CNT_VARIANT";
+	public static final String PUNKTEEINGABE_KEY		= "PUNKTEINGABE";
 	public static final String ROUND_POINTS_KEY 		= "ROUND_POINTS";
 	public static final String ROUND_ID 				= "ROUND_ID";
 

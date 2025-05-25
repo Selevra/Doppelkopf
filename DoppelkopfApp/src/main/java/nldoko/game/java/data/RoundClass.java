@@ -1,12 +1,15 @@
 package nldoko.game.java.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 import nldoko.game.java.data.DokoData.GAME_ROUND_RESULT_TYPE;
 import nldoko.game.R;
-
+import nldoko.game.java.game.GameActivity;
 
 
 public class RoundClass implements Serializable  {
@@ -17,12 +20,27 @@ public class RoundClass implements Serializable  {
 	private int mPoints;
 	private int mBockCount;
 	private GAME_ROUND_RESULT_TYPE mRoundType;
+	// detailed round infos
+	private String mRoundResult;
+	private String mRoundTypeDetailed;
+	private String mReMembers;
+	private String mKontraMembers;
+	private String mSuspendedPlayers;
+	private String mReAnsagen;
+	private String mKontraAnsagen;
+	private String mReSpecial;
+	private String mKontraSpecial;
 
 	
 	public RoundClass(int id,int points,int bockCount){
 		this.mID = id;
 		this.mBockCount 	= bockCount;
 		this.mPoints	= points;
+		this.mRoundResult = "";
+		this.mReAnsagen = "";
+		this.mKontraAnsagen = "";
+		this.mReSpecial = "";
+		this.mKontraSpecial = "";
 	}
 
     public RoundClass(int id, GAME_ROUND_RESULT_TYPE type, int points,int bockCount){
@@ -30,6 +48,14 @@ public class RoundClass implements Serializable  {
         this.mBockCount 	= bockCount;
         this.mPoints	= points;
         this.mRoundType = type;
+        this.mRoundResult = "";
+        this.mReMembers = "";
+        this.mKontraMembers = "";
+        this.mSuspendedPlayers = "";
+        this.mReAnsagen = "";
+        this.mKontraAnsagen = "";
+		this.mReSpecial = "";
+		this.mKontraSpecial = "";
     }
 	
 	public int getID(){
@@ -153,5 +179,122 @@ public class RoundClass implements Serializable  {
 					return "2vs2";
 				}
 		}
+	}
+
+	public void setRoundResult(String roundResult) {
+	    this.mRoundResult = roundResult;
+        Log.d("XML", "Set Round Result: " + this.mRoundResult);
+    }
+
+	public void setRoundTypeDetailed(String roundType) {
+		this.mRoundTypeDetailed = roundType;
+		Log.d("XML", "Set Round Type (detailed): " + this.mRoundTypeDetailed);
+	}
+
+    public void setAnsagen(String reAnsagen, String kontraAnsagen) {
+	    if (reAnsagen != null) {
+            this.mReAnsagen = reAnsagen;
+        }
+	    if (kontraAnsagen != null) {
+            this.mKontraAnsagen = kontraAnsagen;
+        }
+        Log.d("XML", "Set Re Ansagen: " + this.mReAnsagen);
+        Log.d("XML", "Set Kontra Ansagen: " + this.mKontraAnsagen);
+    }
+
+	public void setSpecialPoints(ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
+		this.mReSpecial = concatenateListElements(reSpecial);
+		this.mKontraSpecial = concatenateListElements(kontraSpecial);
+
+		Log.d("XML", "Re Special: " + this.mReSpecial);
+		Log.d("XML", "Kontra Special: " + this.mKontraSpecial);
+	}
+
+	private String concatenateListElements(ArrayList<String> list) {
+		String ret = "";
+		for (int i=0; i<list.size(); i++) {
+			if (i != 0) {
+				ret += ", ";
+			}
+			ret += list.get(i);
+		}
+		return ret;
+	}
+
+	public void setPartyMember(ArrayList<PlayerClass> players, GameActivity.USER_SELECTED_PLAYER_STATE[] states, DokoData.POINTS_CALCULATION calcType) {
+		List<String> re = new ArrayList<String>();
+		List<String> kontra = new ArrayList<String>();
+		List<String> suspend = new ArrayList<String>();
+		// make sure that we do not try to access not existing array elements
+		if (states.length != players.size())
+		{
+			return;
+		}
+		for(int i=0; i<states.length; i++) {
+			if (states[i] == GameActivity.USER_SELECTED_PLAYER_STATE.WIN_OR_RE_STATE) {
+				re.add(players.get(i).getName());
+			}
+			else if (states[i] == GameActivity.USER_SELECTED_PLAYER_STATE.LOSE_OR_KONTRA_STATE) {
+				kontra.add(players.get(i).getName());
+			}
+			else if (states[i] == GameActivity.USER_SELECTED_PLAYER_STATE.SUSPEND_STATE) {
+				suspend.add(players.get(i).getName());
+			}
+		}
+		this.mReMembers = constructPartyMemberString(re);
+		this.mKontraMembers = constructPartyMemberString(kontra);
+		this.mSuspendedPlayers = constructPartyMemberString(suspend);
+	}
+
+	private String constructPartyMemberString(List<String> list) {
+		String ret = "";
+		for (int i=0; i<list.size(); i++) {
+			if (list.get(i) == "")
+			{
+				Log.d("XML", "No Name set for player " + i);
+				break;
+			}
+			if (i != 0) {
+				ret += ", ";
+			}
+			ret += list.get(i);
+		}
+		return ret;
+	}
+
+	public String getRoundResult() {
+	    return this.mRoundResult;
+    }
+
+	public String getRoundTypeDetailed() {
+		return this.mRoundTypeDetailed;
+	}
+
+    public String getReAnsagen() {
+        return this.mReAnsagen;
+    }
+
+    public String getKontraAnsagen() {
+	    return this.mKontraAnsagen;
+    }
+
+	public String getReSpecial() {
+		return this.mReSpecial;
+	}
+
+	public String getKontraSpecial() {
+		return this.mKontraSpecial;
+	}
+
+	public String getReMembers() {
+		return this.mReMembers;
+	}
+
+	public String getKontraMembers() {
+		return this.mKontraMembers;
+	}
+
+	public String getSuspendedPlayers() {
+		return this.mSuspendedPlayers;
 	}
 }

@@ -81,26 +81,599 @@
 		<View
             android:layout_width="fill_parent"
             android:layout_height="4dip"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="0dp"
             android:background="@drawable/drop_shadow" />
 
     </LinearLayout>
 
     <ScrollView
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="-4dp"
         android:paddingLeft="@dimen/activity_padding_lr"
         android:paddingRight="@dimen/activity_padding_lr">
 	
 	    <LinearLayout
+			android:id="@+id/game_add_round_point_grid"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
             android:paddingTop="@dimen/item_space"
 	        android:orientation="vertical" >
 
             <include layout="@layout/fragment_game_new_round_grid_point"/>
+
+            <LinearLayout
+                android:animateLayoutChanges="true"
+                android:id="@+id/game_detailed_round_info_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_space"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/round_new_edit_padding_tb"
+                android:paddingTop="@dimen/round_new_edit_padding_tb">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/round_result"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ToggleButton
+                        android:id="@+id/tb_no120"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="@string/no_120"
+                        android:textOn="@string/no_120" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_no90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="@string/no_90"
+                        android:textOn="@string/no_90" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_no60"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="@string/no_60"
+                        android:textOn="@string/no_60" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_no30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="@string/no_30"
+                        android:textOn="@string/no_30" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_no0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+						android:layout_gravity="center"
+						android:gravity="center"
+                        android:textOff="@string/points_0"
+                        android:textOn="@string/points_0"/>
+                </LinearLayout>
+				<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/for_string" />
+
+                    <RadioGroup
+						android:id="@+id/rb_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/rb_re_won"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+							android:minHeight="48dp"
+                            android:text="@string/re_text" />
+
+                        <RadioButton
+                            android:id="@+id/rb_kontra_won"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+							android:minHeight="48dp"
+                            android:text="@string/kontra_text" />
+
+						<RadioButton
+							android:id="@+id/rb_tie"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:minHeight="48dp"
+							android:text="@string/tie_text" />
+                    </RadioGroup>
+                </LinearLayout>
+				
+				<RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/round_type"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/im_round_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_round_type"
+					android:baselineAligned="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/round_type_normal" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_normal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/round_type_normal"
+                            android:textOn="@string/round_type_normal" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_hochzeit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/round_type_wedding"
+                            android:textOn="@string/round_type_wedding" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_armut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/round_type_poverty"
+                            android:textOn="@string/round_type_poverty" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/round_type_solo" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_obersolo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/solo_typo_obersolo"
+                            android:textOn="@string/solo_typo_obersolo" />
+							
+						<ToggleButton
+                            android:id="@+id/btn_untersolo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/solo_type_untersolo"
+                            android:textOn="@string/solo_type_untersolo" />
+							
+						<ToggleButton
+                            android:id="@+id/btn_fleischloser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/solo_type_fleischloser"
+                            android:textOn="@string/solo_type_fleischloser" />
+							
+						<ToggleButton
+                            android:id="@+id/btn_farbsolo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/solo_type_color"
+                            android:textOn="@string/solo_type_color" />
+						
+						<ToggleButton
+                            android:id="@+id/btn_stille_hochzeit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/solo_type_silent_wedding"
+                            android:textOn="@string/solo_type_silent_wedding" />
+					</LinearLayout>
+				</LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/an_absagen"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/im_ansagen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_ansagen"
+					android:baselineAligned="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/re_text" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ToggleButton
+                                android:id="@+id/tb_re_re"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/re_text_newline"
+                                android:textOn="@string/re_text_newline" />
+							<ToggleButton
+                                android:id="@+id/tb_re_90"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_90"
+                                android:textOn="@string/no_90" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ToggleButton
+                                android:id="@+id/tb_re_60"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_60"
+                                android:textOn="@string/no_60" />
+                            <ToggleButton
+                                android:id="@+id/tb_re_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_30"
+                                android:textOn="@string/no_30" />
+                            <ToggleButton
+                                android:id="@+id/tb_re_0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/points_0"
+                                android:textOn="@string/points_0" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kontra_text" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ToggleButton
+                                android:id="@+id/tb_kontra_kontra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/kontra_text_newline"
+                                android:textOn="@string/kontra_text_newline" />
+							<ToggleButton
+                                android:id="@+id/tb_kontra_90"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_90"
+                                android:textOn="@string/no_90" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ToggleButton
+                                android:id="@+id/tb_kontra_60"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_60"
+                                android:textOn="@string/no_60" />
+                            <ToggleButton
+                                android:id="@+id/tb_kontra_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/no_30"
+                                android:textOn="@string/no_30" />
+                            <ToggleButton
+                                android:id="@+id/tb_kontra_0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textOff="@string/points_0"
+                                android:textOn="@string/points_0" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/special_points"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/im_special"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_special_points"
+					android:baselineAligned="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/re_text" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_re_doppelkopf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/doppelkopf"
+                            android:textOn="@string/doppelkopf" />
+
+                        <SeekBar
+                            android:id="@+id/re_seekBar_DK"
+                            style="@style/Widget.AppCompat.SeekBar.Discrete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:max="4"
+                            android:progress="1" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_re_fuchs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/fox"
+                            android:textOn="@string/fox" />
+
+                        <SeekBar
+                            android:id="@+id/re_seekBar_Fuchs"
+                            style="@style/Widget.AppCompat.SeekBar.Discrete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:max="2"
+                            android:progress="1" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_re_karl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/karlchen"
+                            android:textOn="@string/karlchen" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_re_heart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/heart_trick"
+                            android:textOn="@string/heart_trick" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kontra_text" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_kontra_doppelkopf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/doppelkopf"
+                            android:textOn="@string/doppelkopf" />
+
+                        <SeekBar
+                            android:id="@+id/kontra_seekBar_DK"
+                            style="@style/Widget.AppCompat.SeekBar.Discrete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:max="4"
+                            android:progress="1" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_kontra_fuchs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/fox"
+                            android:textOn="@string/fox" />
+
+                        <SeekBar
+                            android:id="@+id/kontra_seekBar_Fuchs"
+                            style="@style/Widget.AppCompat.SeekBar.Discrete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:max="2"
+                            android:progress="1" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_kontra_karl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/karlchen"
+                            android:textOn="@string/karlchen" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_kontra_heart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/heart_trick"
+                            android:textOn="@string/heart_trick" />
+
+                        <ToggleButton
+                            android:id="@+id/btn_kontra_gegen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="@string/win_vs_alten"
+                            android:textOn="@string/win_vs_alten" />
+                    </LinearLayout>
+                </LinearLayout>
+				<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+					android:layout_marginTop="10dp"
+					android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+					<TextView
+						android:id="@+id/line"
+						style="?android:attr/listSeparatorTextViewStyle"
+						android:paddingTop="5dip"
+						android:gravity="center_horizontal"
+						android:layout_width="match_parent"
+						android:layout_height="2dp"
+						android:background="#000" />
+				</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+						android:textSize="17sp"
+                        android:text="@string/total_points"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/text_projected_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="-" />
+                    <TextView
+                        android:id="@+id/text_winner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
 
 	        <LinearLayout
                 android:layout_marginTop="@dimen/item_space"
@@ -143,8 +716,9 @@
 
                     <ImageView
                         android:clickable="true"
+						android:focusable="true"
                         android:id="@+id/game_add_round_bock_info"
-                        android:tint="@color/btn_style_1"
+                        app:tint="@color/btn_style_1"
                         android:src="@drawable/ic_info_outline_black_24dp"
                         android:layout_weight="0.29"
                         android:layout_width="0dip"
@@ -153,7 +727,7 @@
                         />
 
 
-                    <android.support.v7.widget.AppCompatCheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/game_add_round_bock_cb"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"

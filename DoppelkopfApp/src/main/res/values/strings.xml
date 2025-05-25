@@ -11,10 +11,10 @@
     <string name="str_saved_game_via_mail_text_1">Doppelkopf game from:</string>
     <string name="str_saved_game_via_mail_text_excel">*You can import this data into excel.
         Save data as text file and import into excel by using semicolon as separator.</string>
-    Important set \".\" (dot) as decimal seperator.
+    Important set \".\" (dot) as decimal separator.
     <string name="str_saved_game_via_mail_intent">Send via mail...</string>
     <string name="str_new_game">New game</string>
-    <string name="str_player_name">Playername</string>
+    <string name="str_player_name">Player name</string>
     <string name="str_clear_player_name_list">Delete name history</string>
     <string name="str_clear_player_name_list_text">Successfully cleaned player name history.</string>
     <string name="str_player_add">Add player</string>
@@ -32,7 +32,7 @@
     <string name="str_edit_round_not_possible">You can\'t edit this round</string>
     <string name="str_edit_round_info">Edit a round with a long press on the round entry</string>
     <string name="str_edit_round_finish">Round successfully changed</string>
-    <string name="str_edit_round_error">Error: round coudn\'t be changed!</string>
+    <string name="str_edit_round_error">Error: round could not be changed!</string>
     <string name="str_active_player">Active players</string>
     <string name="str_bock_limit">Bocklimit</string>
     <string name="str_bock">Bock</string>
@@ -59,16 +59,19 @@
     <string name="str_game_points">Points</string>
     <string name="str_game_points_winner_select_text">win</string>
     <string name="str_game_points_lose_select_text">lose</string>
+    <string name="str_game_points_re_select_text">re</string>
+    <string name="str_game_points_kontra_select_text">kontra</string>
     <string name="str_game_points_suspend_select_text">suspended</string>
     <string name="str_game_points_choose_bock">New bock rounds</string>
     <string name="str_game_bock_rounds_cnt">Count of bockrounds</string>
     <string name="str_game_bock_rounds_game_cnt">Games per bockround</string>
     <string name="str_game_points_choose_bock_info">Count of bockrounds:\n\nDefine how often bockrounds will be added.
-    \n\nGames per bockround:\n\Defines how much games will be a bockround.
-    \n\nExampels:\n\nCount of bockround = 1, Games per bockround = 4 will reuslt ind 4 new bockrounds total.
+    \n\nGames per bockround:\nDefines how much games will be a bockround.
+    \n\nExamples:\n\nCount of bockround = 1, Games per bockround = 4 will result ind 4 new bockrounds total.
     \n\nCount of bockround = 2, Games per bockround = 5 will result ind 5 double bockrounds total.</string>
 
-    <string name="str_error_game_new_round_data">Invalid values. Please check points and count of winner/loser/(suspended player)</string>
+    <string name="str_error_game_new_round_data">Invalid values. Please check points and count of winner/loser/(suspended player).</string>
+    <string name="str_error_game_new_detailed_round_data">Invalid values. Please check round result and type and count of re/kontra/(suspended) players.</string>
     <string name="str_round_type_solo">Solo</string>
     <string name="str_round_type_2vs2">2vs2</string>
     <string name="str_round_type_3vs2">3vs2</string>
@@ -83,7 +86,7 @@
     <string name="str_exit_game">Quit game</string>
     <string name="str_exit_game_q">Do really want to quit this game?</string>
     <string name="str_error_game_start">Error: can\'t start game</string>
-    <string name="str_error_load_game_for_change_game_settings">Error: game settings couldn\'t be loaded</string>
+    <string name="str_error_load_game_for_change_game_settings">Error: game settings could not be loaded</string>
 
     <string name="str_dp_seperator">:</string>
     <string name="str_edit">edit</string>
@@ -115,7 +118,7 @@
 
     <string name="str_info_game">Add a new round:\n\n
     To add a new round you have to change to the add round view. You can do this by a swipe to left gesture.\n\n
-        For adding a round you have to define the points of the round and which player had win or lose the new round (optinal which player set was suspended at this round).\n\n
+        For adding a round you have to define the points of the round and which player had win or lose the new round (optional which player set was suspended at this round).\n\n
 
     You can enter the points via the number pad.\n\n
     To define which player has won or lose the round simply press on the player name to change the state.\n\n
@@ -153,5 +156,42 @@
             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
             See the License for the specific language governing permissions and
             limitations under the License.</string>
+    <string name="str_game_enter_detailed_info">Enter detailed game infos</string>
+    <string name="round_result">Round result</string>
+    <string name="no_120">No\n120</string>
+    <string name="no_90">No\n90</string>
+    <string name="no_60">No\n60</string>
+    <string name="no_30">No\n30</string>
+    <string name="points_0">0\n</string>
+    <string name="re_text">Re</string>
+    <string name="kontra_text">Kontra</string>
+    <string name="re_text_newline">Re\n</string>
+    <string name="kontra_text_newline">Kontra\n</string>
+    <string name="for_string">reached by party</string>
+    <string name="round_type">Round type</string>
+    <string name="round_type_normal">Normal</string>
+    <string name="round_type_wedding">Wedding</string>
+    <string name="round_type_poverty">Poverty</string>
+    <string name="round_type_solo">Solo</string>
+    <string name="solo_typo_obersolo">Obersolo</string>
+    <string name="solo_type_untersolo">Untersolo</string>
+    <string name="solo_type_fleischloser">Fleischloser</string>
+    <string name="solo_type_color">Farbsolo</string>
+    <string name="solo_type_silent_wedding">Silent Wedding</string>
+    <string name="an_absagen">An-/Absagen</string>
+    <string name="special_points">Special points</string>
+    <string name="doppelkopf">Doppelkopf</string>
+    <string name="fox">Fox</string>
+    <string name="karlchen">Charly</string>
+    <string name="heart_trick">Heart trick</string>
+    <string name="win_vs_alten">Vs. the Alten</string>
+    <string name="total_points">Total points:</string>
+    <string name="tie_text">Tie</string>
+    <string name="select_party_tie">select party or tie</string>
+    <string name="set_round_result">set round result</string>
+    <string name="set_round_type">set round type</string>
+    <string name="scoring_mode">Scoring mode</string>
+    <string name="scoring_mode_manual">Manual</string>
+    <string name="scoring_mode_detailed">Detailed</string>
 
 </resources>
