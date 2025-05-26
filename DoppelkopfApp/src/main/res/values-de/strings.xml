@@ -2,8 +2,8 @@
 <resources>
     <!-- german -->
 
-    <string name="app_name">Doppelkopf</string>
-    <string name="app_version">Version 3.1</string>
+    <string name="app_name">Doppelkopf 2.0</string>
+    <string name="app_version">Version 4.0.0-alpha</string>
     <string name="start_action_about">Über die App</string>
     <string name="str_saved_game">Speicherstände</string>
     <string name="str_saved_game_delete_all">Speicherstände löschen</string>

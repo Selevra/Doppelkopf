@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 35
     defaultConfig {
-        applicationId "nldoko.game"
+        applicationId "nldoko.game.v2"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 15
-        versionName "3.1"
+        versionName "4.0.0-alpha"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,6 +17,15 @@ android {
         }
     }
     namespace 'nldoko.game'
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def appName = "Doppelkopf-2.0"
+            def versionName = variant.versionName
+            def buildType = variant.buildType.name
+            def newApkName = "${appName}_v${versionName}+${buildType}.apk"
+            outputFileName = newApkName
+        }
+    }
 }
 
 dependencies {
