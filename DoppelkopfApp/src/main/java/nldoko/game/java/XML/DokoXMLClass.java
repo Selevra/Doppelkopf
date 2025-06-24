@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -156,276 +157,234 @@ public class DokoXMLClass {
         }
     }
 
-	public static boolean saveGameStateToXML(Context c, GameClass game) {
-		if(game == null) {
-            // no game ?!
+    public static boolean saveGameStateToXML(Context c, GameClass game) {
+        if (game == null) {
+            Log.e("SaveGame", "Game object is null");
             return false;
         }
 
-        // prepare file handling
-        FileOutputStream fos = null;
-        OutputStreamWriter osw = null;
         String oldGameFile = game.currentFilename();
         String newFilename = game.generateNewFilename();
 
-        File finalFile = null;
-
-        // try to save on external storage
-        boolean access = checkPermissionWriteExternalStorage(c);
-        File externalStorage = getExternalStorageDirectory();
-
-        if (externalStorage != null && access) {
-            boolean dirReady = createAppDirsInStorage(externalStorage);
-
-            if (dirReady) {
-                finalFile = new File(externalStorage.getAbsolutePath() + File.separatorChar + APP_DIR_GAMES + File.separatorChar + newFilename);
-
-                try {
-
-                    fos = new FileOutputStream(finalFile);
-                    osw = new OutputStreamWriter(fos);
-
-                } catch (IOException e) {
-                    // Unable to create file, likely because external storage is
-                    // not currently mounted.
-                    Log.w("ExternalStorage", "Error external storage " + finalFile.getAbsolutePath(), e);
-                    fos = null;
-                    osw = null;
-                }
-            }
+        // Verwende den externen Speicher-Ordner
+        File externalStorage = Environment.getExternalStorageDirectory();
+        if (externalStorage == null) {
+            Log.e("Storage", "External storage directory is null");
+            return false;
         }
 
-        // if no external storage or error on external storage use app dir
-        if (fos == null || osw == null) {
-            //Log.d(TAG,writer.toString());
-            if (DokoXMLClass.isAppDirOK(c)) {
-                String appDir = getAppDir(c);
-                boolean dirReady = createAppDirsInStorage(new File(appDir));
-
-                if (dirReady) {
-                    try {
-
-                        finalFile = new File(appDir+newFilename);
-                        fos = new FileOutputStream(finalFile);
-                        osw = new OutputStreamWriter(fos);
-
-                    } catch (IOException e) {
-                        Log.w("ExternalStorage", "Error internal storage ", e);
-                        fos = null;
-                        osw = null;
-                    }
-                }
+        File gamesDir = new File(c.getExternalFilesDir(null), "games");
+        if (!gamesDir.exists()) {
+            boolean created = gamesDir.mkdirs();
+            if (!created) {
+                Log.e("Storage", "Failed to create directory: " + gamesDir.getAbsolutePath());
+                return false;
             }
         }
+        File finalFile = new File(gamesDir, newFilename);
 
-        if (finalFile != null) {
+        try {
+            FileOutputStream fos = new FileOutputStream(finalFile);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
+
+            serializer.setOutput(writer);
+            serializer.startDocument("UTF-8", false);
+            serializer.text("\n");
+            serializer.startTag("", GAME);
+            serializer.attribute("", GAME_XML_STRUCT_VERSION_ATTR, GAME_XML_STRUCT_VERSION);
+
+            // Hier kommt dein bisheriger XML-Code rein
+            addGameSettingsToXML(serializer, game);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_ROUNDS);
+            ArrayList<RoundClass> rounds = game.getRoundList();
+            for (RoundClass r : rounds) {
+                serializer.text("\n\t\t");
+                serializer.startTag("", GAME_ROUND);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_ROUND_ID);
+                serializer.text(Integer.toString(r.getID()));
+                serializer.endTag("", GAME_ROUND_ID);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_ROUND_TYPE);
+                serializer.text(GAME_ROUND_RESULT_TYPE.stringValueOf(r.getRoundType()));
+                serializer.endTag("", GAME_ROUND_TYPE);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
+                serializer.text(Integer.toString(r.getPointsWithoutBock()));
+                serializer.endTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_ROUND_BOCK_CNT);
+                serializer.text(Integer.toString(r.getBockCount()));
+                serializer.endTag("", GAME_ROUND_BOCK_CNT);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_ROUND_DETAILED_INFO);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_RE_MEMBER);
+                serializer.text(r.getReMembers());
+                serializer.endTag("", GAME_ROUND_RE_MEMBER);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_KONTRA_MEMBER);
+                serializer.text(r.getKontraMembers());
+                serializer.endTag("", GAME_ROUND_KONTRA_MEMBER);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_SUSPENDED_PLAYERS);
+                serializer.text(r.getSuspendedPlayers());
+                serializer.endTag("", GAME_ROUND_SUSPENDED_PLAYERS);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_RESULT);
+                serializer.text(r.getRoundResult());
+                serializer.endTag("", GAME_ROUND_RESULT);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_TYPE_DETAILED);
+                serializer.text(r.getRoundTypeDetailed());
+                serializer.endTag("", GAME_ROUND_TYPE_DETAILED);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_RE_ANSAGEN);
+                serializer.text(r.getReAnsagen());
+                serializer.endTag("", GAME_ROUND_RE_ANSAGEN);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_CONTRA_ANSAGEN);
+                serializer.text(r.getKontraAnsagen());
+                serializer.endTag("", GAME_ROUND_CONTRA_ANSAGEN);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_RE_SPECIAL);
+                serializer.text(r.getReSpecial());
+                serializer.endTag("", GAME_ROUND_RE_SPECIAL);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_CONTRA_SPECIAL);
+                serializer.text(r.getKontraSpecial());
+                serializer.endTag("", GAME_ROUND_CONTRA_SPECIAL);
+
+                serializer.text("\n\t\t\t");
+                serializer.endTag("", GAME_ROUND_DETAILED_INFO);
+
+                serializer.text("\n\t\t");
+                serializer.endTag("", GAME_ROUND);
+            }
+            serializer.text("\n\t");
+            serializer.endTag("", GAME_ROUNDS);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_PLAYERS);
+            for (int i = 0; i < game.getMAXPlayerCount(); i++) {
+                PlayerClass p = game.getPlayer(i);
+
+                serializer.text("\n\t\t");
+                serializer.startTag("", GAME_PLAYER);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_PLAYER_ID);
+                serializer.text(Integer.toString(p.getID()));
+                serializer.endTag("", GAME_PLAYER_ID);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_PLAYER_NAME);
+                serializer.text(p.getName());
+                serializer.endTag("", GAME_PLAYER_NAME);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_PLAYER_POINTS);
+                serializer.text(Float.toString(p.getPoints()));
+                serializer.endTag("", GAME_PLAYER_POINTS);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_PLAYER_POINT_HISTORY);
+
+                for (int ph = 0; ph < p.getPointHistoryLength() && ph < p.getPointHistoryAtRoundLength(); ph++) {
+                    serializer.text("\n\t\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
+
+                    serializer.text("\n\t\t\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
+                    serializer.text(Float.toString(p.getPointHistory(ph)));
+                    serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
+
+                    serializer.text("\n\t\t\t\t\t");
+                    serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
+                    serializer.text(Float.toString(p.getPointHistoryPerRound(ph)));
+                    serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
+
+                    serializer.text("\n\t\t\t\t");
+                    serializer.endTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
+                }
+                serializer.text("\n\t\t\t");
+                serializer.endTag("", GAME_PLAYER_POINT_HISTORY);
+
+                serializer.text("\n\t\t");
+                serializer.endTag("", GAME_PLAYER);
+            }
+            serializer.text("\n\t");
+            serializer.endTag("", GAME_PLAYERS);
+
+            serializer.text("\n\t");
+            serializer.startTag("", GAME_PRE_ROUNDS);
+            for (int t = 0; t < game.getPreRoundList().size(); t++) {
+                serializer.text("\n\t\t");
+                serializer.startTag("", GAME_PRE_ROUND);
+
+                serializer.text("\n\t\t\t");
+                serializer.startTag("", GAME_PRE_ROUND_BOCK_COUNT);
+                serializer.text(Integer.toString(game.getPreRoundList().get(t).getBockCount()));
+                serializer.endTag("", GAME_PRE_ROUND_BOCK_COUNT);
+
+                serializer.text("\n\t\t");
+                serializer.endTag("", GAME_PRE_ROUND);
+            }
+            serializer.text("\n\t");
+            serializer.endTag("", GAME_PRE_ROUNDS);
+
+            serializer.text("\n");
+            serializer.endTag("", GAME);
+            serializer.endDocument();
+            serializer.flush();
+
+            Log.v("SaveGame", "Saving XML content:\n" + writer.toString());
+
+            osw.write(writer.toString());
+            osw.flush();
+            fos.flush();
+            osw.close();
+            fos.close();
+
+            // Alte Datei löschen
+            if (oldGameFile != null) {
+                File oldFile = new File(oldGameFile);
+                if (oldFile.exists() && !oldFile.isDirectory()) {
+                    boolean deleted = oldFile.delete();
+                    Log.d("SaveGame", "Old file deleted? " + deleted + " Path: " + oldGameFile);
+                }
+            }
+
+            // Neuen Pfad setzen
             game.setCurrentFilename(finalFile.getAbsolutePath());
+
+            Log.d("SaveGame", "Game saved successfully at: " + finalFile.getAbsolutePath());
+
+            return true;
+
+        } catch (Exception e) {
+            Log.e("SaveGame", "Error saving game XML", e);
+            return false;
         }
-
-        // XML file content
-        if (fos != null && osw != null){
-			XmlSerializer serializer = Xml.newSerializer();
-		    StringWriter writer = new StringWriter();
-
-    	    try {
-    	        serializer.setOutput(writer);
-    	        serializer.startDocument("UTF-8", false);
-    	        serializer.text("\n");
-    	        serializer.startTag("", GAME);
-                serializer.attribute("", GAME_XML_STRUCT_VERSION_ATTR, GAME_XML_STRUCT_VERSION);
-
-                // only @ version > 2.5
-                // add game settings
-                addGameSettingsToXML(serializer, game);
-
-                // add played rounds
-                serializer.text("\n\t");
-                serializer.startTag("", GAME_ROUNDS);
-                ArrayList<RoundClass> rounds = game.getRoundList();
-                for(int i=0; i < rounds.size(); i++){
-                    RoundClass r = rounds.get(i);
-
-                    serializer.text("\n\t\t");
-                    serializer.startTag("", GAME_ROUND);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_ID);
-                    serializer.text(Integer.toString(r.getID()));
-                    serializer.endTag("", GAME_ROUND_ID);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_TYPE);
-                    serializer.text(GAME_ROUND_RESULT_TYPE.stringValueOf(r.getRoundType()));
-                    serializer.endTag("", GAME_ROUND_TYPE);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
-                    serializer.text(Integer.toString(r.getPointsWithoutBock()));
-                    serializer.endTag("", GAME_ROUND_POINTS_WITHOUT_BOCK);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_BOCK_CNT);
-                    serializer.text(Integer.toString(r.getBockCount()));
-                    serializer.endTag("", GAME_ROUND_BOCK_CNT);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_ROUND_DETAILED_INFO);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_RE_MEMBER);
-                    serializer.text(r.getReMembers());
-                    serializer.endTag("", GAME_ROUND_RE_MEMBER);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_KONTRA_MEMBER);
-                    serializer.text(r.getKontraMembers());
-                    serializer.endTag("", GAME_ROUND_KONTRA_MEMBER);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_SUSPENDED_PLAYERS);
-                    serializer.text(r.getSuspendedPlayers());
-                    serializer.endTag("", GAME_ROUND_SUSPENDED_PLAYERS);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_RESULT);
-                    serializer.text(r.getRoundResult());
-                    serializer.endTag("", GAME_ROUND_RESULT);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_TYPE_DETAILED);
-                    serializer.text(r.getRoundTypeDetailed());
-                    serializer.endTag("", GAME_ROUND_TYPE_DETAILED);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_RE_ANSAGEN);
-                    serializer.text(r.getReAnsagen());
-                    serializer.endTag("", GAME_ROUND_RE_ANSAGEN);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_CONTRA_ANSAGEN);
-                    serializer.text(r.getKontraAnsagen());
-                    serializer.endTag("", GAME_ROUND_CONTRA_ANSAGEN);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_RE_SPECIAL);
-                    serializer.text(r.getReSpecial());
-                    serializer.endTag("", GAME_ROUND_RE_SPECIAL);
-
-                    serializer.text("\n\t\t\t\t");
-                    serializer.startTag("", GAME_ROUND_CONTRA_SPECIAL);
-                    serializer.text(r.getKontraSpecial());
-                    serializer.endTag("", GAME_ROUND_CONTRA_SPECIAL);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.endTag("", GAME_ROUND_DETAILED_INFO);
-
-                    serializer.text("\n\t\t");
-                    serializer.endTag("", GAME_ROUND);
-                }
-                serializer.text("\n\t");
-                serializer.endTag("", GAME_ROUNDS);
-
-                // add player infos
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", GAME_PLAYERS);
-    	        for(int i=0;i<game.getMAXPlayerCount();i++){
-    	        	PlayerClass p = game.getPlayer(i);
-
-        	        serializer.text("\n\t\t");
-        	        serializer.startTag("", GAME_PLAYER);
-
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_PLAYER_ID);
-                    serializer.text(Integer.toString(p.getID()));
-                    serializer.endTag("", GAME_PLAYER_ID);
-
-        	        serializer.text("\n\t\t\t");
-    	            serializer.startTag("", GAME_PLAYER_NAME);
-    	            serializer.text(p.getName());
-    	            serializer.endTag("", GAME_PLAYER_NAME);
-    	            
-    	            serializer.text("\n\t\t\t");
-    	            serializer.startTag("", GAME_PLAYER_POINTS);
-    	            serializer.text(Float.toString(p.getPoints()));
-    	            serializer.endTag("", GAME_PLAYER_POINTS);
-
-                    // point history
-                    serializer.text("\n\t\t\t");
-                    serializer.startTag("", GAME_PLAYER_POINT_HISTORY);
-
-                    for (int ph = 0; ph < p.getPointHistoryLength() && ph < p.getPointHistoryAtRoundLength(); ph++) {
-                        serializer.text("\n\t\t\t\t");
-                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
-
-                        serializer.text("\n\t\t\t\t\t");
-                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
-                        serializer.text(Float.toString(p.getPointHistory(ph)));
-                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS);
-
-                        serializer.text("\n\t\t\t\t\t");
-                        serializer.startTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
-                        serializer.text(Float.toString(p.getPointHistoryPerRound(ph)));
-                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_POINTS_AT_ROUND);
-
-                        serializer.text("\n\t\t\t\t");
-                        serializer.endTag("", GAME_PLAYER_POINT_HISTORY_ROUND);
-                    }
-                    serializer.text("\n\t\t\t");
-                    serializer.endTag("", GAME_PLAYER_POINT_HISTORY);
-    	            
-    	            serializer.text("\n\t\t");
-    	            serializer.endTag("", GAME_PLAYER);
-    	        }
-    	        serializer.text("\n\t");
-	            serializer.endTag("", GAME_PLAYERS);
-    	        
-	            
-    	        serializer.text("\n\t");
-    	        serializer.startTag("", GAME_PRE_ROUNDS);
-	            for (int t=0;t<game.getPreRoundList().size();t++){
-	            	serializer.text("\n\t\t");
-		            serializer.startTag("", GAME_PRE_ROUND);
-		            
-		            serializer.text("\n\t\t\t");
-		            serializer.startTag("", GAME_PRE_ROUND_BOCK_COUNT);
-		            serializer.text(Integer.toString(game.getPreRoundList().get(t).getBockCount()));
-		            serializer.endTag("", GAME_PRE_ROUND_BOCK_COUNT);
-		            
-		            serializer.text("\n\t\t");
-		            serializer.endTag("", GAME_PRE_ROUND);
-		        }
-    	        serializer.text("\n\t");
-	            serializer.endTag("", GAME_PRE_ROUNDS);
-	            
-    	        serializer.text("\n");
-    	        serializer.endTag("", GAME);
-    	        serializer.endDocument();
-                serializer.flush();
-    	        
-    	        //Write to file
-    	        try{
-    	        	Log.v(TAG,writer.toString());
-				    osw.write(writer.toString());
-				    osw.flush();
-	    		    fos.flush();
-	    		    osw.close();
-	    		    fos.close();
-	    		    if (oldGameFile != null) {
-                        File f = new File(oldGameFile);
-	    		    	if (f.exists() && !f.isDirectory()) {
-                            f.delete();
-                        }
-	    		    }
-	    		    return true;
-    	         }	
-    	         catch(Exception e){
-    	        	 Log.d(TAG,e.toString());
-    	         }
-    	    } catch (Exception e) {
-    	    	Log.d(TAG,e.toString());
-    	    } 
-    	}
-    	return false;
     }
 
     private static void addGameSettingsToXML(XmlSerializer serializer, GameClass game) {

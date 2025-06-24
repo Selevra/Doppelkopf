@@ -110,38 +110,19 @@ public class SavedGameListActivity extends DokoActivity {
 
     }
 
-    private ArrayList<File> getFileList (){
-        // add external files
-        ArrayList<File> newFiles = new ArrayList<File>();
+    private ArrayList<File> getFileList() {
+        ArrayList<File> newFiles = new ArrayList<>();
 
-        // search all external dirs
-        for (String sdcard : DokoXMLClass.getPossibleExternalStorageDirs()) {
-            File dir = new File(sdcard +  File.separatorChar + DokoXMLClass.APP_DIR_GAMES);
-            addSavedGamesFromDir(dir, newFiles);
-        }
+        // Fester Pfad, wo die Dateien tatsächlich gespeichert werden:
+        File dir = new File(mContext.getExternalFilesDir(null), "games");
+        Log.d("Storage", "Suche gespeicherte Spiele in: " + dir.getAbsolutePath());
 
-        // add system mounted sdcard but need to check absolute path against present to avoid double entries
-        if(DokoXMLClass.isExternalStorageReady()) {
-            File dir = new File(Environment.getExternalStorageDirectory(), DokoXMLClass.APP_DIR_GAMES);
-            addSavedGamesFromDir(dir, newFiles);
-        }
-
-        // add internal files
-        File dir = new File(DokoXMLClass.getAppDir(this));
         addSavedGamesFromDir(dir, newFiles);
 
-        dir = new File(DokoXMLClass.getAppDir(this) + File.separatorChar + "files");
-        addSavedGamesFromDir(dir, newFiles);
-
-        dir = mContext.getFilesDir();
-        addSavedGamesFromDir(dir, newFiles);
-
-        // sort by last modifieded date
+        // Sortieren wie gehabt
         Collections.sort(newFiles, new Comparator<File>() {
-            public int compare(File f1, File f2)
-            {
-                int r = Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-                return  r;
+            public int compare(File f1, File f2) {
+                return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
             }
         });
 
