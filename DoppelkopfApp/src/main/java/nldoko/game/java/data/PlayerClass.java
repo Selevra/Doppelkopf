@@ -14,14 +14,6 @@ public class PlayerClass implements Serializable  {
 	private ArrayList<Float> mPointHistroy = new ArrayList<Float>();
 	private ArrayList<Float> mPointHistroyATRound = new ArrayList<Float>();
 	
-	
-	public PlayerClass(){
-		this.mID = 0;
-		this.mCurrentPoints	= 0;
-		this.mStartPoints = 0;
-		this.mName = "";
-	}
-	
 	public PlayerClass(int id){
 		this.mID 	= id;
 		this.mCurrentPoints	= 0;

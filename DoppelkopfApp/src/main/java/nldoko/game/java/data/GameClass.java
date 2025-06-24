@@ -245,7 +245,6 @@ public class GameClass  implements Serializable{
 
 		mRound.setPoints(newRoundPoints);
 		mRound.setRoundType(getWinnerCnt(states), mActivePlayerCount);
-		//Log.d("GAMECLASS", mRound.getResultText());
 		updatePlayerPoints(mRound, states);
 		addRound(mRound);
 
@@ -282,21 +281,29 @@ public class GameClass  implements Serializable{
 	private void updatePlayerPoints(RoundClass mRound, DokoData.PLAYER_ROUND_RESULT_STATE[] states) {
 //		int mSoloWinPos = 0; // the player that has played alone
 //		int mSoloLosePos = 0; // the player that has played alone
+		boolean soloUpdated = false;
 
         for(int i=0; i<getPlayerCount(); i++){
           	if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.SUSPEND_STATE) {
                 getPlayer(i).updatePoints(mRound.getID(), (float) 0);
             }
-			else if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO &&
-					states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE){
-				//Win solo 1vs3, 1vs4, 1vs5
-				soloPointUpdate(mRound, true, i, states);
+			  // only once we need to update the points in case of solo
+		    else if (!soloUpdated) {
+				if (mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO &&
+						states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.WIN_STATE) {
+					//Win solo 1vs3, 1vs4, 1vs5
+					soloPointUpdate(mRound, true, i, states);
+					soloUpdated = true;
+				} else if (states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.LOSE_STATE &&
+						mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO) {
+					//Lose solo - 3vs1, 4vs1, 5vs1
+					soloPointUpdate(mRound, false, i, states);
+					soloUpdated = true;
+				}
 			}
-			else if(states[i] == DokoData.PLAYER_ROUND_RESULT_STATE.LOSE_STATE &&
-					mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.LOSE_SOLO){
-				//Lose solo - 3vs1, 4vs1, 5vs1
-				soloPointUpdate(mRound,false, i, states);
-            }
+		}
+		if (soloUpdated) {
+			return; // do not continue in function since points have been updated already for the solo case
 		}
 		
 //		if(mRound.getRoundType() == DokoData.GAME_ROUND_RESULT_TYPE.WIN_SOLO){
@@ -330,6 +337,7 @@ public class GameClass  implements Serializable{
 				}
 			}
 		}
+		// normal games (no solo)
 		else {
 			float mWinFactor = 1.0f; // 2vs2 & 3vs3
             double mLoseFactor = 1.0f;
@@ -402,6 +410,15 @@ public class GameClass  implements Serializable{
 		}
 		else {
 			getPlayer(mSoloPos).updatePoints(mRound.getID(),(float)0);
+		}
+
+		Log.d("SoloPoints", "Round Points: " + mRound.getPoints());
+		Log.d("SoloPoints", "Is Solo Winner: " + isSoloWinner);
+		Log.d("SoloPoints", "Active Player Count: " + getActivePlayerCount());
+		Log.d("SoloPoints", "cntVariant: " + cntVariant);
+		Log.d("SoloPoints", "Solo Pos: " + mSoloPos);
+		for (int i = 0; i < getPlayerCount(); i++) {
+			Log.d("SoloPoints", "Player " + i + " State: " + states[i]);
 		}
 	}
 
