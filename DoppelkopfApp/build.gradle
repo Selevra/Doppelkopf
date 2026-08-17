@@ -1,5 +1,18 @@
 apply plugin: 'com.android.application'
 
+def getGitCommitHash = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (ignored) {
+        return "nogit"
+    }
+}
+
 android {
     compileSdkVersion 35
     defaultConfig {
@@ -7,7 +20,13 @@ android {
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 15
-        versionName "4.0.0-beta"
+        versionName "4.0.0"
+        def commitHash = getGitCommitHash()
+
+        // SemVer-Format: 4.0.0+a1b2c3d
+        def fullVersionDisplay = "${versionName}+${commitHash}"
+
+        resValue "string", "app_version", fullVersionDisplay
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,7 +41,10 @@ android {
             def appName = "Doppelkopf-2.0"
             def versionName = variant.versionName
             def buildType = variant.buildType.name
-            def newApkName = "${appName}_v${versionName}+${buildType}.apk"
+            def commitHash = getGitCommitHash()
+
+            // e.g. Doppelkopf-2.0_v4.0.0+debug_a1b2c3d.apk
+            def newApkName = "${appName}_v${versionName}+${buildType}_${commitHash}.apk"
             outputFileName = newApkName
         }
     }

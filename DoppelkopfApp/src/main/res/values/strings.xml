@@ -2,7 +2,6 @@
     <!-- english -->
 
     <string name="app_name">Doppelkopf 2.0</string>
-    <string name="app_version">Version: 4.0.0-beta</string>
     <string name="start_action_about">About this App</string>
     <string name="str_saved_game">Saved games</string>
     <string name="str_saved_game_delete_all">Delete all saved game</string>
