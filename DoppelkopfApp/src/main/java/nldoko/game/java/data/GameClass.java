@@ -238,7 +238,7 @@ public class GameClass  implements Serializable{
 		}
 	}
 
-	public void addNewRound(int newRoundPoints, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, DokoData.PLAYER_ROUND_RESULT_STATE[] states, GameActivity.USER_SELECTED_PLAYER_STATE[] userSelectedStates,
+	public void addNewRound(int newRoundPoints, String winningParty, Integer mGameBockRoundsCount, Integer mGameBockRoundsGameCount, DokoData.PLAYER_ROUND_RESULT_STATE[] states, GameActivity.USER_SELECTED_PLAYER_STATE[] userSelectedStates,
 							String roundResult, String roundTypeDetailed, String reAnsagen, String kontraAnsagen, ArrayList<String> reSpecial, ArrayList<String> kontraSpecial) {
 		RoundClass mRound = getNewRound();
 
@@ -247,6 +247,8 @@ public class GameClass  implements Serializable{
 		mRound.setRoundType(getWinnerCnt(states), mActivePlayerCount);
 		updatePlayerPoints(mRound, states);
 		addRound(mRound);
+
+		mRound.setWinningParty(winningParty);
 
 		if(mGameBockRoundsCount > 0 && mGameBockRoundsGameCount > 0) {
 			updateBockCountPreRounds(mGameBockRoundsCount, mGameBockRoundsGameCount);

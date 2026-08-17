@@ -79,6 +79,7 @@ public class DokoXMLClass {
     private static final String GAME_ROUND_KONTRA_MEMBER = "RoundKontraMember";
     private static final String GAME_ROUND_SUSPENDED_PLAYERS = "RoundSuspendedPlayers";
     private static final String GAME_ROUND_RESULT = "RoundResult";
+    private static final String GAME_ROUND_POSITIVE_PARTY = "RoundPositiveParty";
     private static final String GAME_ROUND_TYPE_DETAILED = "RoundTypeDetailed";
     private static final String GAME_ROUND_RE_ANSAGEN = "RoundReAnsagen";
     private static final String GAME_ROUND_CONTRA_ANSAGEN = "RoundKontraAnsagen";
@@ -196,7 +197,6 @@ public class DokoXMLClass {
             serializer.startTag("", GAME);
             serializer.attribute("", GAME_XML_STRUCT_VERSION_ATTR, GAME_XML_STRUCT_VERSION);
 
-            // Hier kommt dein bisheriger XML-Code rein
             addGameSettingsToXML(serializer, game);
 
             serializer.text("\n\t");
@@ -248,6 +248,11 @@ public class DokoXMLClass {
                 serializer.startTag("", GAME_ROUND_RESULT);
                 serializer.text(r.getRoundResult());
                 serializer.endTag("", GAME_ROUND_RESULT);
+
+                serializer.text("\n\t\t\t\t");
+                serializer.startTag("", GAME_ROUND_POSITIVE_PARTY);
+                serializer.text(r.getWinningParty());
+                serializer.endTag("", GAME_ROUND_POSITIVE_PARTY);
 
                 serializer.text("\n\t\t\t\t");
                 serializer.startTag("", GAME_ROUND_TYPE_DETAILED);

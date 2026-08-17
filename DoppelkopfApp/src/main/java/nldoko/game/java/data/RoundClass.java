@@ -21,6 +21,7 @@ public class RoundClass implements Serializable  {
 	private int mBockCount;
 	private GAME_ROUND_RESULT_TYPE mRoundType;
 	// detailed round infos
+	private String mWinningParty;
 	private String mRoundResult;
 	private String mRoundTypeDetailed;
 	private String mReMembers;
@@ -41,6 +42,7 @@ public class RoundClass implements Serializable  {
 		this.mKontraAnsagen = "";
 		this.mReSpecial = "";
 		this.mKontraSpecial = "";
+		this.mWinningParty = "";
 	}
 
     public RoundClass(int id, GAME_ROUND_RESULT_TYPE type, int points,int bockCount){
@@ -56,6 +58,7 @@ public class RoundClass implements Serializable  {
         this.mKontraAnsagen = "";
 		this.mReSpecial = "";
 		this.mKontraSpecial = "";
+		this.mWinningParty = "";
     }
 	
 	public int getID(){
@@ -69,15 +72,22 @@ public class RoundClass implements Serializable  {
 	public int getPoints(){
 		return this.mPoints * (this.mBockCount!=0 ? (int)Math.pow(2, this.mBockCount) : 1 );
 	}
-	
-	public int getPointsWithoutBock(){
-		return this.mPoints;
-	}
-	
+
 	public void setPoints(int p){
 		this.mPoints = p;
 	}
 	
+	public int getPointsWithoutBock(){
+		return this.mPoints;
+	}
+
+	public void setWinningParty(String winningParty){
+		this.mWinningParty = winningParty;
+	}
+
+	public String getWinningParty(){
+		return this.mWinningParty;
+	}
 	
 	public int getBockCount(){
 		return mBockCount;

@@ -1102,7 +1102,7 @@ public class GameActivity extends DokoActivity {
             }
 
             Log.d("XML", "Round Result: " + getRoundResultXMLString());
-			mGame.addNewRound(getNewRoundPoints(), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResultXMLString(), getRoundTypeXMLString(), getRoundAnsagenXMLString(GAME_PARTY.PARTY_RE), getRoundAnsagenXMLString(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
+			mGame.addNewRound(getNewRoundPoints(), calcPoints() >= 0 ? gamePartyToString(GAME_PARTY.PARTY_RE) : gamePartyToString(GAME_PARTY.PARTY_KONTRA), mGameBockRoundsCount, mGameBockRoundsGameCount, mNewRoundPlayerWinState, mUserSelectedPlayerState, getRoundResultXMLString(), getRoundTypeXMLString(), getRoundAnsagenXMLString(GAME_PARTY.PARTY_RE), getRoundAnsagenXMLString(GAME_PARTY.PARTY_KONTRA), mReSpecialXML, mKontraSpecialXML);
 			Log.d(TAG,mGame.toString());
 			notifyDataSetChanged();
 			 
@@ -1818,15 +1818,26 @@ public class GameActivity extends DokoActivity {
 		return getRoundType().name();
 	}
 
+	private static String gamePartyToString(GAME_PARTY game_party)
+	{
+		if (game_party == GAME_PARTY.PARTY_RE)
+		{
+			return "Re";
+		}
+		else if (game_party == GAME_PARTY.PARTY_KONTRA)
+		{
+			return "Kontra";
+		}
+		return "Re"; // should never be reached
+	}
+
 	private String getRoundAnsagenXMLString(GAME_PARTY party) {
 		ArrayList<ToggleButton> tmpList;
-		String partyString;
+		String partyString = gamePartyToString(party);
 		if (party == GAME_PARTY.PARTY_RE) {
-			partyString = "Re";
 			tmpList = mListReAnsagenTBs;
 		}
 		else if (party == GAME_PARTY.PARTY_KONTRA) {
-			partyString = "Kontra";
 			tmpList = mListKontraAnsagenTBs;
 		}
 		// should never be reached
@@ -1900,18 +1911,17 @@ public class GameActivity extends DokoActivity {
 		Log.d("INFO", "setAllDeclarationButtonsForPartyUntil: called... for Party " + party + ". Button clicked: " + lastButtonToSet);
 		// get relevant button-list and XML member variables for party
 		ArrayList<ToggleButton> list;
-		String partyString;
+		String partyString = gamePartyToString(party);
 
 		// first element "Re" respectively "Kontra" is missing and has to be added below
 		ArrayList<String> buttons = new ArrayList<String>(Arrays.asList("90", "60", "30", "0"));
 
 		if (party == GAME_PARTY.PARTY_RE)
 		{
-			partyString = "Re";
 			list = mListReAnsagenTBs;
 		}
-		else {
-			partyString = "Kontra";
+		else
+		{
 			list = mListKontraAnsagenTBs;
 		}
 		buttons.add(0, partyString);
@@ -2049,22 +2059,20 @@ public class GameActivity extends DokoActivity {
 	}
 
     private static int calculateSpecialPointsForParty(GAME_PARTY party) {
-		String partyString;
 		ArrayList<String> specialXML;
 		Map<String, ToggleButton> tbMap;
 		SeekBar sbDK;
 		SeekBar sbFuchs;
+		String partyString = gamePartyToString(party);
 
 		int points = 0;
 		if (party == GAME_PARTY.PARTY_RE) {
-			partyString = "Re";
 			specialXML = mReSpecialXML;
 			tbMap = mMapTBsRe;
 			sbDK = mSBReDK;
 			sbFuchs = mSBReFuchs;
 		}
 		else if (party == GAME_PARTY.PARTY_KONTRA) {
-			partyString = "Kontra";
 			specialXML = mKontraSpecialXML;
 			tbMap = mMapTBsKontra;
 			sbDK = mSBKontraDK;
