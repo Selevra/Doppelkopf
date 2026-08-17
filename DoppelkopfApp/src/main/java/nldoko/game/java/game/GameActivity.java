@@ -597,7 +597,7 @@ public class GameActivity extends DokoActivity {
 				mListGameResultTBs.get(0).setChecked(true);
 				setAllWinnerButtonsUntil(120);
 			}
-			updatePointsAndTextView();
+			updateUIOnChange();
 		});
 		RadioButton rbWinnerKontra = (RadioButton)rootView.findViewById(R.id.rb_kontra_won);
 		rbWinnerKontra.setOnClickListener(view -> {
@@ -609,14 +609,14 @@ public class GameActivity extends DokoActivity {
 				mListGameResultTBs.get(0).setChecked(true);
 				setAllWinnerButtonsUntil(120);
 			}
-			updatePointsAndTextView();
+			updateUIOnChange();
 		});
 		RadioButton rbTie = (RadioButton)rootView.findViewById(R.id.rb_tie);
 		rbTie.setOnClickListener(view -> {
 			Log.d("INFO", "Tie radio button was pressed");
 			// uncheck all buttons
 			setAllWinnerButtonsUntil(-1);
-			updatePointsAndTextView();
+			updateUIOnChange();
 		});
 		mMapRBWinner.put(GAME_PARTY.PARTY_RE, rbWinnerRe);
 		mMapRBWinner.put(GAME_PARTY.PARTY_KONTRA, rbWinnerKontra);
@@ -664,7 +664,7 @@ public class GameActivity extends DokoActivity {
 			Objects.requireNonNull(mMapTbRoundType.get(entry.getKey())).setOnClickListener(view -> {
 				if (mMapTbRoundType.get(entry.getKey()) != null) {
 					setRoundType(entry.getKey());
-					updatePointsAndTextView();
+					updateUIOnChange();
 				}
 			});
 		}
@@ -675,7 +675,7 @@ public class GameActivity extends DokoActivity {
 			Objects.requireNonNull(mMapTbRoundType.get(entry.getKey())).setOnClickListener(view -> {
 				if (mMapTbRoundType.get(entry.getKey()) != null) {
 					setRoundType(entry.getKey());
-					updatePointsAndTextView();
+					updateUIOnChange();
 				}
 			});
 		}
@@ -826,7 +826,7 @@ public class GameActivity extends DokoActivity {
 		mSBReDK.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -839,7 +839,7 @@ public class GameActivity extends DokoActivity {
 			@Override
 			public void onClick(View view) {
 				if (mTBReDK != null) {
-					updatePointsAndTextView();
+					updateUIOnChange();
 				}
 				if (mSBReDK != null && mTBReDK != null) {
 					mSBReDK.setVisibility(mTBReDK.isChecked() ? View.VISIBLE : View.GONE);
@@ -851,7 +851,7 @@ public class GameActivity extends DokoActivity {
 		mSBReFuchs.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -862,7 +862,7 @@ public class GameActivity extends DokoActivity {
 		mMapTBsRe.put("Fuchs", mTBReFuchs);
 		mTBReFuchs.setOnClickListener(view -> {
 			if (mTBReFuchs != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			if (mSBReFuchs != null && mTBReFuchs != null) {
 				mSBReFuchs.setVisibility(mTBReFuchs.isChecked() ? View.VISIBLE : View.GONE);
@@ -872,14 +872,14 @@ public class GameActivity extends DokoActivity {
 		mMapTBsRe.put("Karlchen", mTBReKarlchen);
 		mTBReKarlchen.setOnClickListener(view -> {
 			if (mTBReKarlchen != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 		});
 		mTBReHeart = (ToggleButton)rootView.findViewById(R.id.btn_re_heart);
 		mMapTBsRe.put("Herz", mTBReHeart);
 		mTBReHeart.setOnClickListener(view -> {
 			if (mTBReHeart != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 		});
 
@@ -887,7 +887,7 @@ public class GameActivity extends DokoActivity {
 		mSBKontraDK.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -898,7 +898,7 @@ public class GameActivity extends DokoActivity {
 		mMapTBsKontra.put("Doppelkopf", mTBKontraDK);
 		mTBKontraDK.setOnClickListener(view -> {
 			if (mTBKontraDK != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			if (mSBKontraDK != null && mTBKontraDK != null) {
 				mSBKontraDK.setVisibility(mTBKontraDK.isChecked() ? View.VISIBLE : View.GONE);
@@ -909,7 +909,7 @@ public class GameActivity extends DokoActivity {
 		mSBKontraFuchs.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -920,7 +920,7 @@ public class GameActivity extends DokoActivity {
 		mMapTBsKontra.put("Fuchs", mTBKontraFuchs);
 		mTBKontraFuchs.setOnClickListener(view -> {
 			if (mTBKontraFuchs != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 			if (mSBKontraFuchs != null && mTBKontraFuchs != null) {
 				mSBKontraFuchs.setVisibility(mTBKontraFuchs.isChecked() ? View.VISIBLE : View.GONE);
@@ -930,21 +930,21 @@ public class GameActivity extends DokoActivity {
 		mMapTBsKontra.put("Karlchen", mTBKontraKarlchen);
 		mTBKontraKarlchen.setOnClickListener(view -> {
 			if (mTBKontraKarlchen != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 		});
 		mTBKontraHeart = (ToggleButton)rootView.findViewById(R.id.btn_kontra_heart);
 		mMapTBsKontra.put("Herz", mTBKontraHeart);
 		mTBKontraHeart.setOnClickListener(view -> {
 			if (mTBKontraHeart != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 		});
 		mTBKontraGegen = (ToggleButton)rootView.findViewById(R.id.btn_kontra_gegen);
 		mMapTBsKontra.put("Gegen", mTBKontraGegen);
 		mTBKontraGegen.setOnClickListener(view -> {
 			if (mTBKontraGegen != null) {
-				updatePointsAndTextView();
+				updateUIOnChange();
 			}
 		});
 
@@ -1401,7 +1401,7 @@ public class GameActivity extends DokoActivity {
 		}
 		mSBKontraDK.setVisibility(View.GONE);
 		mSBKontraFuchs.setVisibility(View.GONE);
-		updatePointsAndTextView();
+		updateUIOnChange();
 	}
 
 	private boolean isNewBockRoundSet(){
@@ -1805,7 +1805,7 @@ public class GameActivity extends DokoActivity {
 		return ret;
 	}
 
-	private ROUND_TYPES getRoundType() {
+	private static ROUND_TYPES getRoundType() {
 		for (Map.Entry<ROUND_TYPES, ToggleButton> entry : mMapTbRoundType.entrySet()) {
 			if (entry.getValue().isChecked()) {
 				return entry.getKey();
@@ -1904,7 +1904,7 @@ public class GameActivity extends DokoActivity {
 				buttonStateToSet = false;
 			}
 		}
-		updatePointsAndTextView();
+		updateUIOnChange();
 	}
 
     private static void setAllDeclarationButtonsForPartyUntil(GAME_PARTY party, String lastButtonToSet) {
@@ -1947,7 +1947,7 @@ public class GameActivity extends DokoActivity {
                 buttonStateToSet = false;
             }
         }
-		updatePointsAndTextView();
+		updateUIOnChange();
     }
 
 	private static void setRoundType(ROUND_TYPES type) {
@@ -1995,6 +1995,11 @@ public class GameActivity extends DokoActivity {
 		return MISSING_INFO_FOR_POINT_CALC.ALL_VALID;
     }
 
+	private static void updateUIOnChange() {
+		checkGegenButton();
+		updatePointsAndTextView();
+	}
+
     private static void updatePointsAndTextView() {
 		Log.d("INFO", "\nUpdating projected points...");
 		MISSING_INFO_FOR_POINT_CALC dataValid = checkRelevantRoundResultButtonsSet();
@@ -2002,13 +2007,19 @@ public class GameActivity extends DokoActivity {
 			int points = calcPoints();
 			String projectedPoints = Math.abs(points) + " P.";
 			mTVProjectedPoints.setText(projectedPoints);
-			if (points > 0) {
-				mTVProjectedPointsWinner.setText("(Re)");
+			if (points != 0)
+			{
+				// Determine the party based on points
+				GAME_PARTY winner = (points > 0) ? GAME_PARTY.PARTY_RE : GAME_PARTY.PARTY_KONTRA;
+
+				// Get the name (e.g., "Re")
+				String partyName = gamePartyToString(winner);
+
+				// Apply the format "(%1$s)" from strings.xml
+				mTVProjectedPointsWinner.setText(String.format("(%s)", partyName));
 			}
-			else if (points < 0) {
-				mTVProjectedPointsWinner.setText("(Kontra)");
-			}
-			else {
+			else
+			{
 				mTVProjectedPointsWinner.setText("");
 			}
 		} else {
@@ -2020,6 +2031,22 @@ public class GameActivity extends DokoActivity {
 			} else if (dataValid == MISSING_INFO_FOR_POINT_CALC.ROUND_TYPE) {
 				mTVProjectedPointsWinner.setText(R.string.set_round_type);
 			}
+		}
+	}
+
+	private static void checkGegenButton() {
+		if (checkRelevantRoundResultButtonsSet() != MISSING_INFO_FOR_POINT_CALC.ALL_VALID) {
+			return;
+		}
+		// check if "Gegen die Alten" is even possible in respective round
+		if ((getRoundType() == ROUND_TYPES.HOCHZEIT) || (getRoundType() == ROUND_TYPES.NORMAL)) {
+			// check if Kontra won, to set button
+			if (mRadioGroup.getCheckedRadioButtonId() == R.id.rb_kontra_won) {
+				mTBKontraGegen.setChecked(true);
+			}
+		}
+		else {
+			mTBKontraGegen.setChecked(false);
 		}
 	}
 
