@@ -127,8 +127,8 @@ public class NewGameActivity extends DokoActivity {
         mSpBockLimit.setAdapter(mSPBockLimitArrayAdapter);
 		mSpBockLimit.setSelection(0);
 
-		String[] mScoringModeVariantArr = new String[]{getString(R.string.scoring_mode_manual), getString(R.string.scoring_mode_detailed)};
-		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text,mScoringModeVariantArr);
+		String[] mScoringModeVariantArr = new String[]{getString(R.string.scoring_mode_detailed), getString(R.string.scoring_mode_manual)};
+		mSPPunkteeingabeArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,R.id.spinner_text, mScoringModeVariantArr);
 		mSPPunkteeingabeArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 		mSpPunkteeingabe.setAdapter(mSPPunkteeingabeArrayAdapter);
 		mSpPunkteeingabe.setSelection(0);
@@ -226,7 +226,14 @@ public class NewGameActivity extends DokoActivity {
 			i.putExtra(DokoData.BOCKLIMIT_KEY, mSpBockLimit.getSelectedItemPosition());
 			i.putExtra(DokoData.ACTIVE_PLAYER_KEY, mSpActivePlayer.getSelectedItemPosition()+4);
 			i.putExtra(DokoData.GAME_CNT_VARIANT_KEY, GAME_CNT_VARIANT.values()[mSpGameCntVariant.getSelectedItemPosition()]);
-			i.putExtra(DokoData.PUNKTEEINGABE_KEY, DokoData.POINTS_CALCULATION.values()[mSpPunkteeingabe.getSelectedItemPosition()]);
+			DokoData.POINTS_CALCULATION selectedMode;
+			if (mSpPunkteeingabe.getSelectedItemPosition() == 0) {
+				// detailed is it position 0 in array
+				selectedMode = DokoData.POINTS_CALCULATION.POINTS_CALCULATION_DETAILED;
+			} else {
+				selectedMode = DokoData.POINTS_CALCULATION.POINTS_CALCULATION_MANUAL;
+			}
+			i.putExtra(DokoData.PUNKTEEINGABE_KEY, selectedMode);
 
 			startActivity(i);
 		}
