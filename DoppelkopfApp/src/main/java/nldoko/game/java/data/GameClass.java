@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class GameClass  implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -444,7 +445,7 @@ public class GameClass  implements Serializable{
 		
 	public String generateNewFilename(){
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.GERMANY);
         String formattedDate = df.format(c.getTime());
         return formattedDate + DokoXMLClass.SAVED_GAME_FILE_SUFFIX;
 	}

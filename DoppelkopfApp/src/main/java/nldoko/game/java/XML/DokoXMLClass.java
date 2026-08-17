@@ -158,10 +158,10 @@ public class DokoXMLClass {
         }
     }
 
-    public static boolean saveGameStateToXML(Context c, GameClass game) {
+    public static void saveGameStateToXML(Context c, GameClass game) {
         if (game == null) {
             Log.e("SaveGame", "Game object is null");
-            return false;
+            return;
         }
 
         String oldGameFile = game.currentFilename();
@@ -171,7 +171,7 @@ public class DokoXMLClass {
         File externalStorage = Environment.getExternalStorageDirectory();
         if (externalStorage == null) {
             Log.e("Storage", "External storage directory is null");
-            return false;
+            return;
         }
 
         File gamesDir = new File(c.getExternalFilesDir(null), "games");
@@ -179,7 +179,7 @@ public class DokoXMLClass {
             boolean created = gamesDir.mkdirs();
             if (!created) {
                 Log.e("Storage", "Failed to create directory: " + gamesDir.getAbsolutePath());
-                return false;
+                return;
             }
         }
         File finalFile = new File(gamesDir, newFilename);
@@ -384,11 +384,11 @@ public class DokoXMLClass {
 
             Log.d("SaveGame", "Game saved successfully at: " + finalFile.getAbsolutePath());
 
-            return true;
+            return;
 
         } catch (Exception e) {
             Log.e("SaveGame", "Error saving game XML", e);
-            return false;
+            return;
         }
     }
 
